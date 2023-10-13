@@ -1,0 +1,132 @@
+/* FILEPATH: /C:/git/My-Game-Tracker/style.css */
+
+/* Reset default browser styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Set font family and size */
+body {
+    background-color: #2f3136;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+}
+
+/* Style the header */
+.header {
+    background-color: #202225;
+    color: #fff;
+    padding: 10px;
+    display: flex;
+}
+
+/* Style the left_nav */
+.left_nav {
+    list-style: none;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.right_nav {
+    list-style: none;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.left_nav li {
+    margin-right: 10px;
+    min-width: 65px;
+}
+
+.right_nav li {
+    margin-left: 10px;
+    min-width: 200px;
+}
+
+.left_nav a {
+    color: #fff;
+    text-decoration: none;
+    padding: 5px;
+}
+
+.right_nav a{
+    color: #fff;
+    text-decoration: none;
+    padding: 5px;
+}
+
+
+.right_nav input[type="text"] {
+    padding: 5px;
+    margin-right: 5px;
+}
+
+.right_nav button[type="submit"] {
+    padding: 5px;
+    background-color: #fff;
+    color: #333;
+    border: none;
+}
+
+/* Style the main content */
+.main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.main h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.main h2 {
+    color: #fff;
+}
+
+.main p {
+    color: #fff;
+}
+
+.gallery {
+    margin-bottom: 40px;
+}
+
+.gallery h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.scrolling-list {
+    display: flex;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    background-color: #292b2f;
+    padding: 3%;
+}
+
+.scrolling-list img {
+    padding: 10%;
+    margin-right: 10px;
+}
+
+.scrolling-list p {
+    text-align: center;
+}
+
+.trending-topics {
+    background-color: #292b2f;
+}
+
+.trending-topics ul{
+    background-color: #292b2f;
+}
+
+.trending-topics a {
+    color: #fff;
+}
