@@ -9,7 +9,7 @@
 
 /* Set font family and size */
 body {
-    background-color: #2f3136;
+    background-color: #292b2f;
     font-family: Arial, sans-serif;
     font-size: 16px;
 }
@@ -74,7 +74,7 @@ body {
 
 /* Style the main content */
 .main {
-    max-width: 800px;
+    max-width: 95%;
     margin: 0 auto;
     padding: 20px;
 }
@@ -111,8 +111,8 @@ body {
 }
 
 .scrolling-list img {
-    padding: 10%;
-    margin-right: 10px;
+    max-width: 200px;
+    padding: 5%;
 }
 
 .scrolling-list p {
@@ -120,13 +120,52 @@ body {
 }
 
 .trending-topics {
-    background-color: #292b2f;
+    color: #fff;
+    margin: 10px;
+    background-color: #2f3136;
 }
 
 .trending-topics ul{
-    background-color: #292b2f;
+    background-color: #2f3136;
+}
+
+.trending-topics li{
+    color: #fff;
 }
 
 .trending-topics a {
+    color: #fff;
+}
+
+
+/* 
+
+Login Page Style
+
+*/
+
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+.left-column {
+    width: 20%;
+}
+.right-column {
+    width: 20%;
+}
+.middle-column {
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form label{
     color: #fff;
 }
