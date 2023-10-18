@@ -16,6 +16,7 @@ body {
 
 /* Style the header */
 .header {
+    cursor: default;
     background-color: #202225;
     color: #fff;
     padding: 10px;
@@ -173,4 +174,14 @@ form {
 
 form label{
     color: #fff;
+}
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+.form-container form {
+    margin: 0 20px;
 }
