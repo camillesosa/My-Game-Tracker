@@ -9,8 +9,8 @@
         <h1 class="header">My Game Tracker</h1>
         <div class="header">
             <ul class="left_nav">
-                <li><a href="/home.html">Home</a></li>
-                <li><a href="#">My List</a></li>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="mylist.html">My List</a></li>
                 <li><a href="#">Achievements</a></li>
                 <li><a href="#">Recommended</a></li>
                 <li><a href="#">Users</a></li>
@@ -37,8 +37,94 @@
         </div>
         <!-- End Navigation bar -->
         <!-- Begin Page Body -->
+        <style>
+        .picture-list {
+            overflow-x: scroll;
+            max-height: 500px;
+            white-space: nowrap;
+        }
+        .picture-list li {
+            display: inline-block;
+            margin-right: 10px;
+            text-align: center;
+            vertical-align: top;
+            width: 200px;
+        }
+        .picture-list li p {
+            margin-top: 5px;
+        } 
+
+        </style>
         <div class="main">
-            <!-- Populate webpage body here -->
-        </div> 
+            <div style="float: left; width: 80%;">
+                <ul class="picture-list" style="display: flex; justify-content: center;">
+                    <li><img src="img\crystal.bmp" style="width: 200px;" alt="Picture 1"><p>Caption 1</p></li>
+                    <li><img src="img\crystal.bmp" style="width: 200px;" alt="Picture 2"><p>Caption 2</p></li>
+                    <li><img src="img\crystal.bmp" style="width: 200px;" alt="Picture 3"><p>Caption 3</p></li>
+                    <li><img src="img\crystal.bmp" style="width: 200px;" alt="Picture 4"><p>Caption 4</p></li>
+                    <li><img src="img\crystal.bmp" style="width: 200px;" alt="Picture 5"><p>Caption 5</p></li>
+                    <li><img src="img\crystal.bmp" style="width: 200px;" alt="Picture 6"><p>Caption 6</p></li>
+                    <li><img src="img\crystal.bmp" style="width: 200px;" alt="Picture 7"><p>Caption 7</p></li>
+                    <li><img src="img\crystal.bmp" style="width: 200px;" alt="Picture 8"><p>Caption 8</p></li>
+                    <li><img src="img\crystal.bmp" style="width: 200px;" alt="Picture 9"><p>Caption 9</p></li>
+                    <li><img src="img\crystal.bmp" style="width: 200px;" alt="Picture 10"><p>Caption 10</p></li>
+                </ul>
+            </div> 
+        </div>
+        <div class="container">
+            <div style="justify-content: right; width: auto; text-align: center; padding: 10%;">
+                <div class="search-box" style="height: 200px;">
+                    <form>
+                        <input type="text" placeholder="Search your list...">
+                        <button type="submit">Go</button>
+                    </form>
+                    <img src="picture11.jpg" alt="Picture 11"><p>Caption 11</p>
+                </div>
+                <div class="text-entry" style="height: 200px;">
+                    <form>
+                        <h2 style="color: #fff;">Add a new game</h2>
+                        <label style="padding-top: 10%;" for="name">Game:</label>
+                        <input type="text" id="name" name="name">
+                        <label style="padding-top: 10%;" for="rating">Rating:</label>
+                        <style>
+                            .rating input[type="radio"] {
+                                display: none;
+                            }
+
+                            .rating label {
+                                display: inline-block;
+                                cursor: pointer;
+                                width: 30px;
+                                height: 30px;
+                                background-image: url('https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-star-512.png');
+                                background-size: cover;
+                            }
+
+                            .rating input[type="radio"]:checked + label {
+                                background-image: url('https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-star-512.png');
+                                background-size: cover;
+                                color: yellow;
+                            }
+                        </style>
+
+                        <div class="rating">
+                            <input type="radio" id="star5" name="rating" value="5">
+                            <label for="star5" title="5 stars"></label>
+                            <input type="radio" id="star4" name="rating" value="4">
+                            <label for="star4" title="4 stars"></label>
+                            <input type="radio" id="star3" name="rating" value="3">
+                            <label for="star3" title="3 stars"></label>
+                            <input type="radio" id="star2" name="rating" value="2">
+                            <label for="star2" title="2 stars"></label>
+                            <input type="radio" id="star1" name="rating" value="1">
+                            <label for="star1" title="1 star"></label>
+                        </div>
+                        <input type="email" id="email" name="email"><br><br>
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- End Page Body -->
     </body>
 </html>
