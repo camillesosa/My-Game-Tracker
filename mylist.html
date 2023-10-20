@@ -39,37 +39,43 @@
         <!-- Begin Page Body -->
         <style>
         .picture-list {
-            max-height: 500px;
+            overflow-y: scroll;
+            max-height: 700px;
+            float: left;
+            width: 80%;
+            min-width: 420px;
+            max-width: 1500px;
         }
         .picture-list li {
             display: inline-block;
             margin-right: 10px;
             text-align: center;
             vertical-align: top;
-            width: 200px;
+            width: 250px;
         }
         .picture-list li p {
             margin-top: 5px;
         } 
+        .picture-list li img {
+            width: 250px;
+        }
 
         </style>
         <div class="main">
-
-
             <!-- Left Column -->
             
-            <div class="picture-list" style="float: left; width: 80%; max-width: 1200px;">
-                <ul style="min-width: 420px; max-width: 1200px;">
-                    <li><img src="img\crystal.bmp" style="width: 200px;" alt="Picture 1"><p>Caption 1</p></li>
-                    <li><img src="img\crystal.bmp" style="width: 200px;" alt="Picture 2"><p>Caption 2</p></li>
-                    <li><img src="img\crystal.bmp" style="width: 200px;" alt="Picture 3"><p>Caption 3</p></li>
-                    <li><img src="img\crystal.bmp" style="width: 200px;" alt="Picture 4"><p>Caption 4</p></li>
-                    <li><img src="img\crystal.bmp" style="width: 200px;" alt="Picture 5"><p>Caption 5</p></li>
-                    <li><img src="img\crystal.bmp" style="width: 200px;" alt="Picture 6"><p>Caption 6</p></li>
-                    <li><img src="img\crystal.bmp" style="width: 200px;" alt="Picture 7"><p>Caption 7</p></li>
-                    <li><img src="img\crystal.bmp" style="width: 200px;" alt="Picture 8"><p>Caption 8</p></li>
-                    <li><img src="img\crystal.bmp" style="width: 200px;" alt="Picture 9"><p>Caption 9</p></li>
-                    <li><img src="img\crystal.bmp" style="width: 200px;" alt="Picture 10"><p>Caption 10</p></li>
+            <div class="picture-list" style="float: left; width: 80%; min-width: 420px; max-width: 1500px;">
+                <ul id="picture-ul">
+                    <li><img src="img\crystal.bmp" alt="Picture 1"><p>Caption 1</p></li>
+                    <li><img src="img\crystal.bmp" alt="Picture 2"><p>Caption 2</p></li>
+                    <li><img src="img\crystal.bmp" alt="Picture 3"><p>Caption 3</p></li>
+                    <li><img src="img\crystal.bmp" alt="Picture 4"><p>Caption 4</p></li>
+                    <li><img src="img\crystal.bmp" alt="Picture 5"><p>Caption 5</p></li>
+                    <li><img src="img\crystal.bmp" alt="Picture 6"><p>Caption 6</p></li>
+                    <li><img src="img\crystal.bmp" alt="Picture 7"><p>Caption 7</p></li>
+                    <li><img src="img\crystal.bmp" alt="Picture 8"><p>Caption 8</p></li>
+                    <li><img src="img\crystal.bmp" alt="Picture 9"><p>Caption 9</p></li>
+                    <li><img src="img\crystal.bmp" alt="Picture 10"><p>Caption 10</p></li>
                 </ul>
             </div>
 
@@ -121,17 +127,6 @@
                                 <input type="radio" id="star5" name="rating" value="5">
                                 <label for="star5" title="5 star"></label>
                             </div>
-                            <script>
-                                const starLabels = document.querySelectorAll('.rating label');
-                                starLabels.forEach((label) => {
-                                    label.addEventListener('click', () => {
-                                        starLabels.forEach((label) => {
-                                            label.style.backgroundColor = 'transparent';
-                                        });
-                                        label.style.backgroundColor = 'yellow';
-                                    });
-                                });
-                            </script>
                             <input type="email" id="email" name="email">
                             <button type="submit">Submit</button>
                         </form>
@@ -141,3 +136,34 @@
         <!-- End Page Body -->
     </body>
 </html>
+
+<script>
+    const starLabels = document.querySelectorAll('.rating label');
+    starLabels.forEach((label) => {
+        label.addEventListener('click', () => {
+            starLabels.forEach((label) => {
+                label.style.backgroundColor = 'transparent';
+            });
+            label.style.backgroundColor = 'yellow';
+        });
+    });
+
+    // proof of concept, pull from a DB later
+    let games = ['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a']
+
+    games.forEach((game) => {
+        // Add a li, img to picture-list ul
+        let pictureList = document.getElementById('picture-ul');
+        let newLi = document.createElement('li');
+        let newImg = document.createElement('img');
+        newLi.appendChild(newImg);
+        newImg.src = 'img/crystal.bmp';
+        newImg.alt = 'Picture ' + (pictureList.children.length + 1);
+        let caption = document.createElement('p');
+        caption.innerHTML = 'Caption ' + (pictureList.children.length + 1);
+        newLi.appendChild(caption);
+        
+        pictureList.appendChild(newLi);
+    });
+
+</script>
