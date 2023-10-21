@@ -61,6 +61,9 @@
             .picture-list li img {
                 width: 250px;
             }
+            .picture-list li div {
+                margin-bottom: 5%;
+            }
 
         </style>
         <div class="main">
@@ -179,6 +182,26 @@
         newLi.appendChild(newImg);
         newLi.appendChild(caption);
         pictureList.appendChild(newLi);
+
+        // Add rating to new li
+        let ratingDiv = document.createElement('div');
+        ratingDiv.setAttribute('class', 'rating');
+
+        // TODO: Grab rating from DB later
+        let rating = 3;
+
+        for (let i = 0; i < 5; i++) {
+            let newLabel = document.createElement('label');
+            let oldStyle = newLabel.getAttribute('style');
+            newLabel.setAttribute('style', oldStyle + 'cursor: default;');
+            newLabel.id = (i + 1);
+            newLabel.title = (i + 1) + ' stars';
+            if (i < rating) {
+                newLabel.style.backgroundColor = 'yellow';
+            }
+            ratingDiv.appendChild(newLabel);
+        }
+        newLi.appendChild(ratingDiv);
     });
 
 </script>
