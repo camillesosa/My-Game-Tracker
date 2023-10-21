@@ -115,6 +115,16 @@
                                     background-size: cover;
                                 }
 
+                                .rating staticlabel {
+                                    display: inline-block;
+                                    cursor: default;
+                                    border-radius: 15px;
+                                    width: 30px;
+                                    height: 30px;
+                                    background-image: url('https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-star-512.png');
+                                    background-size: cover;
+                                }
+
                                 .rating input[type="radio"]:checked + label {
                                     background-image: url('https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-star-512.png');
                                     background-size: cover;
@@ -191,7 +201,7 @@
         let rating = 3;
 
         for (let i = 0; i < 5; i++) {
-            let newLabel = document.createElement('label');
+            let newLabel = document.createElement('staticlabel');
             let oldStyle = newLabel.getAttribute('style');
             newLabel.setAttribute('style', oldStyle + 'cursor: default;');
             newLabel.id = (i + 1);
