@@ -1,45 +1,20 @@
-<!-- FILEPATH: /c:/git/My-Game-Tracker/login.html -->
-
 <!DOCTYPE html>
 <html>
     <head>
         <title>Login Page</title>
         <link rel="stylesheet" href="style.css">
-        <style>
-            .container {
-                display: flex;
-                justify-content: space-between;
-            }
-            .left-column {
-                width: 20%;
-            }
-            .right-column {
-                width: 20%;
-            }
-            .middle-column {
-                width: 60%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-            form {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-        </style>
     </head>
     <body>
         <h1 class="header">My Game Tracker</h1>
         <div class="header">
             <ul class="left_nav">
                 <li><a href="home.html">Home</a></li>
-                <li><a href="#">My List</a></li>
+                <li><a href="mylist.html">My List</a></li>
                 <li><a href="#">Achievements</a></li>
                 <li><a href="#">Recommended</a></li>
                 <li><a href="#">Users</a></li>
             </ul>
-            <span class="logo" style="width: 100vw;"></span>
+            <span class="logo" style="width: 30vw;"></span>
             <ul class="right_nav">
                 <li>
                     <select name="categories">
@@ -52,11 +27,13 @@
                 </li>
                 <li>
                     <form>
-                        <input type="text" placeholder="Search...">
-                        <button type="submit">Go</button>
+                        <span>
+                            <input type="text" placeholder="Search...">
+                            <button type="submit">Go</button>
+                        </span>
                     </form>
                 </li>
-                <li><a href="/">Login</a></li>
+                <li><a href="login.html">Login</a></li>
             </ul>
         </div>
         <div class="main">
@@ -64,6 +41,7 @@
                 <div class="left-column"></div>
                 <div class="middle-column">
                     <form>
+                        <h2>Login</h2>
                         <label for="username">Username:</label>
                         <input type="text" id="username" name="username"><br><br>
                         <label for="password">Password:</label>
@@ -73,6 +51,18 @@
                     </form>
                 </div>
                 <div class="right-column"></div>
+            </div>
+            <div class="form-container">
+                <form>
+                    <h2>Register</h2>
+                    <label for="new-username">Username:</label>
+                    <input type="text" id="new-username" name="new-username"><br><br>
+                    <label for="new-password">Password:</label>
+                    <input type="password" id="new-password" name="new-password"><br><br>
+                    <label for="confirm-password">Confirm Password:</label>
+                    <input type="password" id="confirm-password" name="confirm-password"><br><br>
+                    <button type="submit">Register</button>
+                </form>
             </div>
         </div>
     </body>
