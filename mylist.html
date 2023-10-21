@@ -15,7 +15,7 @@
                 <li><a href="#">Recommended</a></li>
                 <li><a href="#">Users</a></li>
             </ul>
-            <span class="logo" style="width: 100vw;"></span>
+            <span class="logo" style="width: 30vw;"></span>
             <ul class="right_nav">
                 <li>
                     <select name="categories">
@@ -28,8 +28,10 @@
                 </li>
                 <li>
                     <form>
-                        <input type="text" placeholder="Search...">
-                        <button type="submit">Go</button>
+                        <span>
+                            <input type="text" placeholder="Search...">
+                            <button type="submit">Go</button>
+                        </span>
                     </form>
                 </li>
                 <li><a href="login.html">Login</a></li>
@@ -38,27 +40,27 @@
         <!-- End Navigation bar -->
         <!-- Begin Page Body -->
         <style>
-        .picture-list {
-            overflow-y: scroll;
-            max-height: 700px;
-            float: left;
-            width: 80%;
-            min-width: 420px;
-            max-width: 1500px;
-        }
-        .picture-list li {
-            display: inline-block;
-            margin-right: 10px;
-            text-align: center;
-            vertical-align: top;
-            width: 250px;
-        }
-        .picture-list li p {
-            margin-top: 1%;
-        } 
-        .picture-list li img {
-            width: 250px;
-        }
+            .picture-list {
+                overflow-y: scroll;
+                max-height: 700px;
+                float: left;
+                width: 80%;
+                min-width: 420px;
+                max-width: 1500px;
+            }
+            .picture-list li {
+                display: inline-block;
+                margin-right: 10px;
+                text-align: center;
+                vertical-align: top;
+                width: 250px;
+            }
+            .picture-list li p {
+                margin-top: 1%;
+            } 
+            .picture-list li img {
+                width: 250px;
+            }
 
         </style>
         <div class="main">
@@ -139,7 +141,6 @@
 </html>
 
 <script>
-    
     // Function to highlight all stars up to the one clicked
     function highlightStars(starValue) {
         let starLabels = document.querySelectorAll('.rating label');
@@ -169,13 +170,14 @@
         let pictureList = document.getElementById('picture-ul');
         let newLi = document.createElement('li');
         let newImg = document.createElement('img');
-        newLi.appendChild(newImg);
+        let caption = document.createElement('p');
+        
         newImg.src = 'img/crystal.bmp';
         newImg.alt = 'Picture ' + (pictureList.children.length + 1);
-        let caption = document.createElement('p');
         caption.innerHTML = 'Caption ' + (pictureList.children.length + 1);
-        newLi.appendChild(caption);
         
+        newLi.appendChild(newImg);
+        newLi.appendChild(caption);
         pictureList.appendChild(newLi);
     });
 

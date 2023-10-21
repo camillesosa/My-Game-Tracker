@@ -29,6 +29,7 @@ body {
     display: flex;
     justify-content: start;
     align-items: center;
+    width: 40vw;
 }
 
 .right_nav {
@@ -43,9 +44,17 @@ body {
     min-width: 65px;
 }
 
+.right_nav input{
+    width: 160px;
+}
+
+.right_nav button{
+    width: 40px;
+}
+
 .right_nav li {
     margin-left: 10px;
-    min-width: 200px;
+    min-width: 210px;
 }
 
 .left_nav a {
