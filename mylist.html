@@ -70,18 +70,7 @@
             <!-- Left Column -->
             
             <div class="picture-list" style="float: left; width: 80%; min-width: 420px; max-width: 1500px;">
-                <ul id="picture-ul">
-                    <li><img src="img\crystal.bmp" alt="Picture 1"><p>Caption 1</p></li>
-                    <li><img src="img\crystal.bmp" alt="Picture 2"><p>Caption 2</p></li>
-                    <li><img src="img\crystal.bmp" alt="Picture 3"><p>Caption 3</p></li>
-                    <li><img src="img\crystal.bmp" alt="Picture 4"><p>Caption 4</p></li>
-                    <li><img src="img\crystal.bmp" alt="Picture 5"><p>Caption 5</p></li>
-                    <li><img src="img\crystal.bmp" alt="Picture 6"><p>Caption 6</p></li>
-                    <li><img src="img\crystal.bmp" alt="Picture 7"><p>Caption 7</p></li>
-                    <li><img src="img\crystal.bmp" alt="Picture 8"><p>Caption 8</p></li>
-                    <li><img src="img\crystal.bmp" alt="Picture 9"><p>Caption 9</p></li>
-                    <li><img src="img\crystal.bmp" alt="Picture 10"><p>Caption 10</p></li>
-                </ul>
+                <ul id="picture-ul"></ul>
             </div>
 
             <!-- Right Column -->
@@ -176,7 +165,10 @@
     });
 
     // proof of concept, pull from a DB later
-    let games = ['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a']
+    let games = [
+        'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a',
+        'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'
+    ]
 
     games.forEach((game) => {
         // Add a li, img to picture-list ul
