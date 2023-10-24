@@ -67,8 +67,90 @@
         <div class="main">
             <!-- Left Column -->
 
-            <div class="picture-list" style="float: left; width: 80%; min-width: 420px; max-width: 1500px;">
-                <ul id="picture-ul"></ul>
+            <div style="float: left; width: 80%; overflow-y: scroll; max-height: 700px">
+                <div class="gallery">
+                    <h2>Game 1</h2>
+                    <div class="scrolling-list">
+                        <div>
+                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
+                            <p>Achievement 1</p>
+                        </div>
+                        <div>
+                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
+                            <p>Achievement 2</p>
+                        </div>
+                        <div>
+                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
+                            <p>Achievement 3</p>
+                        </div>
+                        <div>
+                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
+                            <p>Achievement 4</p>
+                        </div>
+                        <div>
+                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
+                            <p>Achievement 5</p>
+                        </div>
+                        <div>
+                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
+                            <p>Achievement 6</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery">
+                    <h2>Game 2</h2>
+                    <div class="scrolling-list">
+                        <div>
+                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
+                            <p>Achievement 1</p>
+                        </div>
+                        <div>
+                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
+                            <p>Achievement 2</p>
+                        </div>
+                        <div>
+                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
+                            <p>Achievement 3</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery">
+                    <h2>Game 3</h2>
+                    <div class="scrolling-list">
+                        <div>
+                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
+                            <p>Achievement 1</p>
+                        </div>
+                        <div>
+                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
+                            <p>Achievement 2</p>
+                        </div>
+                        <div>
+                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
+                            <p>Achievement 3</p>
+                        </div>
+                        <div>
+                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
+                            <p>Achievement 4</p>
+                        </div>
+                        <div>
+                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
+                            <p>Achievement 5</p>
+                        </div>
+                        <div>
+                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
+                            <p>Achievement 6</p>
+                        </div>
+                        <div>
+                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
+                            <p>Achievement 7</p>
+                        </div>
+                        <div>
+                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
+                            <p>Achievement 8</p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Right Column -->
@@ -99,28 +181,26 @@
 </html>
 
 <script>
-//TO-DO: Match wireframe more
-//Have achievement sorting (by game)
+//TO-DO:
+//Games should be dependent on list gathered from "My List"
+//Should be using games[] to display everything, so then achievements can be appended to list entries
 //Possibly add "Achievements" title at the top with total # of trophies
 
     // proof of concept, pull from a DB later
-    let achievements = [
-        'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a',
-        'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'
+    let games = [
+        'a', 'a', 'a', 'a'
     ]
 
-    achievements.forEach((achievement) => {
-        // Add a li, img to picture-list ul
+//currently this is being hardcoded in the body
+    games.forEach((game) => {
+        // Add a li, game title to picture-list ul
         let pictureList = document.getElementById('picture-ul');
         let newLi = document.createElement('li');
         let newImg = document.createElement('img');
         let caption = document.createElement('p');
 
-        newImg.src = 'img/trophiesIcon.png';
-        newImg.alt = 'Picture ' + (pictureList.children.length + 1);
-        caption.innerHTML = 'Caption ' + (pictureList.children.length + 1);
+        caption.innerHTML = 'Game ' + (pictureList.children.length + 1);
 
-        newLi.appendChild(newImg);
         newLi.appendChild(caption);
         pictureList.appendChild(newLi);
 
