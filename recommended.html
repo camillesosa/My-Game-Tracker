@@ -12,18 +12,16 @@
                 <li><a href="home.html">Home</a></li>
                 <li><a href="mylist.html">My List</a></li>
                 <li><a href="achievements.html">Achievements</a></li>
-                <li><a href="#">Recommended</a></li>
+                <li><a href="recommended.html">Recommended</a></li>
                 <li><a href="#">Users</a></li>
             </ul>
             <span class="logo" style="width: 30vw;"></span>
             <ul class="right_nav">
                 <li>
-                    <select name="categories">
-                        <option value="all">All Categories</option>
-                        <option value="action">Action</option>
-                        <option value="adventure">Adventure</option>
-                        <option value="rpg">RPG</option>
-                        <option value="sports">Sports</option>
+                    <select name="Sort">
+                        <option value="A-Z">Sort By: A-Z</option>
+                        <option value="Z-A">Sort By: Z-A</option>
+                        <option value="Ranking">Sort By: Avg. Ranking</option>
                     </select>
                 </li>
                 <li>
@@ -39,8 +37,120 @@
         </div>
         <!-- End Navigation bar -->
         <!-- Begin Page Body -->
+        <style>
+            .picture-list {
+                max-height: 700px;
+            }
+            .picture-list li {
+                display: inline-block;
+                margin-right: 50px;
+                margin-left: 100px;
+                text-align: center;
+                vertical-align: top;
+                width: 400px;
+            }
+            .picture-list li p {
+                margin-top: 1%;
+            }
+            .picture-list li img {
+                width: 250px;
+            }
+            .picture-list li div {
+                margin-bottom: 5%;
+            }
+
+        </style>
         <div class="main">
-            <!-- Populate webpage body here -->
-        </div> 
+            <!-- Left Column -->
+
+            <div class="picture-list">
+                <ul id="picture-ul"></ul>
+            </div>
+            <style>
+                .rating input[type="radio"] {
+                    display: none;
+                }
+
+                .rating label {
+                    display: inline-block;
+                    cursor: pointer;
+                    border-radius: 15px;
+                    width: 30px;
+                    height: 30px;
+                    background-image: url('https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-star-512.png');
+                    background-size: cover;
+                }
+
+                .rating staticlabel {
+                    display: inline-block;
+                    cursor: default;
+                    border-radius: 15px;
+                    width: 30px;
+                    height: 30px;
+                    background-image: url('https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-star-512.png');
+                    background-size: cover;
+                }
+
+                .rating input[type="radio"]:checked + label {
+                    background-image: url('https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-star-512.png');
+                    background-size: cover;
+                }
+            </style>
+        <!-- End Page Body -->
     </body>
 </html>
+
+<script>
+//TO-DO: Match wireframe more
+//Move game name and ratings to the right of each entry
+//Possibly add "Recommended Games" title at the top
+
+    const starLabels = document.querySelectorAll('.rating label');
+    starLabels.forEach((label) => {
+        label.addEventListener('click', () => {
+            highlightStars(label.id);
+        });
+    });
+
+    // proof of concept, pull from a DB later
+    let games = [
+        'a', 'a', 'a', 'a', 'a', 'a'
+    ]
+
+    games.forEach((game) => {
+        // Add a li, img to picture-list ul
+        let pictureList = document.getElementById('picture-ul');
+        let newLi = document.createElement('li');
+        let newImg = document.createElement('img');
+        let caption = document.createElement('p');
+
+        newImg.src = 'img/soulsilver.bmp';
+        newImg.alt = 'Picture ' + (pictureList.children.length + 1);
+        caption.innerHTML = 'Caption ' + (pictureList.children.length + 1);
+
+        newLi.appendChild(newImg);
+        newLi.appendChild(caption);
+        pictureList.appendChild(newLi);
+
+        // Add rating to new li
+        let ratingDiv = document.createElement('div');
+        ratingDiv.setAttribute('class', 'rating');
+
+        // TODO: Grab rating from DB later
+        let rating = 5;
+
+        for (let i = 0; i < 5; i++) {
+            let newLabel = document.createElement('staticlabel');
+            let oldStyle = newLabel.getAttribute('style');
+            newLabel.setAttribute('style', oldStyle + 'cursor: default;');
+            newLabel.id = (i + 1);
+            newLabel.title = (i + 1) + ' stars';
+            if (i < rating) {
+                newLabel.style.backgroundColor = 'yellow';
+            }
+            ratingDiv.appendChild(newLabel);
+        }
+        newLi.appendChild(ratingDiv);
+    });
+
+</script>
