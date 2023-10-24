@@ -11,19 +11,17 @@
             <ul class="left_nav">
                 <li><a href="home.html">Home</a></li>
                 <li><a href="mylist.html">My List</a></li>
-                <li><a href="#">Achievements</a></li>
+                <li><a href="achievements.html">Achievements</a></li>
                 <li><a href="#">Recommended</a></li>
                 <li><a href="#">Users</a></li>
             </ul>
             <span class="logo" style="width: 30vw;"></span>
             <ul class="right_nav">
                 <li>
-                    <select name="categories">
-                        <option value="all">All Categories</option>
-                        <option value="action">Action</option>
-                        <option value="adventure">Adventure</option>
-                        <option value="rpg">RPG</option>
-                        <option value="sports">Sports</option>
+                    <select name="Sort">
+                        <option value="A-Z">Sort By: A-Z</option>
+                        <option value="Z-A">Sort By: Z-A</option>
+                        <option value="# of trophies">Sort By: # of Trophies</option>
                     </select>
                 </li>
                 <li>
@@ -39,8 +37,88 @@
         </div>
         <!-- End Navigation bar -->
         <!-- Begin Page Body -->
+        <style>
+            .picture-list {
+                overflow-y: scroll;
+                max-height: 700px;
+                float: left;
+                width: 80%;
+                min-width: 420px;
+                max-width: 1500px;
+            }
+            .picture-list li {
+                display: inline-block;
+                margin-right: 10px;
+                text-align: center;
+                vertical-align: top;
+                width: 250px;
+            }
+            .picture-list li p {
+                margin-top: 1%;
+            }
+            .picture-list li img {
+                width: 250px;
+            }
+            .picture-list li div {
+                margin-bottom: 5%;
+            }
+
+        </style>
         <div class="main">
-            <!-- Populate webpage body here -->
-        </div> 
+            <!-- Left Column -->
+
+            <div class="picture-list" style="float: left; width: 80%; min-width: 420px; max-width: 1500px;">
+                <ul id="picture-ul"></ul>
+            </div>
+
+            <!-- Right Column -->
+            <div style="justify-content: center; width: auto; text-align: center;" class="container">
+                <div>
+                    <div class="search-box" style="height: 200px;">
+                        <form>
+                            <input type="text" placeholder="Search your achievements...">
+                            <button type="submit">Go</button>
+                        </form>
+                        <img style="padding-top: 10%; width: 120px; height: 120px;" src="img/trophy.png" alt="Picture 11"><p>Caption 11</p>
+                    </div>
+                    <div class="text-entry" style="height: 200px;">
+                        <form>
+                            <h2 style="color: #fff;">Add a new achievement</h2>
+                            <label style="padding-top: 10%;" for="name">Game:</label>
+                            <input type="text" id="name" name="name">
+                            <label style="padding-top: 10%;" for="achievement">Achievement:</label>
+                            <input type="text" id="achievement" name="achievement">
+
+                            <button type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        <!-- End Page Body -->
     </body>
 </html>
+
+<script>
+    // proof of concept, pull from a DB later
+    let achievements = [
+        'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a',
+        'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'
+    ]
+
+    achievements.forEach((achievement) => {
+        // Add a li, img to picture-list ul
+        let pictureList = document.getElementById('picture-ul');
+        let newLi = document.createElement('li');
+        let newImg = document.createElement('img');
+        let caption = document.createElement('p');
+
+        newImg.src = 'img/trophiesIcon.png';
+        newImg.alt = 'Picture ' + (pictureList.children.length + 1);
+        caption.innerHTML = 'Caption ' + (pictureList.children.length + 1);
+
+        newLi.appendChild(newImg);
+        newLi.appendChild(caption);
+        pictureList.appendChild(newLi);
+
+    });
+</script>
