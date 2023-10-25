@@ -152,6 +152,42 @@ body {
     color: #fff;
 }
 
+/* Applys aesthetic style to all "text" elements */
+input[type="text"] {
+    background-color: #292b2f;
+    color: #fff;
+    border-color: #292b2f;
+    border-radius: 10px;
+    padding: 5px;
+    margin-right: 5px;
+}
+
+/* Applys aesthetic style to all "password" elements */
+input[type="password"] {
+    background-color: #292b2f;
+    color: #fff;
+    border-color: #292b2f;
+    border-radius: 10px;
+    padding: 5px;
+    margin-right: 5px;
+}
+
+/* Apply the style to all button elements */
+button {
+    padding: 5px;
+    background-color: #292b2f;
+    color: #fff;
+    border-color: #292b2f;
+    border-radius: 10px;
+}
+
+a:link {
+    color: #fff; /* Set the color for unvisited links to white */
+}
+
+a:visited {
+    color: #fff; /* Set the color for visited links to white */
+}
 
 /* 
 
@@ -175,6 +211,19 @@ Login Page Style
     justify-content: center;
     align-items: center;
 }
+
+/* Add margin-top to the "Forgot Password" link */
+.middle-column a {
+    margin-top: 10px;
+	text-decoration: none; /* Remove the underline from Forgot Password*/
+}
+
+/* Add margin-bottom to the "Login" and "Register" text */
+.middle-column h2,
+.form-container h2 {
+    margin-bottom: 10px;
+}
+
 form {
     display: flex;
     flex-direction: column;
@@ -190,7 +239,48 @@ form label{
     justify-content: center;
     align-items: center;
     margin-top: 50px;
+	background-color: #292b2f;
 }
 .form-container form {
     margin: 0 20px;
+}
+
+/* 
+
+Continuation of Login-Page Style, implementing style for
+forgot password pop-up
+
+*/
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #292b2f;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+}
+
+.popup form {
+    text-align: center;
+	margin: 5px;
+}
+
+#forgot-password-submit {
+	margin-top: 20px;
+}
+
+input[type="email"] {
+    background-color: #292b2f;
+    color: #fff;
+    border-color: #292b2f;
+    border-radius: 10px;
+    padding: 5px;
+    margin-right: 5px;
+	margin-top: 10px;
 }
