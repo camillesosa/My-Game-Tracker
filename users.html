@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="utf-8">
         <title>Users</title>
         <link rel="stylesheet" href="style.css">
     </head>
@@ -57,7 +58,6 @@
             .picture-list li div {
                 margin-bottom: 5%;
             }
-
         </style>
 
         <div class="main">
@@ -65,23 +65,21 @@
 			 <h1 style="text-align: center;">Find A User</h1>
             <hr>
             <br>
-			    <ul>
-                    <form>
-                        <span>
-                            <input type="text" placeholder="Search username...">
-                            <button type="submit">Go</button>
-                        </span>
-                    </form>
-                </ul>
+                <form>
+                    <span>
+                        <input type="text" placeholder="Search username...">
+                        <button type="submit">Go</button>
+                    </span>
+                </form>
             <br>
 
             <h2>Search Results:</h2>
-            <ul class="right_nav">
-                <select name="Sort">
+            <div class="right_nav">
+                <select class="right_nav" name="Sort">
                     <option value="A-Z">Sort By: A-Z</option>
                     <option value="Z-A">Sort By: Z-A</option>
                 </select>
-            </ul>
+            </div>
             <div class="picture-list">
                 <ul id="picture-ul"></ul>
             </div>
