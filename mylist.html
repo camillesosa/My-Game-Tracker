@@ -140,69 +140,70 @@
             </div>
         <!-- End Page Body -->
         </div>
+        <script>
+        // Function to highlight all stars up to the one clicked
+        function highlightStars(starValue) {
+            let starLabels = document.querySelectorAll('.rating label');
+            starLabels.forEach((label) => {
+                label.style.backgroundColor = 'transparent';
+            });
+            for (let i = 0; i < starValue; i++) {
+                if (starLabels[i].id <= starValue){
+
+                    starLabels[i].style.backgroundColor = 'yellow';
+                }
+            }
+        }
+
+        const starLabels = document.querySelectorAll('.rating label');
+        starLabels.forEach((label) => {
+            label.addEventListener('click', () => {
+                highlightStars(label.id);
+            });
+        });
+
+        // proof of concept, pull from a DB later
+        let games = [
+            'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a',
+            'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'
+        ]
+
+        games.forEach((game) => {
+            // Add a li, img to picture-list ul
+            let pictureList = document.getElementById('picture-ul');
+            let newLi = document.createElement('li');
+            let newImg = document.createElement('img');
+            let caption = document.createElement('p');
+
+            newImg.src = 'img/crystal.bmp';
+            newImg.alt = 'Picture ' + (pictureList.children.length + 1);
+            caption.innerHTML = 'Caption ' + (pictureList.children.length + 1);
+
+            newLi.appendChild(newImg);
+            newLi.appendChild(caption);
+            pictureList.appendChild(newLi);
+
+            // Add rating to new li
+            let ratingDiv = document.createElement('div');
+            ratingDiv.setAttribute('class', 'rating');
+
+            // TODO: Grab rating from DB later
+            let rating = 3;
+
+            for (let i = 0; i < 5; i++) {
+                let newLabel = document.createElement('staticlabel');
+                let oldStyle = newLabel.getAttribute('style');
+                newLabel.setAttribute('style', oldStyle + 'cursor: default;');
+                newLabel.id = (i + 1);
+                newLabel.title = (i + 1) + ' stars';
+                if (i < rating) {
+                    newLabel.style.backgroundColor = 'yellow';
+                }
+                ratingDiv.appendChild(newLabel);
+            }
+            newLi.appendChild(ratingDiv);
+        });
+        </script>
     </body>
 </html>
-<script>
-    // Function to highlight all stars up to the one clicked
-    function highlightStars(starValue) {
-        let starLabels = document.querySelectorAll('.rating label');
-        starLabels.forEach((label) => {
-            label.style.backgroundColor = 'transparent';
-        });
-        for (let i = 0; i < starValue; i++) {
-            if (starLabels[i].id <= starValue){
-                
-                starLabels[i].style.backgroundColor = 'yellow';
-            }
-        }
-    }
 
-    const starLabels = document.querySelectorAll('.rating label');
-    starLabels.forEach((label) => {
-        label.addEventListener('click', () => {
-            highlightStars(label.id);
-        });
-    });
-
-    // proof of concept, pull from a DB later
-    let games = [
-        'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a',
-        'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'
-    ]
-
-    games.forEach((game) => {
-        // Add a li, img to picture-list ul
-        let pictureList = document.getElementById('picture-ul');
-        let newLi = document.createElement('li');
-        let newImg = document.createElement('img');
-        let caption = document.createElement('p');
-        
-        newImg.src = 'img/crystal.bmp';
-        newImg.alt = 'Picture ' + (pictureList.children.length + 1);
-        caption.innerHTML = 'Caption ' + (pictureList.children.length + 1);
-        
-        newLi.appendChild(newImg);
-        newLi.appendChild(caption);
-        pictureList.appendChild(newLi);
-
-        // Add rating to new li
-        let ratingDiv = document.createElement('div');
-        ratingDiv.setAttribute('class', 'rating');
-
-        // TODO: Grab rating from DB later
-        let rating = 3;
-
-        for (let i = 0; i < 5; i++) {
-            let newLabel = document.createElement('staticlabel');
-            let oldStyle = newLabel.getAttribute('style');
-            newLabel.setAttribute('style', oldStyle + 'cursor: default;');
-            newLabel.id = (i + 1);
-            newLabel.title = (i + 1) + ' stars';
-            if (i < rating) {
-                newLabel.style.backgroundColor = 'yellow';
-            }
-            ratingDiv.appendChild(newLabel);
-        }
-        newLi.appendChild(ratingDiv);
-    });
-</script>

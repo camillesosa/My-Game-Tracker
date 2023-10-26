@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="utf-8">
         <title>My Achievements</title>
         <link rel="stylesheet" href="style.css">
     </head>
@@ -177,32 +178,32 @@
                 </div>
             </div>
         <!-- End Page Body -->
+        </div>
+        <script>
+            //TO-DO:
+            //Games should be dependent on list gathered from "My List"
+            //Should be using games[] to display everything, so then achievements can be appended to list entries
+            //Possibly add "Achievements" title at the top with total # of trophies
+
+            // proof of concept, pull from a DB later
+            let games = [
+                'a', 'a', 'a', 'a'
+            ]
+
+            //currently this is being hardcoded in the body
+            games.forEach((game) => {
+                // Add a li, game title to picture-list ul
+                let pictureList = document.getElementById('picture-ul');
+                let newLi = document.createElement('li');
+                let newImg = document.createElement('img');
+                let caption = document.createElement('p');
+
+                caption.innerHTML = 'Game ' + (pictureList.children.length + 1);
+
+                newLi.appendChild(caption);
+                pictureList.appendChild(newLi);
+            });
+        </script>
     </body>
 </html>
 
-<script>
-//TO-DO:
-//Games should be dependent on list gathered from "My List"
-//Should be using games[] to display everything, so then achievements can be appended to list entries
-//Possibly add "Achievements" title at the top with total # of trophies
-
-    // proof of concept, pull from a DB later
-    let games = [
-        'a', 'a', 'a', 'a'
-    ]
-
-//currently this is being hardcoded in the body
-    games.forEach((game) => {
-        // Add a li, game title to picture-list ul
-        let pictureList = document.getElementById('picture-ul');
-        let newLi = document.createElement('li');
-        let newImg = document.createElement('img');
-        let caption = document.createElement('p');
-
-        caption.innerHTML = 'Game ' + (pictureList.children.length + 1);
-
-        newLi.appendChild(caption);
-        pictureList.appendChild(newLi);
-
-    });
-</script>

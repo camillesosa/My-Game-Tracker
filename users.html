@@ -84,31 +84,31 @@
                 <ul id="picture-ul"></ul>
             </div>
         </div>
+        <script>
+            //TO-DO: Change user icon size
+
+            // proof of concept, pull from a DB later
+            let users = [
+                'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'
+            ]
+
+            users.forEach((user) => {
+                // Add a li, img to picture-list ul
+                let pictureList = document.getElementById('picture-ul');
+                let newLi = document.createElement('li');
+                let newImg = document.createElement('img');
+                let caption = document.createElement('p');
+
+                newImg.src = 'img/GamerIcon.png';
+                newImg.alt = 'Picture ' + (pictureList.children.length + 1);
+                caption.innerHTML = 'Username: ' + (pictureList.children.length + 1);
+
+                newLi.appendChild(newImg);
+                newLi.appendChild(caption);
+                pictureList.appendChild(newLi);
+            });
+        </script>
     </body>
 </html>
 
-<script>
-//TO-DO: Change user icon size
 
-    // proof of concept, pull from a DB later
-    let users = [
-        'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'
-    ]
-
-    users.forEach((user) => {
-        // Add a li, img to picture-list ul
-        let pictureList = document.getElementById('picture-ul');
-        let newLi = document.createElement('li');
-        let newImg = document.createElement('img');
-        let caption = document.createElement('p');
-
-        newImg.src = 'img/GamerIcon.png';
-        newImg.alt = 'Picture ' + (pictureList.children.length + 1);
-        caption.innerHTML = 'Username: ' + (pictureList.children.length + 1);
-
-        newLi.appendChild(newImg);
-        newLi.appendChild(caption);
-        pictureList.appendChild(newLi);
-    });
-
-</script>
