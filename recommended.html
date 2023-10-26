@@ -4,6 +4,58 @@
         <meta charset="utf-8">
         <title>Recommended Games</title>
         <link rel="stylesheet" href="style.css">
+        <style>
+            .picture-list {
+                max-height: 700px;
+            }
+            .picture-list li {
+                display: inline-block;
+                margin-right: 50px;
+                margin-left: 100px;
+                text-align: center;
+                vertical-align: top;
+                width: 400px;
+            }
+            .picture-list li p {
+                margin-top: 1%;
+            }
+            .picture-list li img {
+                width: 250px;
+            }
+            .picture-list li div {
+                margin-bottom: 5%;
+            }
+        </style>
+        <style>
+            .rating input[type="radio"] {
+                display: none;
+            }
+
+            .rating label {
+                display: inline-block;
+                cursor: pointer;
+                border-radius: 15px;
+                width: 30px;
+                height: 30px;
+                background-image: url('https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-star-512.png');
+                background-size: cover;
+            }
+
+            .rating staticlabel {
+                display: inline-block;
+                cursor: default;
+                border-radius: 15px;
+                width: 30px;
+                height: 30px;
+                background-image: url('https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-star-512.png');
+                background-size: cover;
+            }
+
+                .rating input[type="radio"]:checked + label {
+                background-image: url('https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-star-512.png');
+                background-size: cover;
+            }
+        </style>
     </head>
     <body>
         <!-- Begin navigation bar. -->
@@ -38,29 +90,7 @@
         </div>
         <!-- End Navigation bar -->
         <!-- Begin Page Body -->
-        <style>
-            .picture-list {
-                max-height: 700px;
-            }
-            .picture-list li {
-                display: inline-block;
-                margin-right: 50px;
-                margin-left: 100px;
-                text-align: center;
-                vertical-align: top;
-                width: 400px;
-            }
-            .picture-list li p {
-                margin-top: 1%;
-            }
-            .picture-list li img {
-                width: 250px;
-            }
-            .picture-list li div {
-                margin-bottom: 5%;
-            }
 
-        </style>
         <div class="main">
             <!-- Left Column -->
             <h1 style="text-align: center;">Highest Rated Games Among Players</h1>
@@ -69,36 +99,6 @@
             <div class="picture-list">
                 <ul id="picture-ul"></ul>
             </div>
-            <style>
-                .rating input[type="radio"] {
-                    display: none;
-                }
-
-                .rating label {
-                    display: inline-block;
-                    cursor: pointer;
-                    border-radius: 15px;
-                    width: 30px;
-                    height: 30px;
-                    background-image: url('https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-star-512.png');
-                    background-size: cover;
-                }
-
-                .rating staticlabel {
-                    display: inline-block;
-                    cursor: default;
-                    border-radius: 15px;
-                    width: 30px;
-                    height: 30px;
-                    background-image: url('https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-star-512.png');
-                    background-size: cover;
-                }
-
-                .rating input[type="radio"]:checked + label {
-                    background-image: url('https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-star-512.png');
-                    background-size: cover;
-                }
-            </style>
         <!-- End Page Body -->
         </div>
         <script>
