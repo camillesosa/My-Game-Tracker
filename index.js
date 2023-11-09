@@ -7,15 +7,16 @@ app.use(express.static('.'));
 app.use(cors());
 
 let APIKey = 'moby_sdCDybSPYjxpemBsRXkaWEHTbpY';
-let mobyUrl = 'https://api.mobygames.com/v1/games?api_key=moby_sdCDybSPYjxpemBsRXkaWEHTbpY';
+let mobyUrl = 'https://api.mobygames.com/v1/games?api_key=';
 
 app.get('/search', function (req, res) {
-    
+
     let options = {
         method: 'GET',
-        uri: 'https://api.mobygames.com/v1/games?api_key=moby_sdCDybSPYjxpemBsRXkaWEHTbpY&title=pok%C3%A9mon',
-        path: '',
+        uri: mobyUrl + APIKey + '&' + req.url.slice(8)
     }
+
+    console.log(options.uri);
     
     request.get(options, function(error, response, body){
         if(error){
@@ -26,46 +27,6 @@ app.get('/search', function (req, res) {
             console.log(response.statusCode);
         }
     });
-    // res.send();
-
-    // let url = mobyUrl + APIKey + '&title=' + 'crystal';
-    // console.log(url);
-
-    // fetch(url)
-    // .then(function(response){ return response.body})
-    // .then(function(body){
-    //     // Read body of response
-    //     const reader = body.getReader();
-    //     return new ReadableStream({
-    //         start(controller) {
-    //             return pump();
-    //             function pump() {
-    //                 return reader.read().then(function({ done, value }){
-    //                     // When no more data needs to be consumed, close the stream
-    //                     if (done) {
-    //                         controller.close();
-    //                         return;
-    //                     }
-    //                     // Enqueue the next data chunk into our target stream
-    //                     controller.enqueue(value);
-    //                     return pump();
-    //                 }).then(function(){reader.releaseLock()});
-    //             }
-    //         },
-    //     })
-    // })
-    // .then(function(stream){
-    //     console.log(stream);
-    //     return new Response(stream);
-    // })
-    // .then(function(response){
-    //     console.log(response);
-    //     console.log(JSON.stringify(response));
-    //     res.json(response);
-    // })
-    // .catch(function(error){
-    //     console.log(error);
-    // });
 });
 
 app.get('/', function (req, res) {

@@ -163,13 +163,32 @@
             });
         });
 
-        fetch('/search').then(function(response){
+        // TODO: Grab gameIDs from localDB depending on user 
+        let gameIDs = [
+            4397,
+            5129,
+            17653,
+            5426,
+            12055,
+            8460,
+            27755,
+            50753,
+            41397,
+            15034
+        ]
+
+        let searchParams = new URLSearchParams('');
+ 
+        gameIDs.forEach(function(gameID){
+            searchParams.append('id', gameID);
+        });
+        
+        fetch('/search?' + searchParams.toString()).then(function(response){
             return response.json();
         }).then(function(responseJson){
             let games = JSON.parse(responseJson).games;
 
             games.forEach((game) => {
-                console.log(game.game_id);
                 // Add a li, img to picture-list ul
                 let pictureList = document.getElementById('picture-ul');
                 let newLi = document.createElement('li');

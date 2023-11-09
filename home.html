@@ -22,8 +22,11 @@
                 <li>
                     <form>
                         <span>
-                            <input type="text" placeholder="Search..." id="search-input">
-                            <div hidden="true" id="search-results"></div>
+                            <span>
+                                <input type="text" placeholder="Search..." id="search-input">
+                                <div id="search-results"></div>
+                                
+                            </span>
                             <button type="submit" onclick="search()">Go</button>
 
                             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -33,34 +36,45 @@
                                     let delay = null;
                                     // Get the search input and results div
                                     let searchInput = $('#search-input');
-                                    let searchResults = $('#search-results');
+                                    let searchResults = document.getElementById('search-results');
                                     // Add an event listener to the search input
                                     
                                     searchInput.on('input', function() {
                                         // Clear the delay
                                         clearTimeout(delay);
+                                        // searchResults.hide();
                                         // Set a new delay
 
                                         delay = setTimeout(function() {
                                             // Get the search query
                                             let query = searchInput.val();
 
-                                            fetch('/search').then(function(response){
-                                                console.log(response);
+                                            let searchParams = new URLSearchParams('');
+                                            searchParams.append('title', query);
+                                            searchParams.append('limit', 5)
+
+                                            let options = {
+                                                method: 'GET',
+                                                path: searchParams.toString()
+                                            }
+
+                                            console.log(searchParams.toString());
+
+                                            fetch('/search?'+searchParams.toString(), options).then(function(response){
+                                                return response.json();
+                                            }).then(function(responseJson){
+                                                // searchResults.show();
+                                                let games = JSON.parse(responseJson).games;
+
+                                                games.forEach((game) => {
+                                                    console.log(game.title);
+                                                    searchResults.insertAdjacentHTML("afterend", "<span><a href='/search?&id="+game.game_id+"'>"+game.title+"</a></span>");
+                                                });
+                                            }).catch(function(err){
+                                                // searchResults.hide();
+                                                console.log(err);
                                             });
-                                            
-                                            // fetch('/search').then(function(response) {
-                                            //     console.log(response);
-
-                                            //     // response.body.on('data', function(chunk) {
-                                            //     //     console.log(chunk);
-                                            //     // });
-
-                                            //     return response.json();
-                                            // }).catch(function(error) {
-                                            //     console.log(error);
-                                            // });
-                                        }, 1500);
+                                        }, 100);
                                     });
                                 });
                             </script>
