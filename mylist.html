@@ -66,11 +66,11 @@
         <h1 class="header">My Game Tracker</h1>
         <div class="header">
             <ul class="left_nav">
-                <li><a href="home.html">Home</a></li>
-                <li><a href="mylist.html" style="border:2px solid white"><b>My List</b></a></li>
-                <li><a href="achievements.html">Achievements</a></li>
-                <li><a href="recommended.html">Recommended</a></li>
-                <li><a href="users.html">Users</a></li>
+                <li><a href="home">Home</a></li>
+                <li><a href="mylist" style="border:2px solid white"><b>My List</b></a></li>
+                <li><a href="achievements">Achievements</a></li>
+                <li><a href="recommended">Recommended</a></li>
+                <li><a href="users">Users</a></li>
             </ul>
             <span class="logo" style="width: 30vw;"></span>
             <ul class="right_nav">
@@ -163,46 +163,60 @@
             });
         });
 
-        // proof of concept, pull from a DB later
-        let games = [
-            'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a',
-            'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'
-        ]
+        let options = {
+            method: 'GET',
+            uri: 'https://api.mobygames.com/v1/games?api_key=moby_sdCDybSPYjxpemBsRXkaWEHTbpY&format=brief&limit=10',
+            path: '',
+        }
 
-        games.forEach((game) => {
-            // Add a li, img to picture-list ul
-            let pictureList = document.getElementById('picture-ul');
-            let newLi = document.createElement('li');
-            let newImg = document.createElement('img');
-            let caption = document.createElement('p');
+        
+        fetch('/search').then(function(response){
+            return response.json();
+        }).then(function(json){
+            console.log(json);
+            json = JSON.parse(json);
+            console.log(json.games.length);
 
-            newImg.src = 'img/crystal.bmp';
-            newImg.alt = 'Picture ' + (pictureList.children.length + 1);
-            caption.innerHTML = 'Caption ' + (pictureList.children.length + 1);
+            let games = json.games;
 
-            newLi.appendChild(newImg);
-            newLi.appendChild(caption);
-            pictureList.appendChild(newLi);
+            games.forEach((game) => {
+                console.log(game.game_id);
+                // Add a li, img to picture-list ul
+                let pictureList = document.getElementById('picture-ul');
+                let newLi = document.createElement('li');
+                let newImg = document.createElement('img');
+                let caption = document.createElement('p');
 
-            // Add rating to new li
-            let ratingDiv = document.createElement('div');
-            ratingDiv.setAttribute('class', 'rating');
+                newImg.src = game.sample_cover.image;
+                newImg.alt = 'Picture ' + (pictureList.children.length + 1);
+                caption.innerHTML = game.title;
 
-            // TODO: Grab rating from DB later
-            let rating = 3;
+                newLi.appendChild(newImg);
+                newLi.appendChild(caption);
+                pictureList.appendChild(newLi);
 
-            for (let i = 0; i < 5; i++) {
-                let newLabel = document.createElement('staticlabel');
-                let oldStyle = newLabel.getAttribute('style');
-                newLabel.setAttribute('style', oldStyle + 'cursor: default;');
-                newLabel.id = (i + 1);
-                newLabel.title = (i + 1) + ' stars';
-                if (i < rating) {
-                    newLabel.style.backgroundColor = 'yellow';
+                // Add rating to new li
+                let ratingDiv = document.createElement('div');
+                ratingDiv.setAttribute('class', 'rating');
+
+                // TODO: Grab rating from DB later
+                let rating = 3;
+
+                for (let i = 0; i < 5; i++) {
+                    let newLabel = document.createElement('staticlabel');
+                    let oldStyle = newLabel.getAttribute('style');
+                    newLabel.setAttribute('style', oldStyle + 'cursor: default;');
+                    newLabel.id = (i + 1);
+                    newLabel.title = (i + 1) + ' stars';
+                    if (i < rating) {
+                        newLabel.style.backgroundColor = 'yellow';
+                    }
+                    ratingDiv.appendChild(newLabel);
                 }
-                ratingDiv.appendChild(newLabel);
-            }
-            newLi.appendChild(ratingDiv);
+                newLi.appendChild(ratingDiv);
+            });
+        }).catch(function(err){
+            console.log(err);
         });
         </script>
     </body>

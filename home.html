@@ -9,11 +9,11 @@
         <h1 class="header">My Game Tracker</h1>
         <div class="header">
             <ul class="left_nav">
-                <li><a href="home.html" style="border:2px solid white"><b>Home</b></a></li>
-                <li><a href="mylist.html">My List</a></li>
-                <li><a href="achievements.html">Achievements</a></li>
-                <li><a href="recommended.html">Recommended</a></li>
-                <li><a href="users.html">Users</a></li>
+                <li><a href="home" style="border:2px solid white"><b>Home</b></a></li>
+                <li><a href="mylist">My List</a></li>
+                <li><a href="achievements">Achievements</a></li>
+                <li><a href="recommended">Recommended</a></li>
+                <li><a href="users">Users</a></li>
             </ul>
             <span class="logo" style="width: 30vw;"></span>
             <ul class="right_nav">
@@ -22,8 +22,48 @@
                 <li>
                     <form>
                         <span>
-                            <input type="text" placeholder="Search...">
-                            <button type="submit">Go</button>
+                            <input type="text" placeholder="Search..." id="search-input">
+                            <div hidden="true" id="search-results"></div>
+                            <button type="submit" onclick="search()">Go</button>
+
+                            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                            <script>
+                                $(document).ready(function() {
+                                    // Set a delay for the search input
+                                    let delay = null;
+                                    // Get the search input and results div
+                                    let searchInput = $('#search-input');
+                                    let searchResults = $('#search-results');
+                                    // Add an event listener to the search input
+                                    
+                                    searchInput.on('input', function() {
+                                        // Clear the delay
+                                        clearTimeout(delay);
+                                        // Set a new delay
+
+                                        delay = setTimeout(function() {
+                                            // Get the search query
+                                            let query = searchInput.val();
+
+                                            fetch('/search').then(function(response){
+                                                console.log(response);
+                                            });
+                                            
+                                            // fetch('/search').then(function(response) {
+                                            //     console.log(response);
+
+                                            //     // response.body.on('data', function(chunk) {
+                                            //     //     console.log(chunk);
+                                            //     // });
+
+                                            //     return response.json();
+                                            // }).catch(function(error) {
+                                            //     console.log(error);
+                                            // });
+                                        }, 1500);
+                                    });
+                                });
+                            </script>
                         </span>
                     </form>
                 </li>
