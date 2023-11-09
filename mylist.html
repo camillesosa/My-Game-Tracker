@@ -163,13 +163,7 @@
             });
         });
 
-        let options = {
-            method: 'GET',
-            uri: 'https://api.mobygames.com/v1/games?api_key=moby_sdCDybSPYjxpemBsRXkaWEHTbpY&format=brief&limit=10',
-            path: '',
-        }
-
-        fetch('/search').then(function(response){
+        fetch('/search', options).then(function(response){
             return response.json();
         }).then(function(responseJson){
             let games = JSON.parse(responseJson).games;
