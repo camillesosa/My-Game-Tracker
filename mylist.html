@@ -163,7 +163,7 @@
             });
         });
 
-        fetch('/search', options).then(function(response){
+        fetch('/search').then(function(response){
             return response.json();
         }).then(function(responseJson){
             let games = JSON.parse(responseJson).games;
