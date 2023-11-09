@@ -10,7 +10,7 @@ let APIKey = 'moby_sdCDybSPYjxpemBsRXkaWEHTbpY';
 let mobyUrl = 'https://api.mobygames.com/v1/games?api_key=moby_sdCDybSPYjxpemBsRXkaWEHTbpY';
 
 app.get('/search', function (req, res) {
-
+    
     let options = {
         method: 'GET',
         uri: 'https://api.mobygames.com/v1/games?api_key=moby_sdCDybSPYjxpemBsRXkaWEHTbpY&title=pok%C3%A9mon',
@@ -21,8 +21,6 @@ app.get('/search', function (req, res) {
         if(error){
             console.log(error);
         }else if(response.statusCode == 200){
-            
-            console.log(JSON.parse(body));
             res.json(body);
         }else{
             console.log(response.statusCode);

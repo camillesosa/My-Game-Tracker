@@ -169,15 +169,10 @@
             path: '',
         }
 
-        
         fetch('/search').then(function(response){
             return response.json();
-        }).then(function(json){
-            console.log(json);
-            json = JSON.parse(json);
-            console.log(json.games.length);
-
-            let games = json.games;
+        }).then(function(responseJson){
+            let games = JSON.parse(responseJson).games;
 
             games.forEach((game) => {
                 console.log(game.game_id);
@@ -225,4 +220,3 @@
         </script>
     </body>
 </html>
-
