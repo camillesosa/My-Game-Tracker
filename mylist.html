@@ -187,7 +187,11 @@
                 let newImg = document.createElement('img');
                 let caption = document.createElement('p');
 
-                newImg.src = game.sample_cover.image;
+                if(game.sample_cover == null) {
+                    newImg.src = 'img/placeholder.jpg';
+                }else{
+                    newImg.src = game.sample_cover.image;
+                }
                 newImg.alt = 'Picture ' + (pictureList.children.length + 1);
                 caption.innerHTML = game.title;
 

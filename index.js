@@ -13,7 +13,7 @@ app.get('/search', function (req, res) {
 
     let options = {
         method: 'GET',
-        uri: 'https://api.mobygames.com/v1/games?api_key=moby_sdCDybSPYjxpemBsRXkaWEHTbpY&limit=10&title=pok%C3%A9mon',
+        uri: 'https://api.mobygames.com/v1/games?api_key=moby_sdCDybSPYjxpemBsRXkaWEHTbpY&title=pok%C3%A9mon',
         path: '',
     }
     
