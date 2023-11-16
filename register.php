@@ -6,15 +6,13 @@ $usernameInput = $_POST['new-username'];
 $passwordInput = $_POST['new-password'];
 $emailInput = $_POST['new-email'];
 
-
-
 // Define variables and initialize with empty values
 $username = $password = $email = "";
 $username_err = $password_err = $email_err = "";
 
 
         // Prepare a select statement
-        $sql = "SELECT id FROM users WHERE username = ?";
+        $sql = "SELECT user_id FROM User WHERE username = ?";
 
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
@@ -41,7 +39,7 @@ $username_err = $password_err = $email_err = "";
             mysqli_stmt_close($stmt);
         }
 
-        $sql = "SELECT id FROM users WHERE email = ?";
+        $sql = "SELECT user_id FROM User WHERE email = ?";
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
             mysqli_stmt_bind_param($stmt, "s", $param_email);
@@ -74,7 +72,7 @@ $username_err = $password_err = $email_err = "";
     if(empty($username_err) && empty($password_err) && empty($email_err)){
 
         // Prepare an insert statement
-        $sql = "INSERT INTO users (username, password, email) VALUES (?, ?)";
+        $sql = "INSERT INTO User (username, password, email) VALUES (?, ?)";
 
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
@@ -114,7 +112,7 @@ $username_err = $password_err = $email_err = "";
     <div class="header">
             <ul class="left_nav">
                 <li><a href="home.html">Home</a></li>
-                <li><a href="mylist.html">My List</a></li>
+                <li><a href="mylist.php">My List</a></li>
                 <li><a href="achievements.html">Achievements</a></li>
                 <li><a href="recommended.html">Recommended</a></li>
                 <li><a href="users.html">Users</a></li>
