@@ -18,7 +18,6 @@
     $query = "SELECT user_videogame.rating, user_videogame.review, user_videogame.game_id, videogame.title, videogame.coverArt from user_videogame join videogame on user_videogame.game_id = videogame.game_id where user_videogame.user_id = '$user_id';";
     
     $result = $mysqli->query($query);
-    print_r($result);
     if (!$result) {
         printf("Query failed: %s\n", $mysqli->error);
         exit();
