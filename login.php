@@ -120,7 +120,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         </span>
                     </form>
                 </li>
-                <li><a href="login.html">Login</a></li>
+                <li><a href="login.php">Login</a></li>
             </ul>
     </div>
     <div class="main">

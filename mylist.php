@@ -118,7 +118,7 @@
                         </span>
                     </form>
                 </li>
-                <li><a href="login.html">Login</a></li>
+                <li><a href="login.php">Login</a></li>
             </ul>
         </div>
         <!-- End Navigation bar -->
