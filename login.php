@@ -35,7 +35,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate credentials
     if(empty($username_err) && empty($password_err)){
         // Prepare a select statement
-        $sql = "SELECT id, username, password FROM users WHERE username = ?";
+        $sql = "SELECT user_id, username, password FROM User WHERE username = ?";
 
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
@@ -54,6 +54,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     // Bind result variables
                     mysqli_stmt_bind_result($stmt, $id, $username, $hashed_password);
                     if(mysqli_stmt_fetch($stmt)){
+                        $param_password = password_hash($password, PASSWORD_DEFAULT);
+                        print_r($param_password);
+                        print_r($password);
                         if(password_verify($password, $hashed_password)){
                             // Password is correct, so start a new session
                             session_start();
@@ -100,7 +103,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <div class="header">
             <ul class="left_nav">
                 <li><a href="home.html">Home</a></li>
-                <li><a href="mylist.html">My List</a></li>
+                <li><a href="mylist.php">My List</a></li>
                 <li><a href="achievements.html">Achievements</a></li>
                 <li><a href="recommended.html">Recommended</a></li>
                 <li><a href="users.html">Users</a></li>
@@ -131,7 +134,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 }
                 ?>
 
-                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method='post'>
                     <h2>Login</h2>
                         <label for="username">Username:</label>
                         <input type="text" id="username" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>"><br><br>

@@ -284,3 +284,7 @@ input[type="email"] {
     margin-right: 5px;
 	margin-top: 10px;
 }
+
+invalid-feedback {
+    color: red;
+}

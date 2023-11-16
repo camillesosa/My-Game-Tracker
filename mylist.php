@@ -1,3 +1,30 @@
+<?php
+    session_start();
+    // Check if user is logged in
+    if (!isset($_SESSION['username'])) {
+        header("Location: login.php");
+        exit();
+    }
+    $username = $_SESSION['username'];
+    $user_id = $_SESSION["id"];
+
+    $mysqli = new mysqli('localhost', 'root', 'password', 'greenteam');
+
+    if ($mysqli->connect_errno) {
+        printf("Connection Failed: %s\n", $mysqli->connect_error);
+        exit();
+    }
+    
+    $query = "SELECT user_videogame.rating, user_videogame.review, user_videogame.game_id, videogame.title, videogame.coverArt from user_videogame join videogame on user_videogame.game_id = videogame.game_id where user_videogame.user_id = '$user_id';";
+    
+    $result = $mysqli->query($query);
+    if (!$result) {
+        printf("Query failed: %s\n", $mysqli->error);
+        exit();
+    }
+    $mysqli->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -164,21 +191,19 @@
         });
 
         // proof of concept, pull from a DB later
-        let games = [
-            'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a',
-            'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'
-        ]
+        let games = <?php echo json_encode($result->fetch_all(MYSQLI_ASSOC)); ?>;
 
         games.forEach((game) => {
+            console.log(game);
             // Add a li, img to picture-list ul
             let pictureList = document.getElementById('picture-ul');
             let newLi = document.createElement('li');
             let newImg = document.createElement('img');
             let caption = document.createElement('p');
 
-            newImg.src = 'img/crystal.bmp';
-            newImg.alt = 'Picture ' + (pictureList.children.length + 1);
-            caption.innerHTML = 'Caption ' + (pictureList.children.length + 1);
+            newImg.src = game['coverArt'];
+            newImg.alt = game['title'];
+            caption.innerHTML = game['review'];
 
             newLi.appendChild(newImg);
             newLi.appendChild(caption);
@@ -189,7 +214,7 @@
             ratingDiv.setAttribute('class', 'rating');
 
             // TODO: Grab rating from DB later
-            let rating = 3;
+            let rating =  parseInt(game['rating']);
 
             for (let i = 0; i < 5; i++) {
                 let newLabel = document.createElement('staticlabel');

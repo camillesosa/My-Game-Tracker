@@ -4,81 +4,50 @@ require_once "config.php";
 
 $usernameInput = $_POST['new-username'];
 $passwordInput = $_POST['new-password'];
-$emailInput = $_POST['new-email'];
-
-
 
 // Define variables and initialize with empty values
 $username = $password = $email = "";
 $username_err = $password_err = $email_err = "";
 
+    // Prepare a select statement
+    $sql = "SELECT user_id FROM User WHERE username = ?";
 
-        // Prepare a select statement
-        $sql = "SELECT id FROM users WHERE username = ?";
+    if($stmt = mysqli_prepare($link, $sql)){
+        // Bind variables to the prepared statement as parameters
+        mysqli_stmt_bind_param($stmt, "s", $param_username);
 
-        if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_username);
+        // Set parameters
+        $param_username = trim($_POST["new-username"]);
 
-            // Set parameters
-            $param_username = trim($_POST["new-username"]);
+        // Attempt to execute the prepared statement
+        if(mysqli_stmt_execute($stmt)){
+            /* store result */
+            mysqli_stmt_store_result($stmt);
 
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                /* store result */
-                mysqli_stmt_store_result($stmt);
-
-                if(mysqli_stmt_num_rows($stmt) == 1){
-                    $username_err = "This username is already taken.";
-                } else{
-                    $username = trim($_POST["new-username"]);
-                }
+            if(mysqli_stmt_num_rows($stmt) == 1){
+                $username_err = "This username is already taken.";
             } else{
-                echo "Oops! Something went wrong. Please try again later.";
+                $username = trim(isset($_POST['new-username']) ? $_POST['new-username'] : "");
             }
-
-            // Close statement
-            mysqli_stmt_close($stmt);
+        } else{
+            echo "Oops! Something went wrong. Please try again later.";
         }
 
-        $sql = "SELECT id FROM users WHERE email = ?";
-        if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_email);
+        // Close statement
+        mysqli_stmt_close($stmt);
+    }
 
-            // Set parameters
-            $param_username = trim($_POST["new-email"]);
-
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                /* store result */
-                mysqli_stmt_store_result($stmt);
-
-                if(mysqli_stmt_num_rows($stmt) == 1){
-                    $email_err = "This email address is already taken.";
-                } else{
-                    $email = trim($_POST["new-email"]);
-                }
-            } else{
-                echo "Oops! Something went wrong. Please try again later.";
-            }
-
-            // Close statement
-            mysqli_stmt_close($stmt);
-        }
-
-
-        $password = trim($_POST["new-password"]);
+    $password = trim($_POST["new-password"]);
 
     // Check input errors before inserting in database
-    if(empty($username_err) && empty($password_err) && empty($email_err)){
+    if(empty($username_err) && empty($password_err)){
 
         // Prepare an insert statement
-        $sql = "INSERT INTO users (username, password, email) VALUES (?, ?)";
+        $sql = "INSERT INTO User (username, password) VALUES (?, ?)";
 
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password, $param_email);
+            mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password);
 
             // Set parameters
             $param_username = $username;
@@ -114,7 +83,7 @@ $username_err = $password_err = $email_err = "";
     <div class="header">
             <ul class="left_nav">
                 <li><a href="home.html">Home</a></li>
-                <li><a href="mylist.html">My List</a></li>
+                <li><a href="mylist.php">My List</a></li>
                 <li><a href="achievements.html">Achievements</a></li>
                 <li><a href="recommended.html">Recommended</a></li>
                 <li><a href="users.html">Users</a></li>
@@ -143,12 +112,13 @@ $username_err = $password_err = $email_err = "";
                     <label for="new-username">Username:</label>
                     <input type="text" id="new-username" name="new-username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>"><br><br>
                     <span class="invalid-feedback"><?php echo $username_err; ?></span>
+                    
                     <label for="new-password">Password:</label>
                     <input type="password" id="new-password" name="new-password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>"><br><br>
                     <span class="invalid-feedback"><?php echo $password_err; ?></span>
-                    <label for="new-email">Email:</label>
-                    <input type="text" id="new-email" name="new-email" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>"><br><br>
-                    <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
+                    
+                    <span class="invalid-feedback"><?php echo $password_err; ?></span>
+                    
                     <input type="submit" value="Submit">
                 <p>Already have an account? <a href="login.php">Login here</a>.</p>
                 </form>
