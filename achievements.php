@@ -63,7 +63,7 @@
         <h1 class="header">My Game Tracker</h1>
         <div class="header">
             <ul class="left_nav">
-                <li><a href="home.html">Home</a></li>
+                <li><a href="home.php">Home</a></li>
                 <li><a href="mylist.php">My List</a></li>
                 <li><a href="achievements.php" style="border:2px solid white"><b>Achievements</b></a></li>
                 <li><a href="recommended.html">Recommended</a></li>

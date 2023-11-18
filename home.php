@@ -49,7 +49,7 @@ if($stmt = $mysqli->prepare($sql)){
         <h1 class="header">My Game Tracker</h1>
         <div class="header">
             <ul class="left_nav">
-                <li><a href="home.html" style="border:2px solid white"><b>Home</b></a></li>
+                <li><a href="home.php" style="border:2px solid white"><b>Home</b></a></li>
                 <li><a href="mylist.html">My List</a></li>
                 <li><a href="achievements.html">Achievements</a></li>
                 <li><a href="recommended.html">Recommended</a></li>
