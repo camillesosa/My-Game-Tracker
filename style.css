@@ -125,6 +125,11 @@ body {
     padding: 3%;
 }
 
+.scrolling-list h4 {
+    text-align: center;
+    color: white;
+}
+
 .scrolling-list img {
     max-width: 200px;
     padding: 5%;
@@ -287,4 +292,24 @@ input[type="email"] {
 
 invalid-feedback {
     color: red;
+}
+
+.rating label {
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 15px;
+    width: 30px;
+    height: 30px;
+    background-image: url('https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-star-512.png');
+    background-size: cover;
+}
+
+.rating staticlabel {
+    display: inline-block;
+    cursor: default;
+    border-radius: 15px;
+    width: 30px;
+    height: 30px;
+    background-image: url('https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-star-512.png');
+    background-size: cover;
 }
