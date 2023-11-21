@@ -46,11 +46,54 @@ if($stmt = $mysqli->prepare($sql)){
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
+	<style>
+            .rating label {
+                display: inline-block;
+                cursor: pointer;
+                border-radius: 15px;
+                width: 30px;
+                height: 30px;
+                background-image: url('https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-star-512.png');
+                background-size: cover;
+            }
+
+            .rating staticlabel {
+                display: inline-block;
+                cursor: default;
+                border-radius: 15px;
+                width: 30px;
+                height: 30px;
+                background-image: url('https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-star-512.png');
+                background-size: cover;
+            }
+
+	    .scrolling-list {
+	        display: flex;
+    		overflow-x: scroll;
+    		scroll-behavior: smooth;
+    		background-color: #292b2f;
+    		padding: 3%;
+	    }
+
+	    .scrolling-list h4 {
+    		text-align: center;
+    		color: white;
+	    }
+
+	    .scrolling-list img {
+    		max-width: 200px;
+    		padding: 5%;
+	    }
+
+	    .scrolling-list p {
+    		text-align: center;
+	    }
+        </style>
         <h1 class="header">My Game Tracker</h1>
         <div class="header">
             <ul class="left_nav">
                 <li><a href="home.php" style="border:2px solid white"><b>Home</b></a></li>
-                <li><a href="mylist.html">My List</a></li>
+                <li><a href="mylist.php">My List</a></li>
                 <li><a href="achievements.html">Achievements</a></li>
                 <li><a href="recommended.html">Recommended</a></li>
                 <li><a href="users.html">Users</a></li>
@@ -77,7 +120,7 @@ if($stmt = $mysqli->prepare($sql)){
                     <div tag="scrolling-list" class="scrolling-list">
                         <?php 
                         foreach($games as $game){
-                            echo "<div>";
+                            echo "<span>";
                             echo "<img src=\"$game[coverArt]\" style=\"width: 200px;\" alt=\"$game[title]\">";
                             echo "<h4>$game[title]</h4>";
 
@@ -99,7 +142,7 @@ if($stmt = $mysqli->prepare($sql)){
 
                             echo $ratingHtml;
 
-                            echo "</div>";
+                            echo "</span>";
                         }
                         ?>
                     </div>
