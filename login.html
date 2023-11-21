@@ -9,7 +9,7 @@
         <h1 class="header">My Game Tracker</h1>
         <div class="header">
             <ul class="left_nav">
-                <li><a href="home.html">Home</a></li>
+                <li><a href="home.php">Home</a></li>
                 <li><a href="mylist.php">My List</a></li>
                 <li><a href="achievements.html">Achievements</a></li>
                 <li><a href="recommended.html">Recommended</a></li>
@@ -34,20 +34,20 @@
             <div class="container">
                 <div class="left-column"></div>
                 <div class="middle-column">
-                    <form method="post">
+                    <form action="login.php" method="post">
                         <h2>Login</h2>
                         <label for="username">Username:</label>
                         <input type="text" id="username" name="username"><br><br>
                         <label for="password">Password:</label>
                         <input type="password" id="password" name="password"><br><br>
-                        <a href="register.php"><button type="submit">Login</button></a>
-						<a href="#" id="forgot-password-link">Forgot Password</a> <!-- POPUP -->
+                        <input type="submit" name="login" value="Log In"></input>
+						<a href="#" id="forgot-password-link">Forgot Password?</a> <!-- POPUP -->
                     </form>
                 </div>
                 <div class="right-column"></div>
             </div>
             <div class="form-container">
-                <form method="post">
+                <form action="register.php" method="post">
                     <h2>Register</h2>
                     <label for="new-username">Username:</label>
                     <input type="text" id="new-username" name="new-username"><br><br>
@@ -55,7 +55,7 @@
                     <input type="password" id="new-password" name="new-password"><br><br>
                     <label for="new-email">Email:</label>
                     <input type="text" id="new-email" name="new-email"><br><br>
-                    <a href="register.php"><button type="submit">Register</button></a>
+                    <input type="submit" name="register" value="Register"></input>
                 </form>
             </div>
 			<div class="popup" id="forgot-password-popup">
