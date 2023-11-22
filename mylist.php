@@ -105,25 +105,48 @@
             <span class="logo" style="width: 30vw;"></span>
             <ul class="right_nav">
                 <li>
-                    <select name="categories">
-                        <option value="all">All Categories</option>
-                        <?php
+                    <form name="filterMyList" method="post">
+                        <select name="categories" onchange="filterMyList.submit()">
+                            <option value="all">All Categories</option>
+                            <?php
 
-                            $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-                            $genreQuery = "SELECT DISTINCT genre FROM VideoGame JOIN user_videogame ON VideoGame.game_id = user_videogame.game_id WHERE user_videogame.user_id = '$user_id';";
-                            $genreResult = $mysqli->query($genreQuery);
-                            $elements = $genreResult->fetch_all(MYSQLI_ASSOC);
+                                $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+                                $genreQuery = "SELECT DISTINCT genre FROM VideoGame JOIN user_videogame ON VideoGame.game_id = user_videogame.game_id WHERE user_videogame.user_id = '$user_id';";
+                                $genreResult = $mysqli->query($genreQuery);
+                                $elements = $genreResult->fetch_all(MYSQLI_ASSOC);
+                                
+                                mysqli_close($mysqli);
+
+                                foreach($elements as $element){
+                                    echo "<option value=\"{$element['genre']}\">{$element['genre']}</option>";
+                                }
+                            ?>
+                        </select>
+                    </form>
+                    <?php
+                        if(isset($_POST['categories'])){
+                            $category = $_POST['categories'];
+                            // Set select tag value to the category that was selected
+                            echo "<script>document.getElementsByName('categories')[0].value = '$category';</script>";
                             
-                            mysqli_close($mysqli);
-
-                            echo 'building';
-
-                            foreach($elements as $element){
-                                echo "<option value=\"{$element['genre']}\">{$element['genre']}</option>";
+                            if($category == "all"){
+                                $query = "SELECT user_videogame.rating, user_videogame.review, user_videogame.game_id, VideoGame.title, VideoGame.genre, VideoGame.coverArt FROM user_videogame JOIN VideoGame ON user_videogame.game_id = VideoGame.game_id WHERE user_videogame.user_id = '$user_id';";
                             }
-                            echo 'built';
-                        ?>
-                    </select>
+                            else{
+                                $query = "SELECT user_videogame.rating, user_videogame.review, user_videogame.game_id, VideoGame.title, VideoGame.genre, VideoGame.coverArt FROM user_videogame JOIN VideoGame ON user_videogame.game_id = VideoGame.game_id WHERE user_videogame.user_id = '$user_id' AND VideoGame.genre = '$category';";
+                            }
+                        }
+                        else{
+                            $query = "SELECT user_videogame.rating, user_videogame.review, user_videogame.game_id, VideoGame.title, VideoGame.genre, VideoGame.coverArt FROM user_videogame JOIN VideoGame ON user_videogame.game_id = VideoGame.game_id WHERE user_videogame.user_id = '$user_id';";
+                        }
+                        $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+                        $result = $mysqli->query($query);
+                        if (!$result) {
+                            printf("Query failed: %s\n", $mysqli->error);
+                            exit();
+                        }
+                        $mysqli->close();
+                    ?>
                 </li>
                 <li>
                     <form>
