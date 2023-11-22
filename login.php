@@ -4,7 +4,7 @@ session_start();
 
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-    header("location: welcome.php");
+    header("location: home.php");
     exit;
 }
 
@@ -67,7 +67,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["username"] = $username;
 
                             // Redirect user to welcome page
-                            header("location: welcome.php");
+                            header("location: home.php");
+                            exit;
                         } else{
                             // Password is not valid, display a generic error message
                             $login_err = "Invalid username or password.";
@@ -90,74 +91,3 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     mysqli_close($link);
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Login Page</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <h1 class="header">My Game Tracker</h1>
-    <div class="header">
-            <ul class="left_nav">
-                <li><a href="home.html">Home</a></li>
-                <li><a href="mylist.php">My List</a></li>
-                <li><a href="achievements.html">Achievements</a></li>
-                <li><a href="recommended.html">Recommended</a></li>
-                <li><a href="users.html">Users</a></li>
-            </ul>
-            <span class="logo" style="width: 30vw;"></span>
-            <ul class="right_nav">
-                <li>
-                </li>
-                <li>
-                    <form>
-                        <span>
-                            <input type="text" placeholder="Search...">
-                            <button type="submit">Go</button>
-                        </span>
-                    </form>
-                </li>
-                <li><a href="login.php">Login</a></li>
-            </ul>
-    </div>
-    <div class="main">
-        <div class="container">
-            <div class="left-column"></div>
-            <div class="middle-column">
-
-                <?php
-                if(!empty($login_err)){
-                    echo $login_err;
-                }
-                ?>
-
-                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method='post'>
-                    <h2>Login</h2>
-                        <label for="username">Username:</label>
-                        <input type="text" id="username" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>"><br><br>
-                        <span class="invalid-feedback"><?php echo $username_err; ?></span>
-                        <label for="password">Password:</label>
-                        <input type="password" id="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>"><br><br>
-                        <span class="invalid-feedback"><?php echo $password_err; ?></span>
-                        <input type="submit" value="Login">
-                        <a href="#" id="forgot-password-link">Forgot Password</a> <!-- POPUP -->
-                    <p>Don't have an account? <a href="register.php">Register now</a>.</p>
-                </form>
-            </div>
-            <div class="right-column"></div>
-        </div>
-        <div class="popup" id="forgot-password-popup">
-				<form>
-					<h2>Forgot Password</h2>
-					<p>Enter the email you used to register:</p>
-					<input type="email" id="forgot-email" name="forgot-email" placeholder="Email">
-					<button type="submit" id="forgot-password-submit">Submit</button>
-				</form>
-		</div>
-    </div>
-    <script src="popup.js"></script>
-</body>
-</html>

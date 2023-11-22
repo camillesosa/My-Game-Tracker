@@ -177,6 +177,15 @@ input[type="password"] {
     margin-right: 5px;
 }
 
+input[type="submit"] {
+    background-color: #292b2f;
+    color: #fff;
+    border-color: #292b2f;
+    border-radius: 10px;
+    padding: 5px;
+    margin-top: 10px;
+}
+
 /* Apply the style to all button elements */
 button {
     padding: 5px;
