@@ -5,17 +5,20 @@
         header("Location: login.html");
         exit();
     }
+
+    require_once "config.php";
+
     $username = $_SESSION['username'];
     $user_id = $_SESSION["id"];
 
-    $mysqli = new mysqli('localhost', 'root', 'password', 'greenteam');
+    $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
     if ($mysqli->connect_errno) {
         printf("Connection Failed: %s\n", $mysqli->connect_error);
         exit();
     }
     
-    $query = "SELECT user_videogame.rating, user_videogame.review, user_videogame.game_id, VideoGame.title, VideoGame.coverArt from user_videogame join VideoGame on user_videogame.game_id = VideoGame.game_id where user_videogame.user_id = '$user_id';";
+    $query = "SELECT user_videogame.rating, user_videogame.review, user_videogame.game_id, VideoGame.title, VideoGame.genre, VideoGame.coverArt FROM user_videogame JOIN VideoGame ON user_videogame.game_id = VideoGame.game_id WHERE user_videogame.user_id = '$user_id';";
     
     $result = $mysqli->query($query);
     if (!$result) {
@@ -104,10 +107,22 @@
                 <li>
                     <select name="categories">
                         <option value="all">All Categories</option>
-                        <option value="action">Action</option>
-                        <option value="adventure">Adventure</option>
-                        <option value="rpg">RPG</option>
-                        <option value="sports">Sports</option>
+                        <?php
+
+                            $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+                            $genreQuery = "SELECT DISTINCT genre FROM VideoGame JOIN user_videogame ON VideoGame.game_id = user_videogame.game_id WHERE user_videogame.user_id = '$user_id';";
+                            $genreResult = $mysqli->query($genreQuery);
+                            $elements = $genreResult->fetch_all(MYSQLI_ASSOC);
+                            
+                            mysqli_close($mysqli);
+
+                            echo 'building';
+
+                            foreach($elements as $element){
+                                echo "<option value=\"{$element['genre']}\">{$element['genre']}</option>";
+                            }
+                            echo 'built';
+                        ?>
                     </select>
                 </li>
                 <li>
