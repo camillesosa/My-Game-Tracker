@@ -2,13 +2,16 @@
     session_start();
     // Check if user is logged in
     if (!isset($_SESSION['username'])) {
-        header("Location: login.php");
+        header("Location: login.html");
         exit();
     }
+
+    require_once "config.php";
+
     $username = $_SESSION['username'];
     $user_id = $_SESSION["id"];
 
-    $mysqli = new mysqli('localhost', 'root', 'password', 'greenteam');
+    $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
     if ($mysqli->connect_errno) {
         printf("Connection Failed: %s\n", $mysqli->connect_error);
@@ -86,7 +89,7 @@
                         </span>
                     </form>
                 </li>
-                <li><a href="login.html">Login</a></li>
+                <li><a href="loginlogout.php">Login</a></li>
             </ul>
         </div>
         <!-- End Navigation bar -->
