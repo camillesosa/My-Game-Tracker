@@ -104,20 +104,10 @@ echo "<script>console.log($test)</script>";
                     foreach ($users as $key => $value) {
                     echo "<li> $user['username'] </li>";
                     }
-                    ?>
+                ?>
                 </ul>
             </div>
         </div>
-
-        <?php
-
-        >
     </body>
 </html>
-
-[0]
-{
-"user_id" => 123
-"username" => "blah blah blah"
-}
 
