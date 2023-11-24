@@ -101,9 +101,9 @@ echo "<script>console.log($test)</script>";
             <div class="picture-list">
                 <ul id="picture-ul">
                 <?php
-                    foreach ($users as $key => $value) {
-                    echo "<li> $user['username'] </li>";
-                    }
+                    //foreach ($users as $key => $value) {
+                    //echo "<li> $user['username'] </li>";
+                    //}
                 ?>
                 </ul>
             </div>
