@@ -172,12 +172,14 @@
             <!-- Right Column -->
             <div style="justify-content: center; width: auto; text-align: center;" class="container">
                 <div>
-                    <div class="search-box" style="height: 200px;">
+                    <div class="search-box">
                         <form name="searchMyList" method="post">
                             <input name="search" type="text" placeholder="Search your list...">
                             <input type="submit" value="Search"></input>
                         </form>
                         <?php
+
+                            $searchResult = null;
 
                             if(isset($_POST['search'])){
                                 $query = $_POST['search'];
@@ -189,22 +191,28 @@
                                 else{
                                     $query = "SELECT user_videogame.rating, user_videogame.review, user_videogame.game_id, VideoGame.title, VideoGame.genre, VideoGame.coverArt FROM user_videogame JOIN VideoGame ON user_videogame.game_id = VideoGame.game_id WHERE user_videogame.user_id = '$user_id' AND VideoGame.title LIKE '%$query%';";
                                 }
+                                
+                                $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+                                $searchResult = $mysqli->query($query);
+                                if (!$searchResult) {
+                                    printf("Query failed: %s\n", $mysqli->error);
+                                    exit();
+                                }
+                                $mysqli->close();
                             }
-                            else{
-                                $query = "SELECT user_videogame.rating, user_videogame.review, user_videogame.game_id, VideoGame.title, VideoGame.genre, VideoGame.coverArt FROM user_videogame JOIN VideoGame ON user_videogame.game_id = VideoGame.game_id WHERE user_videogame.user_id = '$user_id';";
-                            }
-                            $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-                            $result = $mysqli->query($query);
-                            if (!$result) {
-                                printf("Query failed: %s\n", $mysqli->error);
-                                exit();
-                            }
-                            $mysqli->close();
 
                         ?>
-                        <img style="padding-top: 10%; width: 120px; height: 120px;" src="img/soulsilver.bmp" alt="Picture 11"><p>Caption 11</p>
                     </div>
                     <div class="text-entry" style="height: 200px;">
+                        <?php
+                            if($searchResult != null){
+                                $row = $searchResult->fetch_assoc();
+                                if($row != null){
+                                    echo "<img style=\"padding-top: 10%; width: 120px; height: 120px;\" src=\"{$row['coverArt']}\" alt=\"{$row['title']}\"><p>{$row['title']}</p>";
+                                }
+                            }
+                        ?>
+
                         <form>
                             <h2 style="color: #fff;">Add a new game</h2>
                             <label style="padding-top: 10%;" for="name">Game:</label>
