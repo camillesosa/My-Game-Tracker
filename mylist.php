@@ -19,7 +19,7 @@
     }
     
     $query = "SELECT user_videogame.rating, user_videogame.review, user_videogame.game_id, VideoGame.title, VideoGame.genre, VideoGame.coverArt FROM user_videogame JOIN VideoGame ON user_videogame.game_id = VideoGame.game_id WHERE user_videogame.user_id = '$user_id';";
-    
+    $searchResult = null;
     $result = $mysqli->query($query);
     if (!$result) {
         printf("Query failed: %s\n", $mysqli->error);
@@ -172,51 +172,20 @@
             <!-- Right Column -->
             <div style="justify-content: center; width: auto; text-align: center;" class="container">
                 <div>
+                    <h2 style="color: #fff; padding-bottom:10%">Add a new game</h2>
                     <div class="search-box">
                         <form name="searchMyList" method="post">
                             <input name="search" type="text" placeholder="Search your list...">
                             <input type="submit" value="Search"></input>
                         </form>
-                        <?php
-
-                            $searchResult = null;
-
-                            if(isset($_POST['search'])){
-                                $query = $_POST['search'];
-                                echo "<script>document.getElementsByName('search')[0].value = '$query';</script>";
-                                
-                                if($query == ""){
-                                    $query = "SELECT user_videogame.rating, user_videogame.review, user_videogame.game_id, VideoGame.title, VideoGame.genre, VideoGame.coverArt FROM user_videogame JOIN VideoGame ON user_videogame.game_id = VideoGame.game_id WHERE user_videogame.user_id = '$user_id';";
-                                }
-                                else{
-                                    $query = "SELECT user_videogame.rating, user_videogame.review, user_videogame.game_id, VideoGame.title, VideoGame.genre, VideoGame.coverArt FROM user_videogame JOIN VideoGame ON user_videogame.game_id = VideoGame.game_id WHERE user_videogame.user_id = '$user_id' AND VideoGame.title LIKE '%$query%';";
-                                }
-                                
-                                $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-                                $searchResult = $mysqli->query($query);
-                                if (!$searchResult) {
-                                    printf("Query failed: %s\n", $mysqli->error);
-                                    exit();
-                                }
-                                $mysqli->close();
-                            }
-
-                        ?>
                     </div>
                     <div class="text-entry" style="height: 200px;">
-                        <?php
-                            if($searchResult != null){
-                                $row = $searchResult->fetch_assoc();
-                                if($row != null){
-                                    echo "<img style=\"padding-top: 10%; width: 120px; height: 120px;\" src=\"{$row['coverArt']}\" alt=\"{$row['title']}\"><p>{$row['title']}</p>";
-                                }
-                            }
-                        ?>
+                        
+                        <img name="searchPreview" style="width: 120px; padding-top: 10%;"> </img>
 
                         <form>
-                            <h2 style="color: #fff;">Add a new game</h2>
-                            <label style="padding-top: 10%;" for="name">Game:</label>
-                            <input type="text" id="name" name="name">
+                            <label style="padding-top: 10%;" for="name">Title:</label>
+                            <input type="text" id="gameTitle" name="gameTitle">
                             <label style="padding-top: 10%;">Rating:</label>
 
                             <div class="rating">
@@ -231,7 +200,7 @@
                                 <input type="radio" id="star5" name="rating" value="5">
                                 <label id="5" title="5 star"></label>
                             </div>
-                            <input type="email" id="email" name="email">
+                            <input type="text" id="reviewText" name="reviewText">
                             <button type="submit">Submit</button>
                         </form>
                     </div>
@@ -304,3 +273,56 @@
     </body>
 </html>
 
+<?php
+    $searchResult = null;
+
+    if(isset($_POST['search'])){
+        $query = $_POST['search'];
+        echo "<script>document.getElementsByName('search')[0].value = '$query';</script>";
+
+        // Check if game is in user's list
+        $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        $checkQuery = "SELECT * FROM user_videogame JOIN VideoGame ON user_videogame.game_id = VideoGame.game_id WHERE user_videogame.user_id = '$user_id' AND VideoGame.title LIKE '%$query%';";
+        $checkResult = $mysqli->query($checkQuery);
+        if (!$checkResult) {
+            printf("Query failed: %s\n", $mysqli->error);
+            exit();
+        }
+        $mysqli->close();
+
+        // If it is, update searchResult with game info
+        if($checkResult->num_rows > 0){
+            $searchResult = $checkResult;
+            // Update Title textbox with game title
+            $row = $searchResult->fetch_assoc();
+            if($row != null){
+                echo "<script>document.getElementsByName('gameTitle')[0].value = '{$row['title']}';</script>";
+                echo "<script>document.getElementsByName('reviewText')[0].value = '{$row['review']}';</script>";
+                echo "<script>document.getElementsByName('searchPreview')[0].src = '{$row['coverArt']}';</script>";
+                echo "<script>highlightStars({$row['rating']});</script>";
+            }
+            // Update Rating field with game rating
+            // Update Review field with game review
+        }
+        // If not, search for game in database
+        else{
+            $query = "SELECT * FROM VideoGame WHERE title LIKE '%$query%' LIMIT 10;";
+            $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+            $searchResult = $mysqli->query($query);
+            if (!$searchResult) {
+                printf("Query failed: %s\n", $mysqli->error);
+                exit();
+            }
+            $mysqli->close();
+
+            // If game is found, update Title textbox with game title
+            $row = $searchResult->fetch_assoc();
+            if($row != null){
+                echo "<script>document.getElementsByName('gameTitle')[0].value = '{$row['title']}';</script>";
+                echo "<script>document.getElementsByName('searchPreview')[0].src = '{$row['coverArt']}';</script>";
+            }
+        }
+        
+        
+    }
+?>
