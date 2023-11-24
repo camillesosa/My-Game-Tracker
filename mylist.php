@@ -173,10 +173,35 @@
             <div style="justify-content: center; width: auto; text-align: center;" class="container">
                 <div>
                     <div class="search-box" style="height: 200px;">
-                        <form>
-                            <input type="text" placeholder="Search your list...">
-                            <button type="submit">Go</button>
+                        <form name="searchMyList" method="post">
+                            <input name="search" type="text" placeholder="Search your list...">
+                            <input type="submit" value="Search"></input>
                         </form>
+                        <?php
+
+                            if(isset($_POST['search'])){
+                                $query = $_POST['search'];
+                                echo "<script>document.getElementsByName('search')[0].value = '$query';</script>";
+                                
+                                if($query == ""){
+                                    $query = "SELECT user_videogame.rating, user_videogame.review, user_videogame.game_id, VideoGame.title, VideoGame.genre, VideoGame.coverArt FROM user_videogame JOIN VideoGame ON user_videogame.game_id = VideoGame.game_id WHERE user_videogame.user_id = '$user_id';";
+                                }
+                                else{
+                                    $query = "SELECT user_videogame.rating, user_videogame.review, user_videogame.game_id, VideoGame.title, VideoGame.genre, VideoGame.coverArt FROM user_videogame JOIN VideoGame ON user_videogame.game_id = VideoGame.game_id WHERE user_videogame.user_id = '$user_id' AND VideoGame.title LIKE '%$query%';";
+                                }
+                            }
+                            else{
+                                $query = "SELECT user_videogame.rating, user_videogame.review, user_videogame.game_id, VideoGame.title, VideoGame.genre, VideoGame.coverArt FROM user_videogame JOIN VideoGame ON user_videogame.game_id = VideoGame.game_id WHERE user_videogame.user_id = '$user_id';";
+                            }
+                            $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+                            $result = $mysqli->query($query);
+                            if (!$result) {
+                                printf("Query failed: %s\n", $mysqli->error);
+                                exit();
+                            }
+                            $mysqli->close();
+
+                        ?>
                         <img style="padding-top: 10%; width: 120px; height: 120px;" src="img/soulsilver.bmp" alt="Picture 11"><p>Caption 11</p>
                     </div>
                     <div class="text-entry" style="height: 200px;">
