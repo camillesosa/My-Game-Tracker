@@ -181,27 +181,29 @@
                     </div>
                     <div class="text-entry" style="height: 200px;">
                         
-                        <img name="searchPreview" style="width: 120px; padding-top: 10%;"> </img>
+                        <img name="searchPreview" style="width: 200px; padding-top: 10%;"> </img>
 
-                        <form>
+                        <form action="addGame.php" method="post">
                             <label style="padding-top: 10%;" for="name">Title:</label>
-                            <input type="text" id="gameTitle" name="gameTitle">
+                            <input readonly type="text" id="gameTitle" name="gameTitle">
                             <label style="padding-top: 10%;">Rating:</label>
+                            <input type="hidden" name="rating" value="">
+                            <input type="hidden" name="gameId" value="">
 
-                            <div class="rating">
-                                <input type="radio" id="star1" name="rating" value="1">
-                                <label id="1" title="1 stars"></label>
-                                <input type="radio" id="star2" name="rating" value="2">
+                            <span class="rating">
+                                <input type="radio" name="star1" id="star1" value="1">
+                                <label id="1"  title="1 stars"></label>
+                                <input type="radio" name="star2" id="star2" value="2">
                                 <label id="2" title="2 stars"></label>
-                                <input type="radio" id="star3" name="rating" value="3">
+                                <input type="radio" name="star3" id="star3" value="3">
                                 <label id="3" title="3 stars"></label>
-                                <input type="radio" id="star4" name="rating" value="4">
+                                <input type="radio" name="star4" id="star4" value="4">
                                 <label id="4" title="4 stars"></label>
-                                <input type="radio" id="star5" name="rating" value="5">
+                                <input type="radio" name="star5" id="star5" value="5">
                                 <label id="5" title="5 star"></label>
-                            </div>
+                            </span>
                             <input type="text" id="reviewText" name="reviewText">
-                            <button type="submit">Submit</button>
+                            <input type="submit" value="submit">
                         </form>
                     </div>
                 </div>
@@ -227,6 +229,8 @@
         starLabels.forEach((label) => {
             label.addEventListener('click', () => {
                 highlightStars(label.id);
+                // Update rating value in div to send to backend
+                document.getElementsByName('rating')[0].value = label.id;
             });
         });
 
@@ -297,9 +301,11 @@
             $row = $searchResult->fetch_assoc();
             if($row != null){
                 echo "<script>document.getElementsByName('gameTitle')[0].value = '{$row['title']}';</script>";
-                echo "<script>document.getElementsByName('reviewText')[0].value = '{$row['review']}';</script>";
+                echo "<script>document.getElementsByName('gameId')[0].value = '{$row['game_id']}';</script>";
                 echo "<script>document.getElementsByName('searchPreview')[0].src = '{$row['coverArt']}';</script>";
+                echo "<script>document.getElementsByName('rating')[0].value = '{$row['rating']}';</script>";
                 echo "<script>highlightStars({$row['rating']});</script>";
+                echo "<script>document.getElementsByName('reviewText')[0].value = '{$row['review']}';</script>";
             }
             // Update Rating field with game rating
             // Update Review field with game review
@@ -320,6 +326,7 @@
             if($row != null){
                 echo "<script>document.getElementsByName('gameTitle')[0].value = '{$row['title']}';</script>";
                 echo "<script>document.getElementsByName('searchPreview')[0].src = '{$row['coverArt']}';</script>";
+                echo "<script>document.getElementsByName('gameId')[0].value = '{$row['game_id']}';</script>";
             }
         }
         
