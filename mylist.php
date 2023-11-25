@@ -100,7 +100,7 @@
                 <li><a href="mylist.php" style="border:2px solid white"><b>My List</b></a></li>
                 <li><a href="achievements.html">Achievements</a></li>
                 <li><a href="recommended.html">Recommended</a></li>
-                <li><a href="users.html">Users</a></li>
+                <li><a href="users.php">Users</a></li>
             </ul>
             <span class="logo" style="width: 30vw;"></span>
             <ul class="right_nav">

@@ -1,20 +1,36 @@
 <?php
 require_once "config.php";
-$sql = "SELECT user_id,username FROM User;";
+$sql = "SELECT user_id, username FROM User;";
 $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-$stmt = $mysqli->prepare($sql);
-$stmt->execute();
-$stmt->bind_result($user_id, $username);
-$users = array();
-  while($stmt->fetch()){
+$dom = new DOMDocument('1.0', 'utf-8');
+
+if($stmt = $mysqli->prepare($sql)){
+    // Attempt to execute prepared statement
+    if($stmt->execute()){
+        // Store result
+        $stmt->store_result();
+        // If more than one result, return array of games
+        if($stmt->num_rows >= 1){
+            // Bind result variables
+            $stmt->bind_result($user_id, $username);
+            $users = array();
+            while($stmt->fetch()){
                 $users[] = array("user_id" => $user_id, "username" => $username);
+
+                $users[count($users)-1]["user_id"] = $user_id;
+                $users[count($users)-1]["username"] = $username;
+
             }
-
-$test = var_dump($users);
-echo "<script>console.log($test)</script>";
+        } else{
+            // echo "No games found.";
+        }
+    } else{
+        // echo "Oops! Something went wrong. Please try again later.";
+    }
+    // Close statement
+    $stmt->close();
+}
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -58,7 +74,7 @@ echo "<script>console.log($test)</script>";
                 <li><a href="mylist.php">My List</a></li>
                 <li><a href="achievements.html">Achievements</a></li>
                 <li><a href="recommended.html">Recommended</a></li>
-                <li><a href="users.html" style="border:2px solid white"><b>Users</b></a></li>
+                <li><a href="users.php" style="border:2px solid white"><b>Users</b></a></li>
             </ul>
             <span class="logo" style="width: 30vw;"></span>
             <ul class="right_nav">
@@ -94,16 +110,19 @@ echo "<script>console.log($test)</script>";
             <h2>Search Results:</h2>
             <div class="right_nav">
                 <select class="right_nav" name="Sort">
-                    <option value="A-Z">Sort By: A-Z</option>
-                    <option value="Z-A">Sort By: Z-A</option>
+                    <option value="A-Z">Sort By: Date Joined</option>
+                    <option value="Z-A">Sort By: Alphabetical</option>
                 </select>
             </div>
             <div class="picture-list">
                 <ul id="picture-ul">
                 <?php
-                    //foreach ($users as $key => $value) {
-                    //echo "<li> $user['username'] </li>";
-                    //}
+                    foreach($users as $user){
+                    	echo "<li>";
+			            echo "<img src='img/GamerIcon.png'>";
+			            echo "<p><b>$user[username]</b></p>";
+			            echo "</li>";
+                    }
                 ?>
                 </ul>
             </div>
