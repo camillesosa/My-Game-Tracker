@@ -110,7 +110,7 @@ if($stmt = $mysqli->prepare($sql)){
                         </span>
                     </form>
                 </li>
-                <li><a href="loginlogout.php">Login</a></li>
+                <li><a href="loginlogout.php">Login/Logout</a></li>
             </ul>
         </div>
         <div class="main">

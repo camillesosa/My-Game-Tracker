@@ -2,7 +2,7 @@
     session_start();
     // Check if user is logged in
     if (!isset($_SESSION['username'])) {
-        header("Location: login.html");
+        header("Location: loginlogout.php");
         exit();
     }
 
@@ -156,7 +156,7 @@
                         </span>
                     </form>
                 </li>
-                <li><a href="loginlogout.php">Login</a></li>
+                <li><a href="loginlogout.php">Login/Logout</a></li>
             </ul>
         </div>
         <!-- End Navigation bar -->

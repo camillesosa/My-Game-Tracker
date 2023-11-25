@@ -72,7 +72,7 @@ echo "<script>console.log($test)</script>";
                         </span>
                     </form>
                 </li>
-                <li><a href="loginlogout.php">Login</a></li>
+                <li><a href="loginlogout.php">Login/Logout</a></li>
             </ul>
         </div>
         <!-- End Navigation bar -->

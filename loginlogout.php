@@ -36,7 +36,7 @@
                         </span>
                     </form>
                 </li>
-                <li><a href="login.html">Login</a></li>
+                <li><a href="loginlogout.php" style="border:2px solid white"><b>Login/Logout</b></a></li>
             </ul>
         </div>
         <div class="main">

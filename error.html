@@ -2,17 +2,37 @@
 <html>
 <head>
   <title>My Game Tracker</title>
-  <style>
-    body {
-      text-align: center;
-      color: white;
-      margin-top: 20%;
-    }
-  </style>
+
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>ERROR: Invalid username or password.</h1>
-    <button onclick="window.location.href = 'login.html';">Login</button>
+    <h1 class="header">My Game Tracker</h1>
+        <div class="header">
+            <ul class="left_nav">
+                <li><a href="home.php">Home</a></li>
+                <li><a href="mylist.php">My List</a></li>
+                <li><a href="achievements.html">Achievements</a></li>
+                <li><a href="recommended.html">Recommended</a></li>
+                <li><a href="users.php">Users</a></li>
+            </ul>
+            <span class="logo" style="width: 30vw;"></span>
+            <ul class="right_nav">
+                <li>
+                </li>
+                <li>
+                    <form>
+                        <span>
+                            <input type="text" placeholder="Search...">
+                            <button type="submit">Go</button>
+                        </span>
+                    </form>
+                </li>
+                <li><a href="loginlogout.php" style="border:2px solid white"><b>Login/Logout</b></a></li>
+            </ul>
+        </div>
+    <div class="main" style="text-align: center; color: white; margin-top: 10%">
+        <h1>ERROR: Invalid username or password.</h1>
+        <button onclick="window.location.href = 'login.html';">Login</button>
+    </div>
 </body>
 </html>
