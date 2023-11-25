@@ -1,3 +1,32 @@
+<?php
+    session_start();
+    // Check if user is logged in
+    if (!isset($_SESSION['username'])) {
+        header("Location: loginlogout.php");
+        exit();
+    } else {
+    	if($_SESSION['username'] != 'kamiyu'){
+		header("Location: error.html");
+        	exit();
+	}
+
+    	require_once "config.php";
+
+    	$username = $_SESSION['username'];
+    	$user_id = $_SESSION["id"];
+
+    	$mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+
+    	if ($mysqli->connect_errno) {
+        	printf("Connection Failed: %s\n", $mysqli->connect_error);
+        	exit();
+    	}
+    }
+
+?>
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +43,8 @@
                 <li><a href="achievements.html">Achievements</a></li>
                 <li><a href="recommended.html">Recommended</a></li>
                 <li><a href="users.php">Users</a></li>
-                <li><a href="admin.php">Admin</a></li>
+		<li><a href="admin.php" style="border:2px solid white"><b>Admin</b></a></li>
+
             </ul>
             <span class="logo" style="width: 30vw;"></span>
             <ul class="right_nav">
@@ -28,13 +58,12 @@
                         </span>
                     </form>
                 </li>
-                <li><a href="loginlogout.php" style="border:2px solid white"><b>Login/Logout</b></a></li>
+                <li><a href="loginlogout.php">Login/Logout</a></li>
             </ul>
         </div>
     <div class="main" style="text-align: center; color: white; margin-top: 10%">
-        <h1>Logout now?</h1>
-        <button onclick="window.location.href = 'logout.php';">Yes</button>
-        <button onclick="window.location.href = 'home.php';">No</button>
+    	<h1>Admin Page!</h1>
+    	<button onclick="window.location.href = 'home.php';">Go Home</button>
     </div>
 </body>
 </html>

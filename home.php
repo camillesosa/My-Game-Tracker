@@ -97,6 +97,7 @@ if($stmt = $mysqli->prepare($sql)){
                 <li><a href="achievements.html">Achievements</a></li>
                 <li><a href="recommended.html">Recommended</a></li>
                 <li><a href="users.php">Users</a></li>
+                <li><a href="admin.php">Admin</a></li>
             </ul>
             <span class="logo" style="width: 30vw;"></span>
             <ul class="right_nav">
