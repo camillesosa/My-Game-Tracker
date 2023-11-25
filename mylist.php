@@ -19,7 +19,7 @@
     }
     
     $query = "SELECT user_videogame.rating, user_videogame.review, user_videogame.game_id, VideoGame.title, VideoGame.genre, VideoGame.coverArt FROM user_videogame JOIN VideoGame ON user_videogame.game_id = VideoGame.game_id WHERE user_videogame.user_id = '$user_id';";
-    
+    $searchResult = null;
     $result = $mysqli->query($query);
     if (!$result) {
         printf("Query failed: %s\n", $mysqli->error);
@@ -173,34 +173,38 @@
             <!-- Right Column -->
             <div style="justify-content: center; width: auto; text-align: center;" class="container">
                 <div>
-                    <div class="search-box" style="height: 200px;">
-                        <form>
-                            <input type="text" placeholder="Search your list...">
-                            <button type="submit">Go</button>
+                    <h2 style="color: #fff; padding-bottom:10%">Add a new game</h2>
+                    <div class="search-box">
+                        <form name="searchMyList" method="post">
+                            <input name="search" type="text" placeholder="Search your list...">
+                            <input type="submit" value="Search"></input>
                         </form>
-                        <img style="padding-top: 10%; width: 120px; height: 120px;" src="img/soulsilver.bmp" alt="Picture 11"><p>Caption 11</p>
                     </div>
                     <div class="text-entry" style="height: 200px;">
-                        <form>
-                            <h2 style="color: #fff;">Add a new game</h2>
-                            <label style="padding-top: 10%;" for="name">Game:</label>
-                            <input type="text" id="name" name="name">
-                            <label style="padding-top: 10%;">Rating:</label>
+                        
+                        <img name="searchPreview" style="width: 200px; padding-top: 10%;"> </img>
 
-                            <div class="rating">
-                                <input type="radio" id="star1" name="rating" value="1">
-                                <label id="1" title="1 stars"></label>
-                                <input type="radio" id="star2" name="rating" value="2">
+                        <form action="addGame.php" method="post">
+                            <label style="padding-top: 10%;" for="name">Title:</label>
+                            <input readonly type="text" id="gameTitle" name="gameTitle">
+                            <label style="padding-top: 10%;">Rating:</label>
+                            <input type="hidden" name="rating" value="">
+                            <input type="hidden" name="gameId" value="">
+
+                            <span class="rating">
+                                <input type="radio" name="star1" id="star1" value="1">
+                                <label id="1"  title="1 stars"></label>
+                                <input type="radio" name="star2" id="star2" value="2">
                                 <label id="2" title="2 stars"></label>
-                                <input type="radio" id="star3" name="rating" value="3">
+                                <input type="radio" name="star3" id="star3" value="3">
                                 <label id="3" title="3 stars"></label>
-                                <input type="radio" id="star4" name="rating" value="4">
+                                <input type="radio" name="star4" id="star4" value="4">
                                 <label id="4" title="4 stars"></label>
-                                <input type="radio" id="star5" name="rating" value="5">
+                                <input type="radio" name="star5" id="star5" value="5">
                                 <label id="5" title="5 star"></label>
-                            </div>
-                            <input type="email" id="email" name="email">
-                            <button type="submit">Submit</button>
+                            </span>
+                            <input type="text" id="reviewText" name="reviewText">
+                            <input type="submit" value="submit">
                         </form>
                     </div>
                 </div>
@@ -226,6 +230,8 @@
         starLabels.forEach((label) => {
             label.addEventListener('click', () => {
                 highlightStars(label.id);
+                // Update rating value in div to send to backend
+                document.getElementsByName('rating')[0].value = label.id;
             });
         });
 
@@ -272,3 +278,59 @@
     </body>
 </html>
 
+<?php
+    $searchResult = null;
+
+    if(isset($_POST['search'])){
+        $query = $_POST['search'];
+        echo "<script>document.getElementsByName('search')[0].value = '$query';</script>";
+
+        // Check if game is in user's list
+        $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        $checkQuery = "SELECT * FROM user_videogame JOIN VideoGame ON user_videogame.game_id = VideoGame.game_id WHERE user_videogame.user_id = '$user_id' AND VideoGame.title LIKE '%$query%';";
+        $checkResult = $mysqli->query($checkQuery);
+        if (!$checkResult) {
+            printf("Query failed: %s\n", $mysqli->error);
+            exit();
+        }
+        $mysqli->close();
+
+        // If it is, update searchResult with game info
+        if($checkResult->num_rows > 0){
+            $searchResult = $checkResult;
+            // Update Title textbox with game title
+            $row = $searchResult->fetch_assoc();
+            if($row != null){
+                echo "<script>document.getElementsByName('gameTitle')[0].value = '{$row['title']}';</script>";
+                echo "<script>document.getElementsByName('gameId')[0].value = '{$row['game_id']}';</script>";
+                echo "<script>document.getElementsByName('searchPreview')[0].src = '{$row['coverArt']}';</script>";
+                echo "<script>document.getElementsByName('rating')[0].value = '{$row['rating']}';</script>";
+                echo "<script>highlightStars({$row['rating']});</script>";
+                echo "<script>document.getElementsByName('reviewText')[0].value = '{$row['review']}';</script>";
+            }
+            // Update Rating field with game rating
+            // Update Review field with game review
+        }
+        // If not, search for game in database
+        else{
+            $query = "SELECT * FROM VideoGame WHERE title LIKE '%$query%' LIMIT 10;";
+            $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+            $searchResult = $mysqli->query($query);
+            if (!$searchResult) {
+                printf("Query failed: %s\n", $mysqli->error);
+                exit();
+            }
+            $mysqli->close();
+
+            // If game is found, update Title textbox with game title
+            $row = $searchResult->fetch_assoc();
+            if($row != null){
+                echo "<script>document.getElementsByName('gameTitle')[0].value = '{$row['title']}';</script>";
+                echo "<script>document.getElementsByName('searchPreview')[0].src = '{$row['coverArt']}';</script>";
+                echo "<script>document.getElementsByName('gameId')[0].value = '{$row['game_id']}';</script>";
+            }
+        }
+        
+        
+    }
+?>
