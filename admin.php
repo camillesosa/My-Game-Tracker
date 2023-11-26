@@ -5,7 +5,7 @@
         header("Location: loginlogout.php");
         exit();
     } else {
-    	if($_SESSION['username'] != 'kamiyu'){
+    	if($_SESSION['username'] != 'admin'){
 		header("Location: error.html");
         	exit();
 	}
