@@ -7,11 +7,12 @@
     session_start();
 
     // Define variables and initialize with empty values
-    $gameTitle = trim($_POST["new-title"]);
-    $img = trim($_POST["new-img"]);
+    $gameTitle = trim($_POST["title"]);
+    $newTitle = trim($_POST["updateTitle"]);
+    $newIMG = trim($_POST["updateIMG"]);
 
     // Prepare a insert statement
-    $sql = "INSERT INTO upcomingGames (title, coverArt) VALUES ('$gameTitle', '$img');";
+    $sql = "UPDATE upcomingGames SET title = '$newTitle', coverArt = '$newIMG' WHERE title = '$gameTitle';";
 
     // Attempt to execute the prepared statement
     $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);

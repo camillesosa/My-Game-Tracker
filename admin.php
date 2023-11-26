@@ -133,25 +133,27 @@ if($stmt = $mysqli->prepare($sql)){
 		<div>
                         <form action="updateGame.php" method="post">
                             <h2 style="color: #fff;">Update a game</h2>
-                            <label style="padding-top: 10%;" for="name">Title:</label>
-                            <input type="text" id="name" name="name">
-			    <label style="padding-top: 10%;">New title:</label>
-                            <input type="text" id="IMGlink" name="IMGlink">
-                            <label style="padding-top: 10%;">New img link:</label>
-                            <input type="text" id="IMGlink" name="IMGlink">
+                            <label style="padding-top: 10%;" for="title">Title:</label>
+                            <input type="text" id="title" name="title">
+			    <label style="padding-top: 10%;" for="updateTitle">New title:</label>
+                            <input type="text" id="updateTitle" name="updateTitle">
+                            <label style="padding-top: 10%;" for="updateIMG">New img link:</label>
+                            <input type="text" id="updateIMG" name="updateIMG">
                             <button type="submit">Submit</button>
                         </form>
                 </div>
 		<div>
                         <form action="deleteGame.php" method="post">
                             <h2 style="color: #fff;">Delete a game</h2>
-                            <label style="padding-top: 10%;" for="name">Title:</label>
-                            <input type="text" id="name" name="name">
+                            <label style="padding-top: 10%;" for="deleteGame">Title:</label>
+                            <input type="text" id="deleteGame" name="deleteGame">
                             <button type="submit">Submit</button>
                         </form>
                 </div>
 
             </div>
+
+
 
 </body>
 </html>
