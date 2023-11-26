@@ -36,6 +36,42 @@ if($stmt = $mysqli->prepare($sql)){
     // Close statement
     $stmt->close();
 }
+
+// Make request to DB for most popular video games
+$sql = "SELECT title, coverArt FROM upcomingGames;";
+
+// Connect to DB
+$mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+$dom = new DOMDocument('1.0', 'utf-8');
+
+
+if($stmt = $mysqli->prepare($sql)){
+    // Attempt to execute prepared statement
+    if($stmt->execute()){
+        // Store result
+        $stmt->store_result();
+        // If more than one result, return array of games
+        if($stmt->num_rows >= 1){
+            // Bind result variables
+            $stmt->bind_result($title, $coverArt);
+            $upcoming = array();
+            while($stmt->fetch()){
+                $upcoming[] = array("title" => $title, "coverArt" => $coverArt);
+
+                $upcoming[count($games)-1]["coverArt"] = $coverArt;
+                $upcoming[count($games)-1]["title"] = $title;
+
+            }
+        } else{
+            // echo "No games found.";
+        }
+    } else{
+        // echo "Oops! Something went wrong. Please try again later.";
+    }
+    // Close statement
+    $stmt->close();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -119,7 +155,7 @@ if($stmt = $mysqli->prepare($sql)){
                 <div class="gallery">
                     <h2>Trending Games</h2>
                     <div tag="scrolling-list" class="scrolling-list">
-                        <?php 
+                        <?php
                         foreach($games as $game){
                             echo "<span>";
                             echo "<img src=\"$game[coverArt]\" style=\"width: 200px;\" alt=\"$game[title]\">";
@@ -151,26 +187,14 @@ if($stmt = $mysqli->prepare($sql)){
                 <div class="gallery">
                     <h2>Upcoming Games</h2>
                     <div class="scrolling-list">
-                        <div>
-                            <img src="img/soulsilver.bmp" style="width: 200px;" alt="Game 1">
-                            <p>Game 1</p>
-                        </div>
-                        <div>
-                            <img src="img/soulsilver.bmp" style="width: 200px;" alt="Game 1">
-                            <p>Game 2</p>
-                        </div>
-                        <div>
-                            <img src="img/soulsilver.bmp" style="width: 200px;" alt="Game 1">
-                            <p>Game 3</p>
-                        </div>
-                        <div>
-                            <img src="img/soulsilver.bmp" style="width: 200px;" alt="Game 1">
-                            <p>Game 4</p>
-                        </div>
-                        <div>
-                            <img src="img/soulsilver.bmp" style="width: 200px;" alt="Game 1">
-                            <p>Game 5</p>
-                        </div>
+                        <?php
+                        foreach($upcoming as $upcomingG){
+                            echo "<span>";
+                            echo "<img src=\"$upcomingG[coverArt]\" style=\"width: 200px;\" alt=\"$game[title]\">";
+                            echo "<h4>$upcomingG[title]</h4>";
+			    echo "</span>";
+			}
+			?>
                     </div>
                 </div>
             </div>
