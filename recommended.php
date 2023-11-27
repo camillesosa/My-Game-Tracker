@@ -2,6 +2,8 @@
 
 require_once "config.php";
 
+session_start();
+
 // Make request to DB for most popular video games
 $sql = "SELECT vg.game_id, vg.title, vg.coverArt, AVG(uv.rating) AS average_rating, COUNT(uv.game_id) AS occurrences FROM VideoGame vg JOIN user_videogame uv ON vg.game_id = uv.game_id GROUP BY vg.game_id, vg.title, vg.coverArt HAVING AVG(uv.rating) > 4 ORDER BY occurrences DESC LIMIT 9;";
 
@@ -140,7 +142,7 @@ if($stmt = $mysqli->prepare($sql)){
             <br><br>
             <div class="picture-list">
                 <ul id="picture-ul">
-		  <?php
+		            <?php
                         foreach($games as $game){
                             echo "<li>";
                             echo "<img src=\"$game[coverArt]\" style=\"width: 200px;\" alt=\"$game[title]\">";
@@ -164,10 +166,144 @@ if($stmt = $mysqli->prepare($sql)){
 
                             echo $ratingHtml;
                             echo "</li>";
-			}
-		?>
-		</ul>
+			            }
+		            ?>
+		        </ul>
+            </div>
 
+            <h1 style="text-align: center;">Recommendations based on your list</h1>
+                <hr>
+                <br><br>
+                <div class="picture-list">
+                    <ul id="picture-ul">
+                    <?php
+                    // New section for recommended games based on user's list
+                    
+                    $userGames = array();
+                    $recommendedGames = array();
+                    // Grab user's list
+                    if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+                        $user_id = $_SESSION["id"];
+                    }else{
+                        $user_id = 0;
+                        return;
+                    }
+
+                    // Grab 3 highest rated games from user's list
+                    $sql = "SELECT vg.game_id, vg.title, vg.coverArt, AVG(uv.rating) AS average_rating FROM videogame vg JOIN user_videogame uv ON vg.game_id = uv.game_id WHERE uv.user_id = $user_id GROUP BY vg.game_id, vg.title, vg.coverArt ORDER BY AVG(uv.rating) DESC LIMIT 3;";
+
+                    if($stmt = $mysqli->prepare($sql)){
+                        // Attempt to execute prepared statement
+                        if($stmt->execute()){
+                            // Store result
+                            $stmt->store_result();
+                            // If more than one result, return array of games
+                            if($stmt->num_rows >= 1){
+                                // Bind result variables
+                                $stmt->bind_result($game_id, $title, $coverArt, $avg_rating);
+                                while($stmt->fetch()){
+                                    $userGames[] = array("vg.game_id" => $game_id, "vg.title" => $title, "coverArt" => $coverArt, "average_rating" => $avg_rating);
+                    
+                                    $userGames[count($userGames)-1]["avg_rating"] = $avg_rating;
+                                    $userGames[count($userGames)-1]["coverArt"] = $coverArt;
+                                    $userGames[count($userGames)-1]["title"] = $title;
+                                }
+                            } else{
+                                // echo "No games found.";
+                            }
+                        } else{
+                            // echo "Oops! Something went wrong. Please try again later.";
+                        }
+                        // Close statement
+                        $stmt->close();
+                    }
+
+                    // Grab 3 highest rated games from other user's list that
+                    // also have the 3 highest rated games from user's list, 
+                    // but are not already in user's list
+                    $sql2 = "SELECT vg.game_id, vg.title, vg.coverArt, AVG(uv.rating) AS average_rating, COUNT(uv.game_id) AS occurrences FROM VideoGame vg JOIN user_videogame uv ON vg.game_id = uv.game_id WHERE vg.game_id NOT IN (SELECT vg.game_id FROM VideoGame vg JOIN user_videogame uv ON vg.game_id = uv.game_id WHERE uv.user_id = $user_id GROUP BY vg.game_id, vg.title, vg.coverArt HAVING AVG(uv.rating) > 4) AND vg.game_id IN (SELECT vg.game_id FROM VideoGame vg JOIN user_videogame uv ON vg.game_id = uv.game_id WHERE uv.user_id = $user_id GROUP BY vg.game_id, vg.title, vg.coverArt HAVING AVG(uv.rating) > 4) GROUP BY vg.game_id, vg.title, vg.coverArt HAVING AVG(uv.rating) > 4;";
+                    // Connect to DB
+                    $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+                    
+                    if($stmt = $mysqli->prepare($sql2)){
+                        // Attempt to execute prepared statement
+                        if($stmt->execute()){
+                            // Store result
+                            $stmt->store_result();
+                            // If more than one result, return array of games
+                            if($stmt->num_rows >= 1){
+                                // Bind result variables
+                                $stmt->bind_result($game_id, $title, $coverArt, $avg_rating, $occurrences);
+                                while($stmt->fetch()){
+                                    $recommendedGames[] = array("vg.game_id" => $game_id, "vg.title" => $title, "coverArt" => $coverArt, "average_rating" => $avg_rating);
+                    
+                                    $recommendedGames[count($recommendedGames)-1]["avg_rating"] = $avg_rating;
+                                    $recommendedGames[count($recommendedGames)-1]["coverArt"] = $coverArt;
+                                    $recommendedGames[count($recommendedGames)-1]["title"] = $title;
+                                }
+                            } else{
+                                // echo "No games found.";
+                            }
+                        } else{
+                            // echo "Oops! Something went wrong. Please try again later.";
+                        }
+                        // Close statement
+                        $stmt->close();
+                    }
+
+                    // Echo out user's list, then recommended games
+                    foreach($userGames as $game){
+                        echo "<li>";
+                        echo "<img src=\"$game[coverArt]\" style=\"width: 200px;\" alt=\"$game[title]\">";
+                        echo "<p>$game[title]</p>";
+
+                        $ratingDiv = $dom->createElement('div');
+                        $ratingDiv->setAttribute('class', 'rating');
+                        $rating = floor($game['avg_rating']);
+
+                        for ($i = 0; $i < 5; $i++){
+                            $newLabel = $dom->createElement('staticlabel');
+                            $newLabel->setAttribute('style', 'cursor: default;');
+                            if ($i < $rating) {
+                                $oldStyle = $newLabel->getAttribute('style');
+                                $newLabel->setAttribute('style', $oldStyle . 'background-color: yellow;');
+                            }
+                            $ratingDiv->appendChild($newLabel);
+                        }
+                        // Convert the DOMDocument to HTML string
+                        $ratingHtml = $dom->saveHTML($ratingDiv);
+
+                        echo $ratingHtml;
+                        echo "</li>";
+                    }
+
+                    foreach($recommendedGames as $game){
+                        echo "<li>";
+                        echo "<img src=\"$game[coverArt]\" style=\"width: 200px;\" alt=\"$game[title]\">";
+                        echo "<p>$game[title]</p>";
+
+                        $ratingDiv = $dom->createElement('div');
+                        $ratingDiv->setAttribute('class', 'rating');
+                        $rating = floor($game['avg_rating']);
+
+                        for ($i = 0; $i < 5; $i++){
+                            $newLabel = $dom->createElement('staticlabel');
+                            $newLabel->setAttribute('style', 'cursor: default;');
+                            if ($i < $rating) {
+                                $oldStyle = $newLabel->getAttribute('style');
+                                $newLabel->setAttribute('style', $oldStyle . 'background-color: yellow;');
+                            }
+                            $ratingDiv->appendChild($newLabel);
+                        }
+                        // Convert the DOMDocument to HTML string
+                        $ratingHtml = $dom->saveHTML($ratingDiv);
+
+                        echo $ratingHtml;
+                        echo "</li>";
+                    }
+                    ?>
+                    </ul>
+                </div>
             </div>
         <!-- End Page Body -->
         </div>
