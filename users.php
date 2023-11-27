@@ -73,7 +73,7 @@ if($stmt = $mysqli->prepare($sql)){
                 <li><a href="home.php">Home</a></li>
                 <li><a href="mylist.php">My List</a></li>
                 <li><a href="achievements.html">Achievements</a></li>
-                <li><a href="recommended.html">Recommended</a></li>
+                <li><a href="recommended.php">Recommended</a></li>
                 <li><a href="users.php" style="border:2px solid white"><b>Users</b></a></li>
                 <li><a href="admin.php">Admin</a></li>
             </ul>
