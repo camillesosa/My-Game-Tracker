@@ -207,6 +207,7 @@ if($stmt = $mysqli->prepare($sql)){
                                     $userGames[count($userGames)-1]["avg_rating"] = $avg_rating;
                                     $userGames[count($userGames)-1]["coverArt"] = $coverArt;
                                     $userGames[count($userGames)-1]["title"] = $title;
+                                    echo "User game: $title";
                                 }
                             } else{
                                 // echo "No games found.";
@@ -218,10 +219,30 @@ if($stmt = $mysqli->prepare($sql)){
                         $stmt->close();
                     }
 
-                    // Grab 3 highest rated games from other user's list that
-                    // also have the 3 highest rated games from user's list, 
-                    // but are not already in user's list
-                    $sql2 = "SELECT vg.game_id, vg.title, vg.coverArt, AVG(uv.rating) AS average_rating, COUNT(uv.game_id) AS occurrences FROM VideoGame vg JOIN user_videogame uv ON vg.game_id = uv.game_id WHERE vg.game_id NOT IN (SELECT vg.game_id FROM VideoGame vg JOIN user_videogame uv ON vg.game_id = uv.game_id WHERE uv.user_id = $user_id GROUP BY vg.game_id, vg.title, vg.coverArt HAVING AVG(uv.rating) > 4) AND vg.game_id IN (SELECT vg.game_id FROM VideoGame vg JOIN user_videogame uv ON vg.game_id = uv.game_id WHERE uv.user_id = $user_id GROUP BY vg.game_id, vg.title, vg.coverArt HAVING AVG(uv.rating) > 4) GROUP BY vg.game_id, vg.title, vg.coverArt HAVING AVG(uv.rating) > 4;";
+                    // Find user that has the most 4+ rated games in common with the current user
+                    $findSimilarUsersSQL = "SELECT 
+                    uv.user_id
+                    FROM user_videogame uv 
+                    WHERE uv.game_id IN (
+                        SELECT uv2.game_id 
+                        FROM user_videogame uv2 
+                        WHERE uv2.user_id = $user_id AND uv2.rating > 4) 
+                    AND uv.user_id != $user_id";
+
+                    // Find the highest rated game that the current user does not have
+                    $sql2 = "SELECT 
+                        vg.game_id, vg.title, vg.coverArt, AVG(uv.rating) AS average_rating, COUNT(uv.game_id) AS occurrences 
+                        FROM VideoGame vg JOIN user_videogame uv ON vg.game_id = uv.game_id 
+                        WHERE uv.user_id IN ( $findSimilarUsersSQL )
+                        AND uv.game_id NOT IN (
+                            SELECT uv2.game_id 
+                            FROM user_videogame uv2 
+                            WHERE uv2.user_id = $user_id) 
+                        GROUP BY vg.game_id, vg.title, vg.coverArt
+                        HAVING AVG(uv.rating) > 4
+                        ORDER BY occurrences
+                        DESC LIMIT 3;";
+
                     // Connect to DB
                     $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
                     
@@ -240,6 +261,8 @@ if($stmt = $mysqli->prepare($sql)){
                                     $recommendedGames[count($recommendedGames)-1]["avg_rating"] = $avg_rating;
                                     $recommendedGames[count($recommendedGames)-1]["coverArt"] = $coverArt;
                                     $recommendedGames[count($recommendedGames)-1]["title"] = $title;
+
+                                    echo "Recommended game: $title";
                                 }
                             } else{
                                 // echo "No games found.";
