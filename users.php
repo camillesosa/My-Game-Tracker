@@ -122,6 +122,7 @@ if($stmt = $mysqli->prepare($sql)){
                     	echo "<li>";
 			            echo "<img src='img/GamerIcon.png'>";
 			            echo "<p><b>$user[username]</b></p>";
+			            echo "<button onclick=\"window.location.href='selectedUserList.php?username=$user[username]'\">User's List</button>";
 			            echo "</li>";
                     }
                 ?>
