@@ -58,6 +58,43 @@ if($stmt = $mysqli->prepare($sql)){
     // Close statement
     $stmt->close();
 }
+
+// Make request to DB for users
+$sql = "SELECT user_id, username, profilePic FROM User;";
+
+// Connect to DB
+$mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+$dom = new DOMDocument('1.0', 'utf-8');
+
+
+if($stmt = $mysqli->prepare($sql)){
+    // Attempt to execute prepared statement
+    if($stmt->execute()){
+        // Store result
+        $stmt->store_result();
+        // If more than one result, return array of games
+        if($stmt->num_rows >= 1){
+            // Bind result variables
+            $stmt->bind_result($username, $user_id, $profilePic);
+            $users = array();
+            while($stmt->fetch()){
+                $users[] = array("username" => $username, "user_id" => $user_id, "profilePic" => $profilePic);
+
+                $users[count($users)-1]["username"] = $username;
+                $users[count($users)-1]["user_id"] = $user_id;
+                $users[count($users)-1]["profilePic"] = $profilePic;
+
+            }
+        } else{
+            // echo "No user found.";
+	}
+    } else{
+        // echo "Oops! Something went wrong. Please try again later.";
+    }
+    // Close statement
+    $stmt->close();
+}
+
 ?>
 
 
@@ -95,7 +132,7 @@ if($stmt = $mysqli->prepare($sql)){
                 <li><a href="loginlogout.php">Login/Logout</a></li>
             </ul>
         </div>
-    <div class="main" style="text-align: center; color: white; margin-top: 5%">
+    <div class="main" style="text-align: center; color: white; margin-top: 2%">
     	<h1>Admin Page!</h1>
     </div>
 
@@ -115,6 +152,22 @@ if($stmt = $mysqli->prepare($sql)){
 		?>
 	</div>
     </div>
+
+    <div class="gallery">
+    	<h2>Users</h2>
+	<div class="scrolling-list">
+		<?php
+		foreach($users as $user){
+                            echo "<span>";
+			    echo "<img src='$user[profilePic]'>";
+                            echo "<h4>$user[username]</h4>";
+                            echo "<h4>$user[user_id]</h4>";
+                            echo "</span>";
+		}
+		?>
+	</div>
+    </div>
+
   </div>
 </div>
 
@@ -122,7 +175,7 @@ if($stmt = $mysqli->prepare($sql)){
             <div style="justify-content: center; width: auto; text-align: center;" class="container">
                 <div>
                         <form action="upcomingGame.php" method="post">
-                            <h2 style="color: #fff;">Add a game</h2>
+                            <h2 style="color: #fff;">Add game</h2>
                             <label style="padding-top: 10%;" for="new-title">Title:</label>
                             <input type="text" id="new-title" name="new-title">
                             <label style="padding-top: 10%;" for="new-img">Img link:</label>
@@ -132,7 +185,7 @@ if($stmt = $mysqli->prepare($sql)){
                 </div>
 		<div>
                         <form action="updateGame.php" method="post">
-                            <h2 style="color: #fff;">Update a game</h2>
+                            <h2 style="color: #fff;">Update game</h2>
                             <label style="padding-top: 10%;" for="title">Title:</label>
                             <input type="text" id="title" name="title">
 			    <label style="padding-top: 10%;" for="updateTitle">New title:</label>
@@ -144,7 +197,7 @@ if($stmt = $mysqli->prepare($sql)){
                 </div>
 		<div>
                         <form action="deleteGame.php" method="post">
-                            <h2 style="color: #fff;">Delete a game</h2>
+                            <h2 style="color: #fff;">Delete game</h2>
                             <label style="padding-top: 10%;" for="deleteGame">Title:</label>
                             <input type="text" id="deleteGame" name="deleteGame">
                             <button type="submit">Submit</button>
@@ -152,6 +205,43 @@ if($stmt = $mysqli->prepare($sql)){
                 </div>
 
             </div>
+<br><br><br><br><br><br><br><br><br><br><br>
+            <div style="justify-content: center; width: auto; text-align: center;" class="container">
+                <div>
+                        <form action="registerAA.php" method="post">
+                            <h2 style="color: #fff;">Add user</h2>
+                            <label style="padding-top: 10%;" for="new-username">Username:</label>
+                            <input type="text" id="new-username" name="new-username">
+			    <label style="padding-top: 10%;" for="new-password">Password:</label>
+                            <input type="text" id="new-password" name="new-password">
+                            <label style="padding-top: 10%;" for="new-img">Profile Picture:</label>
+                            <input type="text" id="new-img" name="new-img">
+                            <button type="submit">Submit</button>
+                        </form>
+                </div>
+		<div>
+                        <form action="updateUser.php" method="post">
+                            <h2 style="color: #fff;">Update user</h2>
+                            <label style="padding-top: 10%;" for="username">Username:</label>
+                            <input type="text" id="username" name="username">
+			    <label style="padding-top: 10%;" for="updateUsername">New username:</label>
+                            <input type="text" id="updateUsername" name="updateUsername">
+                            <label style="padding-top: 10%;" for="updateIMG">New profile picture:</label>
+                            <input type="text" id="updateIMG" name="updateIMG">
+                            <button type="submit">Submit</button>
+                        </form>
+                </div>
+		<div>
+                        <form action="deleteUser.php" method="post">
+                            <h2 style="color: #fff;">Delete user</h2>
+                            <label style="padding-top: 10%;" for="deleteUser">Username:</label>
+                            <input type="text" id="deleteUser" name="deleteUser">
+                            <button type="submit">Submit</button>
+                        </form>
+                </div>
+
+            </div>
+
 
 
 

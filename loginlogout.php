@@ -20,10 +20,10 @@
             <ul class="left_nav">
                 <li><a href="home.php">Home</a></li>
                 <li><a href="mylist.php">My List</a></li>
-                <li><a href="achievements.html">Achievements</a></li>
+                <li><a href="achievements.php">Achievements</a></li>
                 <li><a href="recommended.php">Recommended</a></li>
                 <li><a href="users.php">Users</a></li>
-                <li><a href="admin.php">Admin</a></li>
+		<li><a href="admin.php">Admin</a></li>
             </ul>
             <span class="logo" style="width: 30vw;"></span>
             <ul class="right_nav">
@@ -37,7 +37,7 @@
                         </span>
                     </form>
                 </li>
-                <li><a href="loginlogout.php" style="border:2px solid white"><b>Login/Logout</b></a></li>
+                <li><a href="loginlogout.php"style="border:2px solid white"><b>Login/Logout</b></a></li>
             </ul>
         </div>
         <div class="main">
@@ -63,8 +63,8 @@
                     <input type="text" id="new-username" name="new-username"><br><br>
                     <label for="new-password">Password:</label>
                     <input type="password" id="new-password" name="new-password"><br><br>
-                    <label for="new-email">Email:</label>
-                    <input type="text" id="new-email" name="new-email"><br><br>
+                    <label for="new-img">Profile Pic Link:</label>
+                    <input type="text" id="new-img" name="new-img"><br><br>
                     <input type="submit" name="register" value="Register"></input>
                 </form>
             </div>
