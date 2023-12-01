@@ -2,7 +2,7 @@
     session_start();
     // Check if user is logged in
     if (!isset($_SESSION['username'])) {
-        header("Location: login.html");
+        header("Location: loginlogout.php");
         exit();
     }
 
@@ -18,14 +18,34 @@
         exit();
     }
 
-    $query = "SELECT user_achievements.game_ID, user_achievements.title, user_achievements.achievement_ID from user_achievements join achievements on user_achievements.achievement_ID = achievements.achievement_ID where user_achievements.user_id = '$user_id';";
+    $sql = "SELECT user_videogame.game_id, VideoGame.title FROM user_videogame JOIN VideoGame ON user_videogame.game_id = VideoGame.game_id WHERE user_videogame.user_id = '$user_id';";
 
-    $result = $mysqli->query($query);
-    if (!$result) {
-        printf("Query failed: %s\n", $mysqli->error);
-        exit();
+if($stmt = $mysqli->prepare($sql)){
+    // Attempt to execute prepared statement
+    if($stmt->execute()){
+        // Store result
+        $stmt->store_result();
+        // If more than one result, return array of games
+        if($stmt->num_rows >= 1){
+            // Bind result variables
+            $stmt->bind_result($game_id, $gameTitle);
+            $games = array();
+            while($stmt->fetch()){
+                $games[] = array("game_id" => $game_id, "gameTitle" => $gameTitle);
+
+                $games[count($games)-1]["game_id"] = $game_id;
+                $games[count($games)-1]["gameTitle"] = $gameTitle;
+            }
+        } else{
+            // echo "No games found.";
+        }
+    } else{
+        // echo "Oops! Something went wrong. Please try again later.";
     }
-    $mysqli->close();
+    // Close statement
+    $stmt->close();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -71,7 +91,6 @@
                 <li><a href="achievements.php" style="border:2px solid white"><b>Achievements</b></a></li>
                 <li><a href="recommended.php">Recommended</a></li>
                 <li><a href="users.php">Users</a></li>
-                <li><a href="admin.php">Admin</a></li>
             </ul>
             <span class="logo" style="width: 30vw;"></span>
             <ul class="right_nav">
@@ -98,108 +117,71 @@
 
         <div class="main">
             <!-- Left Column -->
-
             <div style="float: left; width: 80%; overflow-y: scroll; max-height: 700px">
-                <div class="gallery">
-                    <h2>Game 1</h2>
-                    <div class="scrolling-list" style="border: 5px solid white;">
-                        <div>
-                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
-                            <p>Achievement 1</p>
-                        </div>
-                        <div>
-                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
-                            <p>Achievement 2</p>
-                        </div>
-                        <div>
-                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
-                            <p>Achievement 3</p>
-                        </div>
-                        <div>
-                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
-                            <p>Achievement 4</p>
-                        </div>
-                        <div>
-                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
-                            <p>Achievement 5</p>
-                        </div>
-                        <div>
-                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
-                            <p>Achievement 6</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="gallery">
-                    <h2>Game 2</h2>
-                    <div class="scrolling-list" style="border: 5px solid white;">
-                        <div>
-                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
-                            <p>Achievement 1</p>
-                        </div>
-                        <div>
-                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
-                            <p>Achievement 2</p>
-                        </div>
-                        <div>
-                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
-                            <p>Achievement 3</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="gallery">
-                    <h2>Game 3</h2>
-                    <div class="scrolling-list" style="border: 5px solid white;">
-                        <div>
-                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
-                            <p>Achievement 1</p>
-                        </div>
-                        <div>
-                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
-                            <p>Achievement 2</p>
-                        </div>
-                        <div>
-                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
-                            <p>Achievement 3</p>
-                        </div>
-                        <div>
-                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
-                            <p>Achievement 4</p>
-                        </div>
-                        <div>
-                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
-                            <p>Achievement 5</p>
-                        </div>
-                        <div>
-                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
-                            <p>Achievement 6</p>
-                        </div>
-                        <div>
-                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
-                            <p>Achievement 7</p>
-                        </div>
-                        <div>
-                            <img src="img/trophiesIcon.png" style="width: 200px;" alt="Game 1">
-                            <p>Achievement 8</p>
-                        </div>
-                    </div>
-                </div>
+                <?php
+			foreach($games as $game){
+    				$mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+
+    				if ($mysqli->connect_errno) {
+       					printf("Connection Failed: %s\n", $mysqli->connect_error);
+        				exit();
+    				}
+
+    				$sql = "SELECT achievement FROM user_achievement WHERE user_id = '$user_id' AND game_id = $game[game_id];";
+    				$achievements = array();
+				if($stmt = $mysqli->prepare($sql)){
+    					// Attempt to execute prepared statement
+    					if($stmt->execute()){
+        					// Store result
+        					$stmt->store_result();
+        					// If more than one result, return array of games
+        					if($stmt->num_rows >= 1){
+            						// Bind result variables
+            						$stmt->bind_result($achievement);
+            						//$achievements = array();
+            						while($stmt->fetch()){
+                						$achievements[] = array("achievement" => $achievement);
+
+                						$achievements[count($achievements)-1]["achievement"] = $achievement;
+            						}
+        					} else{
+            						// echo "No games found.";
+        					}
+    					} else{
+        					// echo "Oops! Something went wrong. Please try again later.";
+    					}
+    					// Close statement
+    					$stmt->close();
+				}
+
+
+
+				echo "<div class='gallery'>";
+				echo "<h2>$game[gameTitle]</h2>";
+				//echo "<h2>$game[game_id]</h2>";
+				echo "<div class='scrolling-list' style='border: 5px solid white;'>";
+				foreach($achievements as $achievement){
+					echo "<div>
+                            			<img src='img/trophiesIcon.png' style='width: 200px;' alt='Game 1'>
+                            			<p>$achievement[achievement]</p>
+                        	      	      </div>";
+				}
+				echo "</div></div>";
+			}
+		?>
+
             </div>
 
             <!-- Right Column -->
             <div style="justify-content: center; width: auto; text-align: center;" class="container">
                 <div>
-                    <div class="search-box" style="height: 200px;">
-                        <form>
-                            <input type="text" placeholder="Search your achievements...">
-                            <button type="submit">Go</button>
-                        </form>
-                        <img style="padding-top: 10%; width: 120px; height: 120px;" src="img/trophy.png" alt="Picture 11"><p>Caption 11</p>
-                    </div>
+                    <br><br><br>
+		    <img style="padding-top: 10%; width: 120px; height: 120px;" src="img/trophy.png" alt="Picture 11"><br><br>
                     <div class="text-entry" style="height: 200px;">
-                        <form>
+                        <form action="addAchievement.php" method="post">
                             <h2 style="color: #fff;">Add a new achievement</h2>
-                            <label style="padding-top: 10%;" for="name">Game:</label>
-                            <input type="text" id="name" name="name">
+                            <label style="padding-top: 10%;" for="gameTitle">Game:</label>
+                            <input type="text" id="gameTitle" name="gameTitle">
                             <label style="padding-top: 10%;" for="achievement">Achievement:</label>
                             <input type="text" id="achievement" name="achievement">
 
@@ -210,29 +192,6 @@
             </div>
         <!-- End Page Body -->
         </div>
-        <script>
-            //TO-DO:
-            //Games should be dependent on list gathered from "My List"
-            //Should be using games[] to display everything, so then achievements can be appended to list entries
-            //Possibly add "Achievements" title at the top with total # of trophies
-
-            // proof of concept, pull from a DB later
-            let games = <?php echo json_encode($result->fetch_all(MYSQLI_ASSOC)); ?>;
-
-            //currently this is being hardcoded in the body
-            games.forEach((game) => {
-                // Add a li, game title to picture-list ul
-                let pictureList = document.getElementById('picture-ul');
-                let newLi = document.createElement('li');
-                let newImg = document.createElement('img');
-                let caption = document.createElement('p');
-
-                caption.innerHTML = 'Game ' + (pictureList.children.length + 1);
-
-                newLi.appendChild(caption);
-                pictureList.appendChild(newLi);
-            });
-        </script>
     </body>
 </html>
 

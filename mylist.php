@@ -98,7 +98,7 @@
             <ul class="left_nav">
                 <li><a href="home.php">Home</a></li>
                 <li><a href="mylist.php" style="border:2px solid white"><b>My List</b></a></li>
-                <li><a href="achievements.html">Achievements</a></li>
+                <li><a href="achievements.php">Achievements</a></li>
                 <li><a href="recommended.php">Recommended</a></li>
                 <li><a href="users.php">Users</a></li>
                 <li><a href="admin.php">Admin</a></li>
