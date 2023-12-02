@@ -176,7 +176,14 @@ if($stmt = $mysqli->prepare($sql)){
                         </span>
                     </form>
                 </li>
-                <li><a href="loginlogout.php">Login/Logout</a></li>
+                <li><?php
+			            if (isset($_SESSION['username'])) {
+				            echo "<a href='loginlogout.php'>Logout</a>";
+			            } else{
+				            echo "<a href='loginlogout.php'>Login</a>";
+			            }
+		            ?>
+		        </li>
             </ul>
         </div>
         <div class="main">
