@@ -145,6 +145,35 @@ if ($gamecount_result) {
             </ul>
             <span class="logo" style="width: 30vw;"></span>
             <ul class="right_nav">
+
+            	    <div style="position: fixed; top: 0; right: 0; transform: translate(-100%, 0); background-color: #292b2f; color: #fff; padding: 5px; border-radius: 5px;">
+		<?php
+			session_start();
+
+			if (isset($_SESSION['username'])) {
+       		 		echo "{$_SESSION['username']} ";
+				$user = "{$_SESSION['username']}";
+				$mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+
+				$query = "SELECT profilePic FROM User WHERE username = '$user';";
+    				$result = $mysqli->query($query);
+				if ($result) {
+    					// Fetch the associative array of the result
+    					$row = $result->fetch_assoc();
+
+    					if ($row) {
+        					// Retrieve the user_id
+        					$Pic = $row['profilePic'];
+    					} else {
+        					echo "Picture not found";
+    					}
+				}
+				echo "<img src='$Pic' style='width: 50px;'>";
+				$mysqli->close();
+    			}
+		?>
+	    </div>
+
                 <li>
                     <form name="filterMyList" method="post">
                         <select name="categories" onchange="filterMyList.submit()">

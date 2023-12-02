@@ -81,6 +81,35 @@ if($stmt = $mysqli->prepare($sql)){
             </ul>
             <span class="logo" style="width: 30vw;"></span>
             <ul class="right_nav">
+
+            	    <div style="position: fixed; top: 0; right: 0; transform: translate(-100%, 0); background-color: #292b2f; color: #fff; padding: 5px; border-radius: 5px;">
+		<?php
+			session_start();
+
+			if (isset($_SESSION['username'])) {
+       		 		echo "{$_SESSION['username']} ";
+				$username = "{$_SESSION['username']}";
+				$mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+
+				$query = "SELECT profilePic FROM User WHERE username = '$username';";
+    				$result = $mysqli->query($query);
+				if ($result) {
+    					// Fetch the associative array of the result
+    					$row = $result->fetch_assoc();
+
+    					if ($row) {
+        					// Retrieve the user_id
+        					$profilePic = $row['profilePic'];
+    					} else {
+        					echo "Picture not found";
+    					}
+				}
+				echo "<img src='$profilePic' style='width: 50px;'>";
+				$mysqli->close();
+    			}
+		?>
+	    </div>
+
                 <li>
                 </li>
                 <li>
