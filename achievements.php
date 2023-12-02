@@ -181,7 +181,13 @@ if($stmt = $mysqli->prepare($sql)){
                         <form action="addAchievement.php" method="post">
                             <h2 style="color: #fff;">Add a new achievement</h2>
                             <label style="padding-top: 10%;" for="gameTitle">Game:</label>
-                            <input type="text" id="gameTitle" name="gameTitle">
+                            <select name="gameTitle" style="width: 170px; background-color: #292b2f; color: #fff; border-color: #292b2f; border-radius: 10px; padding: 5px; margin-right: 5px;">
+				                <?php
+    					            foreach ($games as $game) {
+        					            echo "<option style='color: #fff;' value=\"$game[gameTitle]\">$game[gameTitle]</option>";
+    					            }
+    				            ?>
+			                </select>
                             <label style="padding-top: 10%;" for="achievement">Achievement:</label>
                             <input type="text" id="achievement" name="achievement">
 
