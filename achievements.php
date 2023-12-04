@@ -135,12 +135,13 @@ if($stmt = $mysqli->prepare($sql)){
                     </select>
                 </li>
                 <li>
-                    <form>
+                    <form action="searchGame.php" method="post">
                         <span>
-                            <input type="text" placeholder="Search...">
+                            <input type="text" id="findGame" name="findGame" placeholder="Search a game...">
                             <button type="submit">Go</button>
                         </span>
                     </form>
+
                 </li>
                 <li><?php
 			            if (isset($_SESSION['username'])) {

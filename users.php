@@ -157,7 +157,7 @@ if($stmt = $mysqli->prepare($sql)){
                     <option value="Z-A">Sort By: Alphabetical</option>
                 </select>
             </div>
-            <div class="picture-list">
+            <div class="picture-list" style="border: 5px solid #202225">
                 <ul id="picture-ul">
 		            <?php
                     foreach($users as $user){

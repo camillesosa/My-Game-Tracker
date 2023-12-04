@@ -241,7 +241,7 @@ if($stmt = $mysqli->prepare($sql)){
             <div style="float: left; width: 40%;">
                 <div class="trending-topics">
                     <h2>Trending Topics</h2>
-                    <ul>
+                    <ul style="list-style-type: none;">
                         <li><a href="#">The excitinue thready felt the open my brought the oncentally kind of unressed sides, I neven my contive traded by to colleave the end</a></li>
                         <li><a href="#">That missing to see a bummer, and it because extra in plot that because end</a></li>
                         <li><a href="#">New part one, is never one, and as that because ever 87 how threads any markers, any missed by to that's already full of this new Game+.</a></li>
