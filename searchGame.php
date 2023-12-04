@@ -37,7 +37,7 @@ if ($stmt = $mysqli->prepare($sql)) {
         } else {
             // No game found with the specified title.
             echo "Game not found.";
-            header("location: error.html");
+            header("location: error2.html");
             exit();
         }
     } else {
