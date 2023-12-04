@@ -146,24 +146,25 @@ if($stmt = $mysqli->prepare($sql)){
 		<?php
 			session_start();
 
-			if (isset($_SESSION['username'])) {
-       		 		echo "{$_SESSION['username']} ";
-				$username = "{$_SESSION['username']}";
+			if (isset($_SESSION['id'])) {
+				$userID = "{$_SESSION['id']}";
 				$mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
-				$query = "SELECT profilePic FROM User WHERE username = '$username';";
+				$query = "SELECT username, profilePic FROM User WHERE user_id = '$userID';";
     				$result = $mysqli->query($query);
 				if ($result) {
     					// Fetch the associative array of the result
     					$row = $result->fetch_assoc();
 
     					if ($row) {
-        					// Retrieve the user_id
+        					// Retrieve the username and profilePic
+						$username = $row['username'];
         					$profilePic = $row['profilePic'];
     					} else {
         					echo "Picture not found";
     					}
 				}
+				echo "<a href='profile.php'>$username </a>";
 				echo "<img src='$profilePic' style='width: 50px;'>";
 				$mysqli->close();
     			}
@@ -173,9 +174,9 @@ if($stmt = $mysqli->prepare($sql)){
                 <li>
                 </li>
                 <li>
-                    <form>
+                    <form action="searchGame.php" method="post">
                         <span>
-                            <input type="text" placeholder="Search...">
+                            <input type="text" id="findGame" name="findGame" placeholder="Search a game...">
                             <button type="submit">Go</button>
                         </span>
                     </form>
@@ -238,14 +239,15 @@ if($stmt = $mysqli->prepare($sql)){
                     </div>
                 </div>
             </div>
-            <div style="float: left; width: 40%;">
+            <div style="float: right; width: 37%;">
                 <div class="trending-topics">
-                    <h2>Trending Topics</h2>
+                    <h2 style="text-align: center">Trending Topics</h2><br><hr><br>
                     <ul style="list-style-type: none;">
-                        <li><a href="#">The excitinue thready felt the open my brought the oncentally kind of unressed sides, I neven my contive traded by to colleave the end</a></li>
-                        <li><a href="#">That missing to see a bummer, and it because extra in plot that because end</a></li>
-                        <li><a href="#">New part one, is never one, and as that because ever 87 how threads any markers, any missed by to that's already full of this new Game+.</a></li>
-                        <li><a href="#">New Game+. The to New Game+. </a></li>
+                        <li><a href="articles/article1.html">Grand Theft Auto 8 Unleashed: A Fictional Gaming Spectacle</a></li><br>
+                        <li><a href="articles/article2.html">Cybernetic Odyssey: Exploring the Virtual Realms of 'NexaSphere' - A Futuristic Gaming Marvel</a></li><br>
+                        <li><a href="articles/article3.html">Legends Rise: Unveiling the Mythical Realms in 'EpicQuest' - A Fantasy Adventure Extravaganza</a></li><br>
+                        <li><a href="articles/article4.html">Quantum Conundrum: Delving into the Mind-Bending Puzzles of 'TechnoMaze' - A Puzzle Masterpiece</a></li><br>
+						<li><a href="articles/article5.html">Starship Commanders: Navigating the Cosmos in 'Galactic Conquest' - An Intergalactic Strategy Epic</a></li><br>
                     </ul>
                 </div>
             </div>
