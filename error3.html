@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Game Tracker</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1 class="header">My Game Tracker</h1>
+        <div class="header">
+            <ul class="left_nav">
+                <li><a href="home.php">Home</a></li>
+                <li><a href="mylist.php">My List</a></li>
+                <li><a href="achievements.php">Achievements</a></li>
+                <li><a href="recommended.php">Recommended</a></li>
+                <li><a href="users.php">Users</a></li>
+            </ul>
+            <span class="logo" style="width: 30vw;"></span>
+            <ul class="right_nav">
+                <li>
+                </li>
+                <li>
+                    <form action="searchGame.php" method="post">
+                        <span>
+                            <input type="text" id="findGame" name="findGame" placeholder="Search a game...">
+                            <button type="submit">Go</button>
+                        </span>
+                    </form>
+                </li>
+                <li><a href="loginlogout.php">Login/Logout</a></li>
+            </ul>
+        </div>
+    <div class="main" style="text-align: center; color: white; margin-top: 10%">
+    	<h1>ERROR: User not found.</h1>
+    	<button onclick="window.location.href = 'users.php';">Users</button>
+    </div>
+</body>
+</html>

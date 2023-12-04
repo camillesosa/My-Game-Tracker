@@ -28,7 +28,7 @@
     						exit();
     					} else {
         					echo "User not found";
-						header("location: users.php");
+						header("location: error3.html");
     					}
 				}
 ?>
