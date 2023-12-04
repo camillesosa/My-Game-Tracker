@@ -108,7 +108,11 @@ if($stmt = $mysqli->prepare($sql)){
                 <li><a href="mylist.php">My List</a></li>
                 <li><a href="achievements.php">Achievements</a></li>
                 <li><a href="recommended.php" style="border:2px solid white"><b>Recommended</b></a></li>
-                <li><a href="users.php">Users</a></li>
+                <?php
+		        session_start();
+		        if($_SESSION['username'] === 'admin'){
+			        echo "<li><a href='admin.php'>Admin</a></li>";
+		        } ?>
             </ul>
             <span class="logo" style="width: 30vw;"></span>
             <ul class="right_nav">

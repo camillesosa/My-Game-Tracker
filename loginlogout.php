@@ -23,7 +23,6 @@
                 <li><a href="achievements.php">Achievements</a></li>
                 <li><a href="recommended.php">Recommended</a></li>
                 <li><a href="users.php">Users</a></li>
-		<li><a href="admin.php">Admin</a></li>
             </ul>
             <span class="logo" style="width: 30vw;"></span>
             <ul class="right_nav">

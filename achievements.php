@@ -91,6 +91,11 @@ if($stmt = $mysqli->prepare($sql)){
                 <li><a href="achievements.php" style="border:2px solid white"><b>Achievements</b></a></li>
                 <li><a href="recommended.php">Recommended</a></li>
                 <li><a href="users.php">Users</a></li>
+                <?php
+		        session_start();
+		        if($_SESSION['username'] === 'admin'){
+			        echo "<li><a href='admin.php'>Admin</a></li>";
+		        } ?>
             </ul>
             <span class="logo" style="width: 30vw;"></span>
             <ul class="right_nav">
@@ -194,7 +199,7 @@ if($stmt = $mysqli->prepare($sql)){
 				echo "<div class='gallery'>";
 				echo "<h2>$game[gameTitle]</h2>";
 				//echo "<h2>$game[game_id]</h2>";
-				echo "<div class='scrolling-list' style='border: 5px solid white;'>";
+				echo "<div class='scrolling-list' style='border: 5px solid #202225;'>";
 				foreach($achievements as $achievement){
 					echo "<div>
                             			<img src='img/trophiesIcon.png' style='width: 200px;' alt='Game 1'>
