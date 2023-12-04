@@ -138,9 +138,9 @@ if($stmt = $mysqli->prepare($sql)){
 			 <h1 style="text-align: center;">Find A User</h1>
             <hr>
             <br>
-                <form>
+                <form action="searchUser.php" method="post">
                     <span>
-                        <input type="text" placeholder="Search username...">
+                        <input type="text" id="findUser" name="findUser" placeholder="Search username...">
                         <button type="submit">Go</button>
                     </span>
                 </form>
