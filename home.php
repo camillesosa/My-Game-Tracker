@@ -58,8 +58,8 @@ if($stmt = $mysqli->prepare($sql)){
             while($stmt->fetch()){
                 $upcoming[] = array("title" => $title, "coverArt" => $coverArt);
 
-                $upcoming[count($games)-1]["coverArt"] = $coverArt;
-                $upcoming[count($games)-1]["title"] = $title;
+                $upcoming[count($upcoming)-1]["coverArt"] = $coverArt;
+                $upcoming[count($upcoming)-1]["title"] = $title;
 
             }
         } else{
