@@ -146,11 +146,6 @@ if($stmt = $mysqli->prepare($sql)){
 	    </div>
 
                 <li>
-                    <select name="Sort">
-                        <option value="A-Z">Sort By: A-Z</option>
-                        <option value="Z-A">Sort By: Z-A</option>
-                        <option value="Ranking">Sort By: Avg. Ranking</option>
-                    </select>
                 </li>
                 <li>
                     <form action="searchGame.php" method="post">

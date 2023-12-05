@@ -1,36 +1,5 @@
 <?php
 require_once "config.php";
-$sql = "SELECT user_id, username, profilePic FROM User;";
-$mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-$dom = new DOMDocument('1.0', 'utf-8');
-
-if($stmt = $mysqli->prepare($sql)){
-    // Attempt to execute prepared statement
-    if($stmt->execute()){
-        // Store result
-        $stmt->store_result();
-        // If more than one result, return array of games
-        if($stmt->num_rows >= 1){
-            // Bind result variables
-            $stmt->bind_result($user_id, $username, $profilePic);
-            $users = array();
-            while($stmt->fetch()){
-                $users[] = array("user_id" => $user_id, "username" => $username, "profilePic" => $profilePic);
-
-                $users[count($users)-1]["user_id"] = $user_id;
-                $users[count($users)-1]["username"] = $username;
-                $users[count($users)-1]["profilePic"] = $profilePic;
-
-            }
-        } else{
-            // echo "No games found.";
-        }
-    } else{
-        // echo "Oops! Something went wrong. Please try again later.";
-    }
-    // Close statement
-    $stmt->close();
-}
 ?>
 
 
@@ -77,61 +46,61 @@ if($stmt = $mysqli->prepare($sql)){
                 <li><a href="achievements.php">Achievements</a></li>
                 <li><a href="recommended.php">Recommended</a></li>
                 <li><a href="users.php" style="border:2px solid white"><b>Users</b></a></li>
-		        <?php
-		        session_start();
-		        if($_SESSION['username'] === 'admin'){
-			        echo "<li><a href='admin.php'>Admin</a></li>";
-		        } ?>
+		<?php
+		session_start();
+		if($_SESSION['username'] === 'admin'){
+			echo "<li><a href='admin.php'>Admin</a></li>";
+		} ?>
             </ul>
             <span class="logo" style="width: 30vw;"></span>
             <ul class="right_nav">
 
-            	    <div style="position: fixed; top: 0; right: 0; transform: translate(-100%, 0); background-color: #292b2f; color: #fff; padding: 5px; border-radius: 5px;">
+	    <div style="position: fixed; top: 0; right: 0; transform: translate(-100%, 0); background-color: #292b2f; color: #fff; padding: 5px; border-radius: 5px;">
 		<?php
 			session_start();
 
-			if (isset($_SESSION['username'])) {
-       		 		echo "{$_SESSION['username']} ";
-				$username = "{$_SESSION['username']}";
+			if (isset($_SESSION['id'])) {
+				$userID = "{$_SESSION['id']}";
 				$mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
-				$query = "SELECT profilePic FROM User WHERE username = '$username';";
+				$query = "SELECT username, profilePic FROM User WHERE user_id = '$userID';";
     				$result = $mysqli->query($query);
 				if ($result) {
     					// Fetch the associative array of the result
     					$row = $result->fetch_assoc();
 
     					if ($row) {
-        					// Retrieve the user_id
+        					// Retrieve the username and profilePic
+						$username = $row['username'];
         					$profilePic = $row['profilePic'];
     					} else {
         					echo "Picture not found";
     					}
 				}
+				echo "<a href='profile.php'>$username </a>";
 				echo "<img src='$profilePic' style='width: 50px;'>";
 				$mysqli->close();
     			}
 		?>
 	    </div>
-
                 <li>
                 </li>
                 <li>
-                    <form>
+                    <form action="searchGame.php" method="post">
                         <span>
-                            <input type="text" placeholder="Search...">
+                            <input type="text" id="findGame" name="findGame" placeholder="Search a game...">
                             <button type="submit">Go</button>
                         </span>
                     </form>
                 </li>
                 <li><?php
-			            if (isset($_SESSION['username'])) {
-				            echo "<a href='loginlogout.php'>Logout</a>";
-			            } else{
-				            echo "<a href='loginlogout.php'>Login</a>";
-			            }
-		            ?>
-		        </li>
+			if (isset($_SESSION['username'])) {
+				echo "<a href='loginlogout.php'>Logout</a>";
+			} else{
+				echo "<a href='loginlogout.php'>Login</a>";
+			}
+		    ?>
+		</li>
             </ul>
         </div>
         <!-- End Navigation bar -->
@@ -152,24 +121,77 @@ if($stmt = $mysqli->prepare($sql)){
 
             <h2>Users</h2>
             <div class="right_nav">
-                <select class="right_nav" name="Sort">
-		    <option value="A-Z">Sort By: Date Joined</option>
-                    <option value="Z-A">Sort By: Alphabetical</option>
-                </select>
+		<form name="orderUsers" method="post">
+                	<select class="right_nav" name="Sort" onchange="orderUsers.submit()">
+				<option value="null">Sort By...</option>
+		    		<option value="date">Sort By: Date Joined</option>
+                    		<option value="A-Z">Sort By: Alphabetical</option>
+				<option value="Z-A">Sort By: Rev. Alphabetical</option>
+                	</select>
+		</form>
+		<?php
+			session_start();
+			if(isset($_POST['Sort'])) {
+				$sort = $_POST['Sort'];
+				if($sort == "A-Z"){
+					//sort by name
+					$sql = "SELECT user_id, username, profilePic FROM User ORDER BY username;";
+				} else if ($sort == "Z-A"){
+					//sort by name reverse
+					$sql = "SELECT user_id, username, profilePic FROM User ORDER BY username DESC;";
+				} else {
+					//sort by date joined
+					$sql = "SELECT user_id, username, profilePic FROM User;";
+				}
+			} else {
+				//sort by date joined
+				$sql = "SELECT user_id, username, profilePic FROM User;";
+			}
+
+				$mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+				$dom = new DOMDocument('1.0', 'utf-8');
+
+				if($stmt = $mysqli->prepare($sql)){
+    					// Attempt to execute prepared statement
+    					if($stmt->execute()){
+       						// Store result
+       						$stmt->store_result();
+       						// If more than one result, return array of games
+       						if($stmt->num_rows >= 1){
+           						// Bind result variables
+          						$stmt->bind_result($user_id, $username, $profilePic);
+            						$users = array();
+            						while($stmt->fetch()){
+                						$users[] = array("user_id" => $user_id, "username" => $username, "profilePic" => $profilePic);
+
+                						$users[count($users)-1]["user_id"] = $user_id;
+                						$users[count($users)-1]["username"] = $username;
+                						$users[count($users)-1]["profilePic"] = $profilePic;
+
+           						}
+        					} else{
+            						// echo "No games found.";
+        					}
+    					} else{
+        					// echo "Oops! Something went wrong. Please try again later.";
+    					}
+    					// Close statement
+    					$stmt->close();
+				} ?>
             </div>
             <div class="picture-list" style="border: 5px solid #202225">
                 <ul id="picture-ul">
-		            <?php
+		  <?php
                     foreach($users as $user){
                     	echo "<li>";
-			            echo "<img src='$user[profilePic]'>";
-			            echo "<p><b>$user[username]</b></p>";
-			            echo "<button onclick=\"window.location.href='selectedUserList.php?username=$user[username]'\">User's List</button>";
+			echo "<img src='$user[profilePic]'>";
+			echo "<p><b>$user[username]</b></p>";
+			echo "<button onclick=\"window.location.href='selectedUserList.php?username=$user[username]'\">User's List</button>";
 
-			            echo "</li>";
+			echo "</li>";
                     }
-		            ?>
-		        </ul>
+		?>
+		</ul>
             </div>
         </div>
     </body>
