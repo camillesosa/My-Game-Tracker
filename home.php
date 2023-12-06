@@ -3,7 +3,7 @@
 require_once "util/config.php";
 
 // Make request to DB for most popular video games
-$sql = "SELECT vg.game_id, vg.title, vg.coverArt, AVG(uv.rating) AS average_rating, COUNT(uv.game_id) AS occurrences FROM VideoGame vg JOIN user_videogame uv ON vg.game_id = uv.game_id GROUP BY vg.game_id, vg.title, vg.coverArt ORDER BY occurrences DESC LIMIT 7;";
+$sql = "SELECT vg.game_id, vg.title, vg.coverArt, AVG(uv.rating) AS average_rating, COUNT(uv.game_id) AS occurrences FROM VideoGame vg JOIN user_videogame uv ON vg.game_id = uv.game_id GROUP BY vg.game_id, vg.title, vg.coverArt ORDER BY occurrences DESC LIMIT 10;";
 
 // Connect to DB
 $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
@@ -21,11 +21,11 @@ if($stmt = $mysqli->prepare($sql)){
             $games = array();
             while($stmt->fetch()){
                 $games[] = array("game_id" => $game_id, "title" => $title, "coverArt" => $coverArt, "avg_rating" => $avg_rating);
-                
+
                 $games[count($games)-1]["avg_rating"] = $avg_rating;
                 $games[count($games)-1]["coverArt"] = $coverArt;
                 $games[count($games)-1]["title"] = $title;
-            
+
             }
         } else{
             // echo "No games found.";
@@ -196,7 +196,7 @@ if($stmt = $mysqli->prepare($sql)){
             <div style="float: left; width: 60%;">
                 <div class="gallery">
                     <h2>Trending Games</h2>
-                    <div tag="scrolling-list" class="scrolling-list">
+                    <div class="scrolling-list trending-scrolling-list">
                         <?php
                         foreach($games as $game){
                             echo "<span>";
@@ -234,9 +234,9 @@ if($stmt = $mysqli->prepare($sql)){
                             echo "<span>";
                             echo "<img src=\"$upcomingG[coverArt]\" style=\"width: 200px;\" alt=\"$game[title]\">";
                             echo "<h4>$upcomingG[title]</h4>";
-			    echo "</span>";
-			}
-			?>
+			                echo "</span>";
+			            }
+			            ?>
                     </div>
                 </div>
             </div>
@@ -248,27 +248,70 @@ if($stmt = $mysqli->prepare($sql)){
                         <li><a href="article2.html">Cybernetic Odyssey: Exploring the Virtual Realms of 'NexaSphere' - A Futuristic Gaming Marvel</a></li><br>
                         <li><a href="article3.html">Legends Rise: Unveiling the Mythical Realms in 'EpicQuest' - A Fantasy Adventure Extravaganza</a></li><br>
                         <li><a href="article4.html">Quantum Conundrum: Delving into the Mind-Bending Puzzles of 'TechnoMaze' - A Puzzle Masterpiece</a></li><br>
-			<li><a href="article5.html">Starship Commanders: Navigating the Cosmos in 'Galactic Conquest' - An Intergalactic Strategy Epic</a></li><br>
+			            <li><a href="article5.html">Starship Commanders: Navigating the Cosmos in 'Galactic Conquest' - An Intergalactic Strategy Epic</a></li><br>
                     </ul>
                 </div>
             </div>
         </div>
 		<script>
-			$(document).ready(function () {
-				var scrollSpeed = 2; 
-				var scrollingList = $('.upcoming-scrolling-list');
-				scrollingList.append(scrollingList.html());
-				function scrollList() {
-					scrollingList.scrollLeft(scrollingList.scrollLeft() + scrollSpeed);
-				}
-				var scrollInterval = setInterval(scrollList, 30);
-				scrollingList.on('mouseover', function () {
-					clearInterval(scrollInterval);
-				});
-				scrollingList.on('mouseout', function () {
-					scrollInterval = setInterval(scrollList, 30);
-				});
-			});
+    			$(document).ready(function () {
+        			var scrollSpeed = 2;
+        			var scrollingList = $('.upcoming-scrolling-list');
+
+        			function scrollList() {
+            				var currentScrollLeft = scrollingList.scrollLeft();
+            				var maxScrollLeft = scrollingList[0].scrollWidth - scrollingList[0].clientWidth;
+
+            				if (currentScrollLeft >= maxScrollLeft) {
+                				// If at the end, change direction to go left
+                				scrollSpeed = -2;
+            				} else if (currentScrollLeft <= 0) {
+                				// If at the beginning, change direction to go right
+                				scrollSpeed = 2;
+            				}
+            				scrollingList.scrollLeft(currentScrollLeft + scrollSpeed);
+        			}
+
+        			var scrollInterval = setInterval(scrollList, 30);
+
+        			scrollingList.on('mouseover', function () {
+            				clearInterval(scrollInterval);
+        			});
+
+        			scrollingList.on('mouseout', function () {
+            				scrollInterval = setInterval(scrollList, 30);
+        			});
+    			});
+
+    			$(document).ready(function () {
+        			var scrollSpeed = 2;
+        			var scrollingList = $('.trending-scrolling-list');
+
+        			function scrollList() {
+            				var currentScrollLeft = scrollingList.scrollLeft();
+            				var maxScrollLeft = scrollingList[0].scrollWidth - scrollingList[0].clientWidth;
+
+            				if (currentScrollLeft >= maxScrollLeft) {
+                				// If at the end, change direction to go left
+                				scrollSpeed = -2;
+            				} else if (currentScrollLeft <= 0) {
+                				// If at the beginning, change direction to go right
+                				scrollSpeed = 2;
+            				}
+            				scrollingList.scrollLeft(currentScrollLeft + scrollSpeed);
+        			}
+
+        			var scrollInterval = setInterval(scrollList, 30);
+
+        			scrollingList.on('mouseover', function () {
+            				clearInterval(scrollInterval);
+        			});
+
+        			scrollingList.on('mouseout', function () {
+            				scrollInterval = setInterval(scrollList, 30);
+        			});
+    			});
+
 		</script>
     </body>
 </html>
