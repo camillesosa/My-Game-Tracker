@@ -6,7 +6,7 @@
         exit();
     }
 
-    require_once "config.php";
+    require_once "util/config.php";
 
     $username = $_SESSION['username'];
     $user_id = $_SESSION["id"];
@@ -241,7 +241,7 @@
                     <br><br><br>
 		    <img style="padding-top: 10%; width: 120px; height: 120px;" src="img/trophy.png" alt="Picture 11"><br><br>
                     <div class="text-entry" style="height: 200px;">
-                        <form action="addAchievement.php" method="post">
+                        <form action="util/addAchievement.php" method="post">
                             <h2 style="color: #fff;">Add a new achievement</h2>
                             <label style="padding-top: 10%;" for="gameTitle">Game:</label>
                             <select name="gameTitle" style="width: 170px; background-color: #292b2f; color: #fff; border-color: #292b2f; border-radius: 10px; padding: 5px; margin-right: 5px;">

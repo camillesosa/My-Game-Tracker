@@ -6,7 +6,7 @@
         exit();
     }
 
-    require_once "config.php";
+    require_once "util/config.php";
 
     $username = $_SESSION['username'];
     $user_id = $_SESSION["id"];
@@ -224,7 +224,7 @@
                         
                         <img name="searchPreview" style="width: 200px; padding-top: 10%;"> </img>
 
-                        <form action="addGame.php" method="post">
+                        <form action="util/addGame.php" method="post">
                             <label style="padding-top: 10%;" for="name">Title:</label>
                             <input readonly type="text" id="gameTitle" name="gameTitle">
                             <label style="padding-top: 10%;">Rating:</label>

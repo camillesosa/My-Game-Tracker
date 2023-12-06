@@ -1,5 +1,5 @@
 <?php
-require_once "config.php";
+require_once "util/config.php";
 ?>
 
 
@@ -111,7 +111,7 @@ require_once "config.php";
 			 <h1 style="text-align: center;">Find A User</h1>
             <hr>
             <br>
-                <form action="searchUser.php" method="post">
+                <form action="util/searchUser.php" method="post">
                     <span>
                         <input type="text" id="findUser" name="findUser" placeholder="Search username...">
                         <button type="submit">Go</button>
