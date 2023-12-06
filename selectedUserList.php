@@ -13,7 +13,7 @@ if (isset($_GET['username'])) {
     require_once "util/config.php";
     $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
-	$query = "SELECT user_id FROM User WHERE username = '$username';";
+	$query = "SELECT user_id, profilePic FROM User WHERE username = '$username';";
     $result = $mysqli->query($query);
 if ($result) {
     // Fetch the associative array of the result
@@ -22,6 +22,7 @@ if ($result) {
     if ($row) {
         // Retrieve the user_id
         $user_id = $row['user_id'];
+        $profilePic = $row['profilePic'];
     } else {
         echo "User not found";
     }
@@ -154,25 +155,26 @@ if ($gamecount_result) {
 		<?php
 			session_start();
 
-			if (isset($_SESSION['username'])) {
-       		 		echo "{$_SESSION['username']} ";
-				$user = "{$_SESSION['username']}";
+			if (isset($_SESSION['id'])) {
+				$userID = "{$_SESSION['id']}";
 				$mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
-				$query = "SELECT profilePic FROM User WHERE username = '$user';";
+				$query = "SELECT username, profilePic FROM User WHERE user_id = '$userID';";
     				$result = $mysqli->query($query);
 				if ($result) {
     					// Fetch the associative array of the result
     					$row = $result->fetch_assoc();
 
     					if ($row) {
-        					// Retrieve the user_id
-        					$Pic = $row['profilePic'];
+        					// Retrieve the username and profilePic
+						$username = $row['username'];
+        					$profilePic = $row['profilePic'];
     					} else {
         					echo "Picture not found";
     					}
 				}
-				echo "<img src='$Pic' style='width: 50px;'>";
+				echo "<a href='profile.php'>$username </a>";
+				echo "<img src='$profilePic' style='width: 50px;'>";
 				$mysqli->close();
     			}
 		?>
@@ -257,14 +259,14 @@ if ($gamecount_result) {
 		    <hr><br>
                     <div class="text-entry" style="height: 200px;">
 
-                        <img src='img/GamerIcon.png'>
-			<?php
-				echo "<p><b>$username</b></p>";
-				echo "</li>";
-				echo "<br>";
-				echo "<p>Games Played:</p>";
-				echo "<p>$gamecount</p>";
-			?>
+			        <?php
+				        echo "<img src='$profilePic' style='width: 250px;'>";
+				        echo "<p><b>$username</b></p>";
+				        echo "</li>";
+				        echo "<br>";
+				        echo "<p>Games Played:</p>";
+				        echo "<p>$gamecount</p>";
+			        ?>
 
                     </div>
                 </div>

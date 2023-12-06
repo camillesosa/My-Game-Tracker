@@ -114,24 +114,25 @@
 		<?php
 			session_start();
 
-			if (isset($_SESSION['username'])) {
-       		 		echo "{$_SESSION['username']} ";
-				$username = "{$_SESSION['username']}";
+			if (isset($_SESSION['id'])) {
+				$userID = "{$_SESSION['id']}";
 				$mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
-				$query = "SELECT profilePic FROM User WHERE username = '$username';";
+				$query = "SELECT username, profilePic FROM User WHERE user_id = '$userID';";
     				$result = $mysqli->query($query);
 				if ($result) {
     					// Fetch the associative array of the result
     					$row = $result->fetch_assoc();
 
     					if ($row) {
-        					// Retrieve the user_id
+        					// Retrieve the username and profilePic
+						$username = $row['username'];
         					$profilePic = $row['profilePic'];
     					} else {
         					echo "Picture not found";
     					}
 				}
+				echo "<a href='profile.php'>$username </a>";
 				echo "<img src='$profilePic' style='width: 50px;'>";
 				$mysqli->close();
     			}

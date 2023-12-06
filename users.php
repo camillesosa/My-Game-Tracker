@@ -46,11 +46,11 @@ require_once "util/config.php";
                 <li><a href="achievements.php">Achievements</a></li>
                 <li><a href="recommended.php">Recommended</a></li>
                 <li><a href="users.php" style="border:2px solid white"><b>Users</b></a></li>
-		<?php
-		session_start();
-		if($_SESSION['username'] === 'admin'){
-			echo "<li><a href='admin.php'>Admin</a></li>";
-		} ?>
+		        <?php
+		            session_start();
+		            if(isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == true){
+			            echo "<li><a href='admin.php'>Admin</a></li>";
+		            } ?>
             </ul>
             <span class="logo" style="width: 30vw;"></span>
             <ul class="right_nav">
