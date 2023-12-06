@@ -4,7 +4,7 @@ session_start();
 
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-    header("location: home.php");
+    header("location: ../home.php");
     exit;
 }
 
@@ -35,7 +35,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate credentials
     if(empty($username_err) && empty($password_err)){
         // Prepare a select statement
-        $sql = "SELECT user_id, username, password FROM User WHERE username = ?";
+        $sql = "SELECT user_id, username, password, adminPermissions FROM User WHERE username = ?";
 
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
@@ -52,7 +52,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 // Check if username exists, if yes then verify password
                 if(mysqli_stmt_num_rows($stmt) == 1){
                     // Bind result variables
-                    mysqli_stmt_bind_result($stmt, $id, $username, $hashed_password);
+                    mysqli_stmt_bind_result($stmt, $id, $username, $hashed_password, $adminPermissions);
                     if(mysqli_stmt_fetch($stmt)){
                         $param_password = password_hash($password, PASSWORD_DEFAULT);
                         print_r($param_password);
@@ -65,20 +65,25 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["loggedin"] = true;
                             $_SESSION["id"] = $id;
                             $_SESSION["username"] = $username;
+                            if($adminPermissions == 1){
+                              $_SESSION["isAdmin"] = true;
+                            } else {
+                              $_SESSION["isAdmin"] = false;
+                            }
 
                             // Redirect user to welcome page
-                            header("location: home.php");
+                            header("location: ../home.php");
                             exit;
                         } else{
                             // Password is not valid, display a generic error message
                             $login_err = "Invalid username or password.";
-                            header("location: error.html");
+                            header("location: ../error.html");
                         }
                     }
                 } else{
                     // Username doesn't exist, display a generic error message
                     $login_err = "Invalid username or password.";
-                    header("location: error.html");
+                    header("location: ../error.html");
                 }
             } else{
                 echo "Oops! Something went wrong. Please try again later.";

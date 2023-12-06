@@ -110,7 +110,7 @@ if($stmt = $mysqli->prepare($sql)){
                 <li><a href="recommended.php" style="border:2px solid white"><b>Recommended</b></a></li>
                 <?php
 		        session_start();
-		        if($_SESSION['username'] === 'admin'){
+		        if(isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == true){
 			        echo "<li><a href='admin.php'>Admin</a></li>";
 		        } ?>
             </ul>

@@ -5,11 +5,10 @@
         header("Location: loginlogout.php");
         exit();
     } else {
-    	if($_SESSION['username'] != 'admin'){
+    	if(!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin'] == false){
 		header("Location: error.html");
         	exit();
 	}
-
     	require_once "util/config.php";
 
     	$username = $_SESSION['username'];

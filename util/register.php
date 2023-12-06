@@ -55,10 +55,10 @@ $username_err = $password_err = $email_err = "";
              //Attempt to execute the prepared statement
             if($stmt->execute()){
                 // Redirect to updated admin page
-                header("location: loginlogout.php");
+                header("location: ../loginlogout.php");
             } else{
                 echo "Oops! Something went wrong. Please try again later.";
-		header("location: error.html");
+		header("location: ../error.html");
             }
 
     $mysqli->close();

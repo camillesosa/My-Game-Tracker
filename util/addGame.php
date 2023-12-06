@@ -32,7 +32,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 $sql = "UPDATE user_videogame SET rating = $gameRating, review = '$gameReview' WHERE user_id = $user_id AND game_id = $game_id;";
                 if($mysqli->query($sql) === true){
                     // Redirect to updated myList
-                    header("location: mylist.php");
+                    header("location: ../mylist.php");
                 } else{
                     echo "ERROR: Could not execute $sql. " . $mysqli->error;
                 }
@@ -41,7 +41,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             }
         }
         // Redirect to updated myList
-        header("location: mylist.php");
+        header("location: ../mylist.php");
     }
     $mysqli->close();
 }
