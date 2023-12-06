@@ -80,6 +80,7 @@ if($stmt = $mysqli->prepare($sql)){
         <meta charset="utf-8">
         <title>My Game Tracker</title>
         <link rel="stylesheet" href="style.css">
+		<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     </head>
     <body>
 	<style>
@@ -227,7 +228,7 @@ if($stmt = $mysqli->prepare($sql)){
                 </div>
                 <div class="gallery">
                     <h2>Upcoming Games</h2>
-                    <div class="scrolling-list">
+                    <div class="scrolling-list upcoming-scrolling-list">
                         <?php
                         foreach($upcoming as $upcomingG){
                             echo "<span>";
@@ -252,5 +253,22 @@ if($stmt = $mysqli->prepare($sql)){
                 </div>
             </div>
         </div>
+		<script>
+			$(document).ready(function () {
+				var scrollSpeed = 2; 
+				var scrollingList = $('.upcoming-scrolling-list');
+				scrollingList.append(scrollingList.html());
+				function scrollList() {
+					scrollingList.scrollLeft(scrollingList.scrollLeft() + scrollSpeed);
+				}
+				var scrollInterval = setInterval(scrollList, 30);
+				scrollingList.on('mouseover', function () {
+					clearInterval(scrollInterval);
+				});
+				scrollingList.on('mouseout', function () {
+					scrollInterval = setInterval(scrollList, 30);
+				});
+			});
+		</script>
     </body>
 </html>
