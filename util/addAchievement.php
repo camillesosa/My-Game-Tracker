@@ -38,9 +38,6 @@
 
     $mysqli->close();
 
-
-
-
     $achievement = trim($_POST["achievement"]);
 
     // Prepare a insert statement
@@ -55,10 +52,10 @@
              //Attempt to execute the prepared statement
             if($stmt->execute()){
                 // Redirect to updated admin page
-                header("location: achievements.php");
+                header("location: ../achievements.php");
             } else{
                 echo "Oops! Something went wrong. Please try again later.";
-		header("location: error.html");
+		header("location: ../error.html");
             }
 
     $mysqli->close();

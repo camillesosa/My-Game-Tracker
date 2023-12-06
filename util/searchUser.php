@@ -24,11 +24,11 @@
 						$username = $row['username'];
         					$user_id = $row['user_id'];
 
-						header("location: selectedUserList.php?username=" . urlencode($username));
+						header("location: ../selectedUserList.php?username=" . urlencode($username));
     						exit();
     					} else {
         					echo "User not found";
-						header("location: error3.html");
+						header("location: ../error3.html");
     					}
 				}
 ?>
