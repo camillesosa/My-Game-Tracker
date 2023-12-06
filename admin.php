@@ -128,7 +128,7 @@ if($stmt = $mysqli->prepare($sql)){
                         </span>
                     </form>
                 </li>
-                <li><a href="loginlogout.php">Login/Logout</a></li>
+                <li><a href="loginlogout.php">Logout</a></li>
             </ul>
         </div>
     <div class="main" style="text-align: center; color: white; margin-top: 2%">
