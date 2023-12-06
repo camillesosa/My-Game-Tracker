@@ -138,10 +138,10 @@ if ($gamecount_result) {
         <div class="header">
             <ul class="left_nav">
                 <li><a href="home.php">Home</a></li>
-                <li><a href="mylist.php" style="border:2px solid white"><b>My List</b></a></li>
+                <li><a href="mylist.php">My List</a></li>
                 <li><a href="achievements.php">Achievements</a></li>
                 <li><a href="recommended.php">Recommended</a></li>
-                <li><a href="users.php">Users</a></li>
+                <li><a href="users.php" style="border:2px solid white"><b>Users</b></a></li>
                 <?php
 		        session_start();
 		        if(isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == true){
@@ -167,17 +167,18 @@ if ($gamecount_result) {
 
     					if ($row) {
         					// Retrieve the username and profilePic
-						$username = $row['username'];
-        					$profilePic = $row['profilePic'];
+						$user = $row['username'];
+        					$Pic = $row['profilePic'];
     					} else {
         					echo "Picture not found";
     					}
 				}
-				echo "<a href='profile.php'>$username </a>";
-				echo "<img src='$profilePic' style='width: 50px;'>";
+				echo "<a href='profile.php'>$user </a>";
+				echo "<img src='$Pic' style='width: 50px;'>";
 				$mysqli->close();
     			}
 		?>
+
 	    </div>
 
                 <li>
