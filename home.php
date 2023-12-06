@@ -108,7 +108,7 @@ if($stmt = $mysqli->prepare($sql)){
     		overflow-x: scroll;
     		scroll-behavior: smooth;
     		background-color: #292b2f;
-    		padding: 3%;
+    		padding: 5px;
 	    }
 
 	    .scrolling-list h4 {
@@ -118,7 +118,7 @@ if($stmt = $mysqli->prepare($sql)){
 
 	    .scrolling-list img {
     		max-width: 200px;
-    		padding: 5%;
+    		padding: 10px;
 	    }
 
 	    .scrolling-list p {
@@ -142,9 +142,8 @@ if($stmt = $mysqli->prepare($sql)){
             <span class="logo" style="width: 30vw;"></span>
             <ul class="right_nav">
 
-            	    <div style="position: fixed; top: 0; right: 0; transform: translate(-100%, 0); background-color: #292b2f; color: #fff; padding: 5px; border-radius: 5px;">
-		<?php
-			session_start();
+            <div style="position: fixed; top: 0; right: 0; transform: translate(-100%, 0); background-color: #292b2f; color: #fff; padding: 5px; border-radius: 5px;">
+		    <?php
 
 			if (isset($_SESSION['id'])) {
 				$userID = "{$_SESSION['id']}";
@@ -227,7 +226,7 @@ if($stmt = $mysqli->prepare($sql)){
                 </div>
                 <div class="gallery">
                     <h2>Upcoming Games</h2>
-                    <div class="scrolling-list">
+                    <div id="upcomingGames" class="scrolling-list">
                         <?php
                         foreach($upcoming as $upcomingG){
                             echo "<span>";
@@ -253,4 +252,25 @@ if($stmt = $mysqli->prepare($sql)){
             </div>
         </div>
     </body>
+    <script>
+        // Add horizontal scroll animation to the scrolling-list div
+        const scrollingList = document.getElementById('upcomingGames');
+        scrollingList.scrollLeft = 1;
+
+        setInterval(() => {
+
+            // Every 200px, pop the first element and append it to the end
+            if(scrollingList.scrollLeft >= scrollingList.firstElementChild.width + 10){
+                
+                // scrollingList.scrollLeft -= 200;
+                // Pop the first element and append it to the end
+                scrollingList.appendChild(scrollingList.firstElementChild);
+                scrollingList.firstElementChild = null;
+                
+            } else {
+                scrollingList.scrollLeft += 3;
+            }
+
+        }, 100);
+    </script>
 </html>
