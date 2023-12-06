@@ -1,6 +1,6 @@
 <?php
 
-require_once "config.php";
+require_once "util/config.php";
 
 // Make request to DB for most popular video games
 $sql = "SELECT vg.game_id, vg.title, vg.coverArt, AVG(uv.rating) AS average_rating, COUNT(uv.game_id) AS occurrences FROM VideoGame vg JOIN user_videogame uv ON vg.game_id = uv.game_id GROUP BY vg.game_id, vg.title, vg.coverArt HAVING AVG(uv.rating) > 4 ORDER BY occurrences DESC LIMIT 9;";

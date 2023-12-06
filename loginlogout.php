@@ -43,7 +43,7 @@
             <div class="container">
                 <div class="left-column"></div>
                 <div class="middle-column">
-                    <form action="login.php" method="post">
+                    <form action="util/login.php" method="post">
                         <h2>Login</h2>
                         <label for="username">Username:</label>
                         <input type="text" id="username" name="username"><br><br>
@@ -56,7 +56,7 @@
                 <div class="right-column"></div>
             </div>
             <div class="form-container">
-                <form action="register.php" method="post">
+                <form action="util/register.php" method="post">
                     <h2>Register</h2>
                     <label for="new-username">Username:</label>
                     <input type="text" id="new-username" name="new-username"><br><br>

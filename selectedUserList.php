@@ -10,7 +10,7 @@ if (isset($_GET['username'])) {
     echo "Username not provided in the URL.";
 }
 
-    require_once "config.php";
+    require_once "util/config.php";
     $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
 	$query = "SELECT user_id FROM User WHERE username = '$username';";

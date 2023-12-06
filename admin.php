@@ -10,7 +10,7 @@
         	exit();
 	}
 
-    	require_once "config.php";
+    	require_once "util/config.php";
 
     	$username = $_SESSION['username'];
     	$user_id = $_SESSION["id"];
@@ -23,7 +23,7 @@
     	}
     }
 
-require_once "config.php";
+require_once "util/config.php";
 //for upcomingGames
 // Make request to DB for umpcoming video games
 $sql = "SELECT title, coverArt FROM upcomingGames;";
@@ -174,7 +174,7 @@ if($stmt = $mysqli->prepare($sql)){
 <!-- Right Column -->
             <div style="justify-content: center; width: auto; text-align: center;" class="container">
                 <div>
-                        <form action="upcomingGame.php" method="post">
+                        <form action="util/upcomingGame.php" method="post">
                             <h2 style="color: #fff;">Add game</h2>
                             <label style="padding-top: 10%;" for="new-title">Title:</label>
                             <input type="text" id="new-title" name="new-title">
@@ -184,7 +184,7 @@ if($stmt = $mysqli->prepare($sql)){
                         </form>
                 </div>
 		<div>
-                        <form action="updateGame.php" method="post">
+                        <form action="util/updateGame.php" method="post">
                             <h2 style="color: #fff;">Update game</h2>
                             <label style="padding-top: 10%;" for="title">Title:</label>
                             <input type="text" id="title" name="title">
@@ -196,7 +196,7 @@ if($stmt = $mysqli->prepare($sql)){
                         </form>
                 </div>
 		<div>
-                        <form action="deleteGame.php" method="post">
+                        <form action="util/deleteGame.php" method="post">
                             <h2 style="color: #fff;">Delete game</h2>
                             <label style="padding-top: 10%;" for="deleteGame">Title:</label>
                             <input type="text" id="deleteGame" name="deleteGame">
@@ -208,7 +208,7 @@ if($stmt = $mysqli->prepare($sql)){
 <br><br><br><br><br><br><br><br><br><br><br>
             <div style="justify-content: center; width: auto; text-align: center;" class="container">
                 <div>
-                        <form action="registerAA.php" method="post">
+                        <form action="util/registerAA.php" method="post">
                             <h2 style="color: #fff;">Add user</h2>
                             <label style="padding-top: 10%;" for="new-username">Username:</label>
                             <input type="text" id="new-username" name="new-username">
@@ -220,7 +220,7 @@ if($stmt = $mysqli->prepare($sql)){
                         </form>
                 </div>
 		<div>
-                        <form action="updateUser.php" method="post">
+                        <form action="util/updateUser.php" method="post">
                             <h2 style="color: #fff;">Update user</h2>
                             <label style="padding-top: 10%;" for="username">Username:</label>
                             <input type="text" id="username" name="username">
@@ -232,7 +232,7 @@ if($stmt = $mysqli->prepare($sql)){
                         </form>
                 </div>
 		<div>
-                        <form action="deleteUser.php" method="post">
+                        <form action="util/deleteUser.php" method="post">
                             <h2 style="color: #fff;">Delete user</h2>
                             <label style="padding-top: 10%;" for="deleteUser">Username:</label>
                             <input type="text" id="deleteUser" name="deleteUser">
