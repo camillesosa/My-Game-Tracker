@@ -243,11 +243,11 @@ if($stmt = $mysqli->prepare($sql)){
                 <div class="trending-topics">
                     <h2 style="text-align: center">Trending Topics</h2><br><hr><br>
                     <ul style="list-style-type: none;">
-                        <li><a href="articles/article1.html">Grand Theft Auto 8 Unleashed: A Fictional Gaming Spectacle</a></li><br>
-                        <li><a href="articles/article2.html">Cybernetic Odyssey: Exploring the Virtual Realms of 'NexaSphere' - A Futuristic Gaming Marvel</a></li><br>
-                        <li><a href="articles/article3.html">Legends Rise: Unveiling the Mythical Realms in 'EpicQuest' - A Fantasy Adventure Extravaganza</a></li><br>
-                        <li><a href="articles/article4.html">Quantum Conundrum: Delving into the Mind-Bending Puzzles of 'TechnoMaze' - A Puzzle Masterpiece</a></li><br>
-						<li><a href="articles/article5.html">Starship Commanders: Navigating the Cosmos in 'Galactic Conquest' - An Intergalactic Strategy Epic</a></li><br>
+                        <li><a href="article1.html">Grand Theft Auto 8 Unleashed: A Fictional Gaming Spectacle</a></li><br>
+                        <li><a href="article2.html">Cybernetic Odyssey: Exploring the Virtual Realms of 'NexaSphere' - A Futuristic Gaming Marvel</a></li><br>
+                        <li><a href="article3.html">Legends Rise: Unveiling the Mythical Realms in 'EpicQuest' - A Fantasy Adventure Extravaganza</a></li><br>
+                        <li><a href="article4.html">Quantum Conundrum: Delving into the Mind-Bending Puzzles of 'TechnoMaze' - A Puzzle Masterpiece</a></li><br>
+			<li><a href="article5.html">Starship Commanders: Navigating the Cosmos in 'Galactic Conquest' - An Intergalactic Strategy Epic</a></li><br>
                     </ul>
                 </div>
             </div>
