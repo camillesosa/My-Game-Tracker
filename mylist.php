@@ -244,7 +244,7 @@
                                 <input type="radio" name="star5" id="star5" value="5">
                                 <label id="5" title="5 star"></label>
                             </span>
-                            <input type="text" id="reviewText" name="reviewText">
+                            <input type="text" id="reviewText" name="reviewText" placeholder="What'd you think?">
                             <input type="submit" value="submit">
                         </form>
                     </div>
