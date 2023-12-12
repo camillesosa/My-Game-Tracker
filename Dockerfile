@@ -10,7 +10,7 @@ COPY . .
 # Install any necessary dependencies
 RUN apt-get update && apt-get install -y \
     libpq-dev \
-    && docker-php-ext-install pdo pdo_pgsql
+    && docker-php-ext-install mysqli
 
 # Expose port 80 for Apache
 EXPOSE 80
