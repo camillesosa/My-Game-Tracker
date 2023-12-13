@@ -6,6 +6,10 @@
 app = "my-game-tracker"
 primary_region = "lax"
 
+[env]
+  MYSQL_DATABASE = "greenteam"
+  MYSQL_USER = "greenteam"
+
 [build]
 
 [http_service]
