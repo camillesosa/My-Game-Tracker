@@ -1,24 +1,20 @@
 <?php
+    require_once "util/config.php";
     session_start();
 
-    	require_once "util/config.php";
+    $username = $_SESSION['username'];
+    $user_id = $_SESSION["id"];
 
-    	$username = $_SESSION['username'];
-    	$user_id = $_SESSION["id"];
+    $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
-    	$mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+    if ($mysqli->connect_errno) {
+        printf("Connection Failed: %s\n", $mysqli->connect_error);
+        exit();
+    }
 
-    	if ($mysqli->connect_errno) {
-        	printf("Connection Failed: %s\n", $mysqli->connect_error);
-        	exit();
-    	}
-
-require_once "util/config.php";
-
-// Connect to DB
-$mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-$dom = new DOMDocument('1.0', 'utf-8');
-
+    // Connect to DB
+    $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+    $dom = new DOMDocument('1.0', 'utf-8');
 ?>
 
 
@@ -39,7 +35,6 @@ $dom = new DOMDocument('1.0', 'utf-8');
                 <li><a href="recommended.php">Recommended</a></li>
                 <li><a href="users.php">Users</a></li>
                 <?php
-		        session_start();
 		        if(isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == true){
 			        echo "<li><a href='admin.php'>Admin</a></li>";
 		        } ?>
@@ -48,7 +43,6 @@ $dom = new DOMDocument('1.0', 'utf-8');
             <ul class="right_nav">
 	    <div style="position: fixed; top: 0; right: 0; transform: translate(-100%, 0); background-color: #292b2f; color: #fff; padding: 5px; border-radius: 5px;">
 		<?php
-			session_start();
 
 			if (isset($_SESSION['id'])) {
 				$userID = "{$_SESSION['id']}";

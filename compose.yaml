@@ -1,0 +1,31 @@
+# Comments are provided throughout this file to help you get started.
+# If you need more help, visit the Docker compose reference guide at
+# https://docs.docker.com/compose/compose-file/
+
+services:
+  mygametracker:
+    build:
+      context: .
+    depends_on:
+      - mygamedb
+    ports:
+      - 80:80
+    develop:
+      watch:
+        - path: .
+          target: /var/www/html
+          action: sync
+
+  mygamedb:
+    build:
+      context: .
+      dockerfile: Dockerfile.db
+    image: mysql:8
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: greenteam
+      MYSQL_USER: greenteam
+      MYSQL_PASSWORD: ra8t9kw8
+
