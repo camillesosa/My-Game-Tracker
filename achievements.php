@@ -64,7 +64,6 @@
                 <li><a href="recommended.php">Recommended</a></li>
                 <li><a href="users.php">Users</a></li>
 		<?php
-		session_start();
 		if(isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == true){
 			echo "<li><a href='admin.php'>Admin</a></li>";
 		} ?>
@@ -74,7 +73,6 @@
 
 	    <div style="position: fixed; top: 0; right: 0; transform: translate(-100%, 0); background-color: #292b2f; color: #fff; padding: 5px; border-radius: 5px;">
 		<?php
-			session_start();
 
 			if (isset($_SESSION['id'])) {
 				$userID = "{$_SESSION['id']}";
@@ -109,7 +107,6 @@
                     </select>
 		</form>
 		<?php
-			session_start();
 			if(isset($_POST['Sort'])) {
 				$sort = $_POST['Sort'];
 				if($sort == "A-Z"){

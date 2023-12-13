@@ -1,7 +1,10 @@
 <?php
 /* Database credentials. Assuming you are running MySQL
 server with default setting (user 'root' with no password) */
-// TODO change to docker container name
+// TODO change server to docker container name
+// TODO spin up dedicated FlyIO app for DB
+// Dev env will be : compose two containers on local machine, one for DB, one for app
+// Prod env will be : One FlyIO app for DB (2GB RAM), One FlyIO app for app (256MB RAM)
 define('DB_SERVER', 'my-game-tracker-mygamedb-1');
 define('DB_USERNAME', 'greenteam');
 define('DB_PASSWORD', 'ra8t9kw8');

@@ -55,8 +55,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     mysqli_stmt_bind_result($stmt, $id, $username, $hashed_password, $adminPermissions);
                     if(mysqli_stmt_fetch($stmt)){
                         $param_password = password_hash($password, PASSWORD_DEFAULT);
-                        print_r($param_password);
-                        print_r($password);
+                        // print_r($param_password);
+                        // print_r($password);
                         if(password_verify($password, $hashed_password)){
                             // Password is correct, so start a new session
                             session_start();

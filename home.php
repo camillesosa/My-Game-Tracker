@@ -2,6 +2,8 @@
 
 require_once "util/config.php";
 
+session_start();
+
 // Make request to DB for most popular video games
 $sql = "SELECT vg.game_id, vg.title, vg.coverArt, AVG(uv.rating) AS average_rating, COUNT(uv.game_id) AS occurrences FROM VideoGame vg JOIN user_videogame uv ON vg.game_id = uv.game_id GROUP BY vg.game_id, vg.title, vg.coverArt ORDER BY occurrences DESC LIMIT 10;";
 
@@ -135,7 +137,6 @@ if($stmt = $mysqli->prepare($sql)){
                 <li><a href="recommended.php">Recommended</a></li>
                 <li><a href="users.php">Users</a></li>
                 <?php
-		        session_start();
 		        if(isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == true){
 			        echo "<li><a href='admin.php'>Admin</a></li>";
 		        } ?>
@@ -145,8 +146,6 @@ if($stmt = $mysqli->prepare($sql)){
 
             	    <div style="position: fixed; top: 0; right: 0; transform: translate(-100%, 0); background-color: #292b2f; color: #fff; padding: 5px; border-radius: 5px;">
 		<?php
-			session_start();
-
 			if (isset($_SESSION['id'])) {
 				$userID = "{$_SESSION['id']}";
 				$mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);

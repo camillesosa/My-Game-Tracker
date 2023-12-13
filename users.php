@@ -1,7 +1,8 @@
 <?php
 require_once "util/config.php";
-?>
 
+session_start();
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -47,7 +48,6 @@ require_once "util/config.php";
                 <li><a href="recommended.php">Recommended</a></li>
                 <li><a href="users.php" style="border:2px solid white"><b>Users</b></a></li>
 		        <?php
-		            session_start();
 		            if(isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == true){
 			            echo "<li><a href='admin.php'>Admin</a></li>";
 		            } ?>
@@ -57,8 +57,6 @@ require_once "util/config.php";
 
 	    <div style="position: fixed; top: 0; right: 0; transform: translate(-100%, 0); background-color: #292b2f; color: #fff; padding: 5px; border-radius: 5px;">
 		<?php
-			session_start();
-
 			if (isset($_SESSION['id'])) {
 				$userID = "{$_SESSION['id']}";
 				$mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
@@ -130,7 +128,6 @@ require_once "util/config.php";
                 	</select>
 		</form>
 		<?php
-			session_start();
 			if(isset($_POST['Sort'])) {
 				$sort = $_POST['Sort'];
 				if($sort == "A-Z"){
